@@ -4,6 +4,8 @@
       <h2 class="company_name">Company Name: <%= f.text_field :name, :title => "Company Name" %></h2>
       <h3 class="company_select">Belongs To: <%= f.select :belongs_to, Client.find(:all, :conditions => {:company => true}).collect {|c| [c.name, c.id]}, {:include_blank => ''} %></h3>
       <h3 class="is_a_company">Company? <%= f.check_box :company %></h3>
+      <h3>Save to Quickbooks? <input id="save_to_quickbooks" name="save_to_quickbooks" type="checkbox" value="1" /></h3>
+      <input name="save_to_quickbooks" type="hidden" value="0" />
     </div>
     <div id="picture"><p>Avatar: <%= f.file_field :mugshot %></p></div>
     <div id="details" class="edit">
@@ -108,5 +110,7 @@
     $("table#addresses a.add_address").bind("click", function(){
       $("table#addresses tbody tr:first").clone().removeClass("hide").appendTo("table#addresses tbody");
     });
+    // check the add to quickbooks box
+    $("#save_to_quickbooks").click();
 	});
 </script>

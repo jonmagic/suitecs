@@ -28,6 +28,54 @@ class Client < ActiveRecord::Base
     end
   end
   
+  def self.save_to_quickbooks(client)
+    # This is a terribly long, but necessary function :-(
+    if client.company != true
+      qb_client = QB::Customer.new(:Name => "#{client.firstname} #{client.lastname}", :FirstName => client.firstname, :LastName => client.lastname)
+    else
+      qb_client = QB::Customer.new(:Name => client.name, :CompanyName => client.name)
+    end
+    # set the rest of the qb_client attributes
+    client.phones.each do |phone|
+      if phone.context == "Work"
+        qb_client[:Phone] = phone.number
+      elsif phone.context == "Fax"
+        qb_client[:Fax] = phone.number
+      elsif phone.context == "Home"
+        qb_client[:AltPhone] = phone.number
+      elsif phone.context == "Cell"
+        qb_client[:Mobile] = phone.number
+      end
+    end
+    client.emails.each do |email|
+      if email.context == "Work"
+        qb_client[:Email] = email.address
+      else
+        qb_client[:AltContact] = email.address
+      end
+    end
+    qb_client[:BillAddress] = {}
+    client.addresses.each do |address|
+      real_address = Address.normalize_address(address.full_address)
+      if address.context == "Work" && client.company == true
+        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr1] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
+        real_address["city"] != nil ? qb_client[:BillAddress][:City] = real_address["city"] : qb_client[:BillAddress][:City] = ""
+        real_address["state"] != nil ? qb_client[:BillAddress][:State] = real_address["state"] : qb_client[:BillAddress][:State] = ""
+        real_address["zip"] != nil ? qb_client[:BillAddress][:PostalCode] = real_address["zip"] : qb_client[:BillAddress][:PostalCode] = ""
+      elsif address.context == "Home" && client.company == false
+        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr1] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
+        real_address["city"] != nil ? qb_client[:BillAddress][:City] = real_address["city"] : qb_client[:BillAddress][:City] = ""
+        real_address["state"] != nil ? qb_client[:BillAddress][:State] = real_address["state"] : qb_client[:BillAddress][:State] = ""
+        real_address["zip"] != nil ? qb_client[:BillAddress][:PostalCode] = real_address["zip"] : qb_client[:BillAddress][:PostalCode] = ""
+      end
+    end
+    # Finally save the qb client and set the suite client qb_id
+    if qb_client.save
+      client.qb_id = qb_client[:ListID].value
+      client.save
+    end
+  end
+  
   def to_json(options={})
     super(options.merge(:methods => :lastfirst))
   end

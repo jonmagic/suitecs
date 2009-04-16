@@ -48,6 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :schedules
   map.resources :radchecks
   map.resources :sentries
+  map.resources :qb_client_connector
   
   # Custom Routes
   map.device_details '/tickets/:ticket_id/devices/:id/details', :controller => 'devices', :action => 'details'

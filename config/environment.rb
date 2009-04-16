@@ -73,6 +73,7 @@ Rails::Initializer.run do |config|
   config.gem "jnunemaker-httparty", :lib => 'httparty'
   config.gem "RedCloth", :lib => "redcloth"
   config.gem "dcparker-days_and_times", :lib => 'days_and_times'
+  config.gem "quickbooks"
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
