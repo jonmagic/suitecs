@@ -7,6 +7,7 @@ class QbClientConnectorController < ApplicationController
     if params[:q]
       @ajax = true
       @possibles = QB::Customer.all(:MaxReturned => 5, :NameRangeFilter => {:FromName => "#{params[:q]}"})
+      Quickbooks.connection.close
       @clients = []
       render :layout => false
     else
@@ -17,6 +18,7 @@ class QbClientConnectorController < ApplicationController
   def show
     @client = Client.find(params[:id])
     @possibles = QB::Customer.all(:MaxReturned => 5, :NameRangeFilter => {:FromName => "#{@client.lastname}"})
+    Quickbooks.connection.close
   end
   
   def update

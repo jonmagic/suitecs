@@ -74,6 +74,7 @@ class Client < ActiveRecord::Base
       client.qb_id = qb_client[:ListID].value
       client.save
     end
+    Quickbooks.connection.close
   end
   
   def to_json(options={})
