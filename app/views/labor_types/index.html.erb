@@ -1,0 +1,25 @@
+<div id="labor_types">
+  <table class="itu">
+    <thead>
+      <tr><th class="first">Name</th><th>QB Equivalent</th><th>Divisor</th></tr>
+    </thead>
+    <tbody>
+      <% @labor_types.each do |labor_type|  %>
+        <tr>
+          <td class="first"><%= link_to labor_type.name, edit_labor_type_url(labor_type) %></td>
+          <td><%= link_to labor_type.qb_id, edit_labor_type_url(labor_type) %></td>
+          <td><%= link_to labor_type.divisor, edit_labor_type_url(labor_type) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // make sidebar item appear selected
+    $("#sidebar li a.labor_types_configuration").parent().addClass("selected");
+    // add new labor_type button to footer
+    $("#footer div.col2").append("<a href='/labor_types/new'>New Labor Type</a>");
+  });
+</script>

@@ -41,6 +41,9 @@
 
 <script>
   $(document).ready(function() {
+    // make sidebar item appear selected
+    $("#sidebar li a.qb_client_connector").parent().addClass("selected");
+    
     // add my tabs, pad my tables
     $("#client_possibles > ul").tabs();
     $("#center div.ui-tabs-panel table.itu").wrap("<div></div>").parent().addClass("ui-tabs-panel-padding");
