@@ -17,16 +17,21 @@ class Report::TimeSheetController < ApplicationController
           :drive_time => 0.0,
           :billable => 0.0,
           :non_billable => 0.0}}
+      onsite = LaborType.find(:first, :conditions => {:name => "Onsite"})
+      instore = LaborType.find(:first, :conditions => {:name => "Instore"})
+      remote = LaborType.find(:first, :conditions => {:name => "Remote"})
+      system_build = LaborType.find(:first, :conditions => {:name => "System Build"})
+      warranty = LaborType.find(:first, :conditions => {:name => "Warranty"})
       entries.each do |entry|
-        if entry.labor_type == "Onsite"
+        if entry.labor_type == onsite
           technicians[entry.creator_id][:onsite] += entry.time
-        elsif entry.labor_type == "Instore"
+        elsif entry.labor_type == instore
           technicians[entry.creator_id][:instore] += entry.time
-        elsif entry.labor_type == "Remote"
+        elsif entry.labor_type == remote
           technicians[entry.creator_id][:remote] += entry.time
-        elsif entry.labor_type == "System Build"
+        elsif entry.labor_type == system_build
           technicians[entry.creator_id][:system_build] += entry.time
-        elsif entry.labor_type == "Warranty"
+        elsif entry.labor_type == warranty
           technicians[entry.creator_id][:warranty] += entry.time
         end
         if entry.billable == true
