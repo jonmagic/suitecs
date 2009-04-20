@@ -37,8 +37,8 @@ class AddLaborTypeTableAndFixTicketEntries < ActiveRecord::Migration
       end
       te.save
     end
-    
-    # And finally remove the labor_type field
+    # 
+    # # And finally remove the labor_type field
     remove_column :ticket_entries, :labor_type
   end
 
