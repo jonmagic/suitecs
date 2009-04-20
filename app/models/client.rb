@@ -31,20 +31,24 @@ class Client < ActiveRecord::Base
   def self.save_to_quickbooks(client)
     # This is a terribly long, but necessary function :-(
     if client.company != true
-      qb_client = QB::Customer.new(:Name => "#{client.firstname} #{client.lastname}", :FirstName => client.firstname, :LastName => client.lastname)
+      qb_client = QB::Customer.new(:Name => "#{client.lastname}, #{client.firstname}", :FirstName => client.firstname, :LastName => client.lastname)
     else
       qb_client = QB::Customer.new(:Name => client.name, :CompanyName => client.name)
     end
     # set the rest of the qb_client attributes
     client.phones.each do |phone|
-      if phone.context == "Work"
+      if phone.context == "Work" && client.company == true
         qb_client[:Phone] = phone.number
+      elsif phone.context == "Work" && client.company == false
+          qb_client[:AltPhone] = phone.number
       elsif phone.context == "Fax"
         qb_client[:Fax] = phone.number
-      elsif phone.context == "Home"
+      elsif phone.context == "Home" && client.company == false
+        qb_client[:Phone] = phone.number
+      elsif phone.context == "Home" && client.company == true
         qb_client[:AltPhone] = phone.number
       elsif phone.context == "Cell"
-        qb_client[:Mobile] = phone.number
+        qb_client[:AltPhone] = phone.number
       end
     end
     client.emails.each do |email|
@@ -57,13 +61,14 @@ class Client < ActiveRecord::Base
     qb_client[:BillAddress] = {}
     client.addresses.each do |address|
       real_address = Address.normalize_address(address.full_address)
+      qb_client[:BillAddress][:Addr1] = client.fullname
       if address.context == "Work" && client.company == true
-        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr1] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
+        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr2] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
         real_address["city"] != nil ? qb_client[:BillAddress][:City] = real_address["city"] : qb_client[:BillAddress][:City] = ""
         real_address["state"] != nil ? qb_client[:BillAddress][:State] = real_address["state"] : qb_client[:BillAddress][:State] = ""
         real_address["zip"] != nil ? qb_client[:BillAddress][:PostalCode] = real_address["zip"] : qb_client[:BillAddress][:PostalCode] = ""
       elsif address.context == "Home" && client.company == false
-        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr1] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
+        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr2] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
         real_address["city"] != nil ? qb_client[:BillAddress][:City] = real_address["city"] : qb_client[:BillAddress][:City] = ""
         real_address["state"] != nil ? qb_client[:BillAddress][:State] = real_address["state"] : qb_client[:BillAddress][:State] = ""
         real_address["zip"] != nil ? qb_client[:BillAddress][:PostalCode] = real_address["zip"] : qb_client[:BillAddress][:PostalCode] = ""
@@ -71,7 +76,7 @@ class Client < ActiveRecord::Base
     end
     # Finally save the qb client and set the suite client qb_id
     if qb_client.save
-      client.qb_id = qb_client[:ListID].value
+      client.qb_id = qb_client[:ListID].to_s
       client.save
     end
     Quickbooks.connection.close
