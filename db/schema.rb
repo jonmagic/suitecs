@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090204212338) do
+ActiveRecord::Schema.define(:version => 20090420135609) do
 
   create_table "addresses", :force => true do |t|
     t.string   "context",      :default => "Work", :null => false
@@ -134,6 +134,14 @@ ActiveRecord::Schema.define(:version => 20090204212338) do
     t.text   "note"
   end
 
+  create_table "labor_types", :force => true do |t|
+    t.string   "name"
+    t.string   "qb_id"
+    t.boolean  "deleted",    :default => false
+    t.datetime "deleted_at"
+    t.integer  "deleted_by"
+  end
+
   create_table "notification_queues", :force => true do |t|
     t.text    "message"
     t.integer "schedule_id"
@@ -232,16 +240,16 @@ ActiveRecord::Schema.define(:version => 20090204212338) do
     t.string   "entry_type"
     t.text     "note"
     t.integer  "time"
-    t.boolean  "billable",   :default => true,  :null => false
-    t.boolean  "private",    :default => false, :null => false
+    t.boolean  "billable",      :default => true,  :null => false
+    t.boolean  "private",       :default => false, :null => false
     t.integer  "detail"
     t.integer  "creator_id"
     t.integer  "ticket_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "labor_type"
     t.text     "parts"
     t.integer  "drive_time"
+    t.integer  "labor_type_id"
   end
 
   create_table "tickets", :force => true do |t|

@@ -30,7 +30,7 @@
         <div class="ticket_entry">
           <%= image_tag entry.creator.avatar.url(:avatar) %>
           <span class="byline"><b><%= entry.creator.name %></b> <%= entry.updated_at.strftime("%H:%M %m/%d/%Y") %></span>
-          <span class="te_details">Time: <b><%= entry.time %>min</b> Type: <b><%= entry.labor_type %></b><br />Billable? <b><%= billable(entry) %></b> Private? <b><%= is_this_private(entry) %></b></span>
+          <span class="te_details">Time: <b><%= entry.time %>min</b> Type: <b><%= entry.labor_type.name %></b><br />Billable? <b><%= billable(entry) %></b> Private? <b><%= is_this_private(entry) %></b></span>
           <div class="te_note"><%= textile_to_html(entry.note) %></div>
           <% if entry.parts != "" %>
             <h3 class="te-parts">Parts</h3>
