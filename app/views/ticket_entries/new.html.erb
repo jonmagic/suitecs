@@ -7,7 +7,7 @@
       <td class="first">Private</td><td><%= f.check_box :private %></td>
     </tr>
     <tr>
-      <td class="first">Labor Type</td><td><%= f.select :labor_type, LaborType.find(:all, :order => "name").collect {|c| [c.name, c.id]}, :include_blank => true %></td>
+      <td class="first">Labor Type</td><td><%= f.select :labor_type_id, LaborType.find(:all, :order => "name").collect {|c| [c.name, c.id]}, :include_blank => true %></td>
       <td class="first hide">Time Spent</td><td class="hide"><%= f.text_field :time, :title => "minutes", :class => "short_field" %></td>
       <td class="first hide">Drive Time</td><td class="hide"><%= f.text_field :drive_time, :title => "minutes", :class => "short_field" %></td>
     </tr>
@@ -29,7 +29,7 @@
 <% end %>
 
 <script>
-  $("select#ticket_entry_labor_type").change(function(){
+  $("select#ticket_entry_labor_type_id").change(function(){
     $("td").removeClass("hide");
   });
 </script>
