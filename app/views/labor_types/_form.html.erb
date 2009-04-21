@@ -1,0 +1,27 @@
+<% form_for @labor_type do |f| -%>
+  <table class="m">
+    <tr>
+      <td class="first">Name:</td><td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td class="first">QB Equivalent:</td><td><%= f.select :qb_id, @qb_labor_types.collect {|c| [c[:FullName].to_s, c[:ListID].to_s]}, :include_blank => true %></td>
+    </tr>
+    <tr>
+      <td class="first">Divisor:</td><td><%= f.text_field :divisor %></td>
+    </tr>
+  </table>
+  <%= f.submit "Save", :class => 'hide' %>
+<% end %>
+
+
+<script>
+  $(document).ready(function() {
+    // make sidebar item appear selected
+    $("#sidebar li a.labor_types_configuration").parent().addClass("selected");
+    // add new device type button to footer
+    $("#footer div.col2").append("<a href='#' class='save'>Save Labor Type</a>");
+    $("#footer div.col2 a.save").bind("click", function(){
+      $("#labor_type input[type=submit]").click();
+    });
+  });
+</script>
