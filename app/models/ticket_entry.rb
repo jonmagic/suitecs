@@ -5,5 +5,10 @@ class TicketEntry < ActiveRecord::Base
   def creator
     creator = User.find(self.creator_id)
   end
+  
+  def initials
+    client = Client.find(self.creator.client_id)
+    initials = client.firstname[0,1]+client.lastname[0,1]
+  end  
 
 end

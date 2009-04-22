@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090420205707) do
+ActiveRecord::Schema.define(:version => 20090421183234) do
 
   create_table "addresses", :force => true do |t|
     t.string   "context",      :default => "Work", :null => false
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20090420205707) do
     t.datetime "deleted_at"
     t.integer  "deleted_by"
     t.integer  "divisor"
+    t.boolean  "visible",    :default => true
   end
 
   create_table "notification_queues", :force => true do |t|
@@ -263,6 +264,7 @@ ActiveRecord::Schema.define(:version => 20090420205707) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
+    t.boolean  "invoiced"
   end
 
   create_table "users", :force => true do |t|

@@ -3,7 +3,7 @@ class TicketEntriesController < ApplicationController
   layout nil
   
   def index
-    @ticket_entries = TicketEntry.find_all_by_ticket_id(params[:ticket_id])
+    @ticket_entries = TicketEntry.find(:all, :order => "created_at DESC", :conditions => {:ticket_id => params[:ticket_id]})
   end
   
   def show

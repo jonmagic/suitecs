@@ -82,6 +82,16 @@ class Client < ActiveRecord::Base
     Quickbooks.connection.close
   end
   
+  def qb_lookup
+    if qb_client = QB::Customer.first(:ListID => [self.qb_id])
+      return qb_client
+      Quickbooks.connection.close
+    else
+      Quickbooks.connection.close
+      return false
+    end
+  end
+  
   def to_json(options={})
     super(options.merge(:methods => :lastfirst))
   end
