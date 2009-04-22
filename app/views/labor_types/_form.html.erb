@@ -9,6 +9,9 @@
     <tr>
       <td class="first">Divisor:</td><td><%= f.text_field :divisor %></td>
     </tr>
+    <tr>
+      <td class="first">Visible?</td><td><%= f.check_box :visible %></td>
+    </tr>
   </table>
   <%= f.submit "Save", :class => 'hide' %>
 <% end %>

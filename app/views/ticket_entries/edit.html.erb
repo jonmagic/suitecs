@@ -10,8 +10,8 @@
       <td class="first">Private</td><td><%= f.check_box :private %></td>
     </tr>
     <tr>
+      <td class="first">Labor Type</td><td><%= f.select :labor_type_id, LaborType.find(:all, :order => "name", :conditions => {:visible => true}).collect {|c| [c.name, c.id]}, :include_blank => true %></td>
       <td class="first">Time Spent</td><td><%= f.text_field :time, :title => "minutes", :class => "short_field" %></td>
-      <td class="first">Labor Type</td><td><%= f.select :labor_type, LaborType.find(:all, :order => "name").collect {|c| [c.name, c.id]}, :include_blank => true %></td>
       <td class="first">Drive Time</td><td><%= f.text_field :drive_time, :title => "minutes", :class => "short_field" %></td>
     </tr>
   </table>

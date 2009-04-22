@@ -37,6 +37,13 @@
       <%= f.submit "Save" %>
     <% end %>
   </div>
+  <div id="invoice" class="hide">
+    <form action="/invoices/" class="create_invoice" id="create_invoice" method="post">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <input id="ticket_id" name="ticket_id" type="hidden" value="<%= @ticket.id %>" />
+      <input id="ticket_submit" name="commit" type="submit" value="Save" />
+    </form>
+  </div>
 </div>
 <br />
 <br />
@@ -79,7 +86,12 @@
       <% end %>
     };
     if(ticket_state() == "completed"){
-      $("#footer div.col2").append("<a href='/tickets/"+<%= @ticket.id %>+"/edit' class='edit_ticket'>Edit</a>");
+      <% if !@ticket.invoiced? && !@ticket.client.qb_id.blank? %>
+        $("#footer div.col2").append("<a href='javascript:void(0)' class='invoice_ticket'>Invoice</a>");
+        $("a.invoice_ticket").click(function(){
+          $("div#invoice form input[type=submit]").click();
+        });
+      <% end %>  
       $("#footer div.col2").append("<a href='#' class='archive_ticket'>Archive</a>");
       $("#footer a.archive_ticket").bind("click", function(){
         $("div#archive form input[type=submit]").click();

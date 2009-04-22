@@ -9,5 +9,21 @@ class NotificationMailer < ActionMailer::Base
     @sent_on = Time.now
     @body[:message] = message
   end
+  
+  def attention(ticket, invoice)
+    @recipients = "jonmagic@gmail.com"
+    @from = APP_CONFIG[:admin_email]
+    @subject = "Invoice ##{invoice[:RefNumber]} needs attention."
+    @sent_on = Time.now
+    message = ""
+    message << "Ticket ##{ticket.id}\n"
+    message << "Description: #{ticket.description}\n\n"
+    ticket.ticket_entries.each do |te|
+      message << "Note by #{te.creator.name} on #{te.created_at.strftime('%m-%d-%y')}\n"
+      message << "Note: #{te.note}\n"
+      message << "Parts: #{te.parts}\n\n"
+    end
+    @body[:message] = message
+  end
 
 end
