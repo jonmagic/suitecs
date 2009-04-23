@@ -11,7 +11,7 @@ class NotificationMailer < ActionMailer::Base
   end
   
   def attention(ticket, invoice)
-    @recipients = "jonmagic@gmail.com"
+    @recipients = "sabretechllc@gmail.com"
     @from = APP_CONFIG[:admin_email]
     @subject = "Invoice ##{invoice[:RefNumber]} needs attention."
     @sent_on = Time.now
