@@ -28,3 +28,4 @@ REST_AUTH_DIGEST_STRETCHES = 10
 config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
 config.gem 'jeremymcanally-stump', :lib => 'stump', :source => 'http://gems.github.com'
 config.gem 'mhennemeyer-matchy', :lib => 'matchy', :source => 'http://gems.github.com'
+config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com", :version => "1.2.0"
