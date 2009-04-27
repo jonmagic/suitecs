@@ -7,6 +7,7 @@ class AddLaborTypeTableAndFixTicketEntries < ActiveRecord::Migration
     create_table :labor_types do |t|
       t.string :name
       t.string :qb_id
+      t.boolean :visible, :default => true
       t.deletestamps(true)
     end
     
@@ -14,6 +15,7 @@ class AddLaborTypeTableAndFixTicketEntries < ActiveRecord::Migration
     ["Onsite", "Instore", "Remote", "System Build", "Warranty"].each do |l|
       LaborType.create(:name => l)
     end
+    LaborType.create(:name => "Drive Time", :visible => false)
     
     # assign my variables
     onsite = LaborType.find(:first, :conditions => {:name => "Onsite"})
