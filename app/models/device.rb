@@ -4,7 +4,6 @@ class Device < ActiveRecord::Base
   has_and_belongs_to_many :tickets
   has_many :checklists, :dependent => :destroy
   has_many :things, :as => :attached, :dependent => :destroy
-  has_many :sentries, :dependent => :destroy
   
   validates_uniqueness_of :service_tag
   validates_presence_of :client_id, :device_type_id
@@ -52,16 +51,6 @@ class Device < ActiveRecord::Base
     super(options.merge(:methods => :client_name))
   end
   
-  def healthy?
-    state = 0
-    self.sentries.each do |sentry|
-      if sentry.state == false
-        state += 1
-      end
-    end
-    state == 0 ? true : false
-  end
-  
   def identifier
     if !self.name.blank?
       return self.name
@@ -77,24 +66,6 @@ class Device < ActiveRecord::Base
       !device.healthy? ? devices_in_trouble << device : false
     end
     return devices_in_trouble
-  end
-  
-  def generate
-    sma_dir = RAILS_ROOT+"/lib/sma/"
-    devices_dir = sma_dir+"devices/"
-    device = self
-    if File.exist?(devices_dir+device.id.to_s+"/sma_installer.exe")
-      return true
-    else
-      FileUtils.mkdir(devices_dir+device.id.to_s)
-      device_dir = devices_dir+device.id.to_s
-      FileUtils.cp sma_dir+"windows/sma.nsi", device_dir
-      config = File.new(device_dir+"/config.yaml", "w+")
-      config.write '{"device":{"id":'+device.id.to_s+'},"auth":{"username":"'+APP_CONFIG[:event_api_username]+'","password":"'+APP_CONFIG[:event_api_password]+'"},"site":{"url":"'+APP_CONFIG[:event_api_url]+'"}}'
-      config.close
-      `#{APP_CONFIG[:nsis_path]}/makensis #{device_dir}/sma.nsi`
-      return true
-    end
   end
   
 end

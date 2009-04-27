@@ -36,9 +36,6 @@ ActionController::Routing::Routes.draw do |map|
   # Secondary Resources
   map.resources :ticket_entries
   map.resources :device_types
-  map.resources :sentries do |sentry|
-    sentry.resources :events
-  end
   map.resources :settings
   map.resources :reports
   map.resources :things

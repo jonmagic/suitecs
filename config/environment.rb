@@ -72,5 +72,4 @@ Rails::Initializer.run do |config|
   config.gem "dcparker-days_and_times", :lib => 'days_and_times', :version => '1.0.0'
   config.gem "quickbooks"
   require 'lib/search.rb'
-  require 'lib/statuslang.rb'
 end
