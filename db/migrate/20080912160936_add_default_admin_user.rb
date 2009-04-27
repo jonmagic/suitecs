@@ -6,7 +6,7 @@ class AddDefaultAdminUser < ActiveRecord::Migration
     
     # Create default admin user
     user = User.create do |u|
-      u.password = u.password_confirmation = 'monkeybutt'
+      u.password = u.password_confirmation = 'password'
       u.email = APP_CONFIG[:admin_email]
     end
     
@@ -16,6 +16,7 @@ class AddDefaultAdminUser < ActiveRecord::Migration
     
     # Add admin role to admin user
     user.roles << admin_role
+    user.roles << technician_role
   end
 
   def self.down

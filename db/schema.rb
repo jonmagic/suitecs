@@ -127,13 +127,6 @@ ActiveRecord::Schema.define(:version => 20090421183234) do
     t.datetime "updated_at"
   end
 
-  create_table "goggles", :force => true do |t|
-    t.string "name"
-    t.string "module"
-    t.string "script"
-    t.text   "note"
-  end
-
   create_table "labor_types", :force => true do |t|
     t.string   "name"
     t.string   "qb_id"
@@ -196,23 +189,6 @@ ActiveRecord::Schema.define(:version => 20090421183234) do
     t.string  "start_time"
     t.string  "end_time"
     t.integer "backup_id"
-  end
-
-  create_table "sentries", :force => true do |t|
-    t.boolean  "state"
-    t.text     "message"
-    t.integer  "device_id"
-    t.string   "parameters"
-    t.datetime "last_surveyed_at"
-    t.integer  "survey_interval",          :default => 5,  :null => false
-    t.integer  "notifications_to_send",    :default => 5,  :null => false
-    t.integer  "maximum_notify_frequency", :default => 15, :null => false
-    t.integer  "notifications_sent",       :default => 0,  :null => false
-    t.integer  "schedule_id"
-    t.integer  "goggle_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "last_notified_at"
   end
 
   create_table "sessions", :force => true do |t|
