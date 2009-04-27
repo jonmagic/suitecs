@@ -8,8 +8,6 @@ class LaborTypesController < ApplicationController
   
   def new
     @labor_type = LaborType.new
-    @qb_labor_types = QB::ItemService.all()
-    Quickbooks.connection.close
   end
   
   def create
@@ -25,8 +23,6 @@ class LaborTypesController < ApplicationController
   
   def edit
     @labor_type = LaborType.find(params[:id])
-    @qb_labor_types = QB::ItemService.all(:NameFilter => {:MatchCriterion => "StartsWith", :Name => "LABOR"})
-    Quickbooks.connection.close
   end
   
   def update

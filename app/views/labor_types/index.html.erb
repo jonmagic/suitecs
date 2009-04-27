@@ -1,14 +1,12 @@
 <div id="labor_types">
   <table class="itu">
     <thead>
-      <tr><th class="first">Name</th><th>QB Equivalent</th><th>Divisor</th><th>Visible?</th></tr>
+      <tr><th class="first">Name</th><th>Visible?</th></tr>
     </thead>
     <tbody>
       <% @labor_types.each do |labor_type|  %>
         <tr>
           <td class="first"><%= link_to labor_type.name, edit_labor_type_url(labor_type) %></td>
-          <td><%= link_to labor_type.qb_id, edit_labor_type_url(labor_type) %></td>
-          <td><%= link_to labor_type.divisor, edit_labor_type_url(labor_type) %></td>
           <td><%= link_to labor_type.visible, edit_labor_type_url(labor_type) %></td>
         </tr>
       <% end %>

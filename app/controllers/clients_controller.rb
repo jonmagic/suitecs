@@ -57,9 +57,6 @@ class ClientsController < ApplicationController
     
     respond_to do |format|
       if @client.save
-        if params[:save_to_quickbooks] == "1"
-          Client.save_to_quickbooks(@client)
-        end
         flash[:notice] = 'Client was successfully created.'
         format.html { redirect_to(@client) }
         format.xml  { render :xml => @client, :status => :created, :location => @client }
