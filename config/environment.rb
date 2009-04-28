@@ -70,5 +70,6 @@ Rails::Initializer.run do |config|
   config.gem "jnunemaker-httparty", :lib => 'httparty', :version => '0.3.1'
   config.gem "RedCloth", :lib => "redcloth", :version => '4.1.9'
   config.gem "dcparker-days_and_times", :lib => 'days_and_times', :version => '1.0.0'
+  config.gem "quickbooks"
   require 'lib/search.rb'
 end
