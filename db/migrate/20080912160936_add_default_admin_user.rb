@@ -1,5 +1,8 @@
 class AddDefaultAdminUser < ActiveRecord::Migration
   def self.up
+    # create default client
+    client = Client.create(:name => APP_CONFIG[:name])
+    
     # Create admin role
     admin_role = Role.create(:name => 'admin')
     technician_role = Role.create(:name => 'technician')
@@ -8,6 +11,7 @@ class AddDefaultAdminUser < ActiveRecord::Migration
     user = User.create do |u|
       u.password = u.password_confirmation = 'password'
       u.email = APP_CONFIG[:admin_email]
+      u.client_id = client.id
     end
     
     # Activate user
