@@ -6,7 +6,7 @@ class QbClientConnectorController < ApplicationController
 
     if params[:q]
       @ajax = true
-      @possibles = QB::Customer.all(:MaxReturned => 5, :NameRangeFilter => {:FromName => "#{params[:q]}"})
+      @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{params[q]}"})
       Quickbooks.connection.close
       @clients = []
       render :layout => false
