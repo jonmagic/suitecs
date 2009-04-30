@@ -5,8 +5,9 @@ class QbClientConnectorController < ApplicationController
     @ajax = false
 
     if params[:q]
+      name = params[:q]
       @ajax = true
-      @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{params[q]}"})
+      @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{name}"})
       Quickbooks.connection.close
       @clients = []
       render :layout => false
@@ -17,8 +18,10 @@ class QbClientConnectorController < ApplicationController
   
   def show
     @client = Client.find(params[:id])
-    @client.company? ? name = @client.name : @client.lastname
+
+    @client.company? ? name = @client.name : name = @client.lastname
     @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{name}"})
+
     Quickbooks.connection.close
   end
   
