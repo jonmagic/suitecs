@@ -17,7 +17,8 @@ class QbClientConnectorController < ApplicationController
   
   def show
     @client = Client.find(params[:id])
-    @possibles = QB::Customer.all(:MaxReturned => 5, :NameRangeFilter => {:FromName => "#{@client.lastname}"})
+    @client.company? ? name = @client.name : @client.lastname
+    @possibles = QB::Customer.all(:MaxReturned => 5, :NameRangeFilter => {:FromName => "#{name}"})
     Quickbooks.connection.close
   end
   
