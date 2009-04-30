@@ -1,0 +1,85 @@
+<% form_for @client, :url => "/setup", :html => { :multipart => true } do |f| -%>
+    <div id="names" class="edit">
+      <p class="person_name">FirstName: <%= f.text_field :firstname, :title => "First Name" %> Lastname: <%= f.text_field :lastname, :title => "Last Name" %></p>
+      <p class="company_name">Company Name: <%= f.text_field :name, :title => "Company Name" %></p>
+      <p class="is_a_company">Company? <%= f.check_box :company %></p>
+      <p>Password: <input id="password" name="password" size="30" title="Password" type="password" /></p>
+      <p>Password (Again): <input id="password_confirmation" name="password_confirmation" size="30" title="Password Confirmation" type="password" /></p>
+    </div>
+    <div id="picture"><p>Avatar: <%= f.file_field :mugshot %></p></div>
+    <div id="details" class="edit">
+      <table id="phones" class="">
+        <thead>
+          <tr>
+
+            <th class="context">Phone</th>
+            <th>Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render :partial => 'phone', :object => Phone.new(:client => @client) %>
+        </tbody>
+      </table>
+      <table id="emails" class="">
+        <thead>
+          <tr>
+            <th class="context">Email</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render :partial => 'email', :object => Email.new(:client => @client) %>
+        </tbody>
+      </table>
+      <table id="addresses" class="">
+        <thead>
+          <tr>
+            <th class="context">Street</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render :partial => 'address', :object => Address.new(:client => @client) %>
+        </tbody>
+      </table>
+      <%= f.submit "Save" %>
+    </div>
+<% end %>
+
+<script>
+  function remove_empty_fields(){
+    // fix form saves so that empty boxes don't get saved :-)
+    $("#details input").each(function(){
+      if ($(this).attr("value") == "") {
+        $(this).parent().parent().remove();
+      };
+      if ($(this).attr("value") == null) {
+        $(this).parent().parent().remove();
+      };
+    });
+  };
+  $(document).ready(function() {
+    
+    // save form
+    $("input[type=submit]").bind("click", function(){
+      remove_empty_fields();
+    });
+    
+    // swap around fields when is or is not a company
+    if ($("#client p.is_a_company input").attr("checked")) { 
+      $("#client p.person_name").addClass("hide")
+    } else {
+      $("#client p.company_name").addClass("hide")
+    };
+    $("#client p.is_a_company input").click( function() {
+      if ($("#client p.is_a_company input").attr("checked")) {
+       $("#client p.person_name").addClass("hide")  
+      $("#client p.company_name").removeClass("hide")     
+      } else {
+       $("#client p.person_name").removeClass("hide")
+       $("#client p.company_name").addClass("hide")     
+      }
+    });
+
+	});
+</script>

@@ -1,0 +1,8 @@
+<% new_or_existing = email.new_record? ? 'new' : 'existing' %>
+<% prefix = "client[#{new_or_existing}_email_attributes][]" %>
+<% fields_for prefix, email do |f| -%>
+  <tr class="email_address">
+    <td class="context"><%= f.select :context, ["Personal","Work","Home","Other"] %></td>
+    <td class="content"><%= f.text_field :address %></td>
+  </tr>
+<% end -%>
