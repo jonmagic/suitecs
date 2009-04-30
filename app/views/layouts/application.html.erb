@@ -9,9 +9,13 @@
 		<meta name="robots" content="all" />	
 		<meta name="resource-type" content="document" />
 		<meta name="MSSmartTagsPreventParsing" content="true" />
-		<%= javascript_include_tag "jquery", "jquery-ui", "jquery.scrollTo", :cache => true %>
-		<%= stylesheet_link_tag "blueprint/screen", "jquery-theme", "common", :media => "screen", :cache => true %>
-     <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+		<%= javascript_include_tag "jquery", "jquery-ui", :cache => true %>
+		<%= stylesheet_link_tag "blueprint/screen", :media => "screen", :cache => true %>
+    <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <style>
+      h1 {text-align:center;margin:1em;}
+      #content {width:800px;margin:1em auto;padding:1em;border:1px solid #f1f1f1;background-color:#fcfcfc;}
+    </style>
 	</head>
 	<body>
 		<div id="container" class="login">

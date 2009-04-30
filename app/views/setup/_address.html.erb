@@ -1,0 +1,8 @@
+<% new_or_existing = address.new_record? ? 'new' : 'existing' %>
+<% prefix = "client[#{new_or_existing}_address_attributes][]" %>
+<% fields_for prefix, address do |f| -%>
+  <tr class="address">
+    <td class="context"><%= f.select :context, ["Home","Work","Other"] %></td>
+    <td class="content"><%= f.text_field :full_address %></td>
+  </tr>
+<% end -%>

@@ -8,6 +8,9 @@ class CreateRoles < ActiveRecord::Migration
       t.belongs_to :role
       t.belongs_to :user
     end
+    
+    admin_role = Role.create(:name => 'admin')
+    technician_role = Role.create(:name => 'technician')
   end
 
   def self.down
