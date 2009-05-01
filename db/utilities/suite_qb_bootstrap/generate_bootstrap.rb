@@ -2,7 +2,7 @@ require 'rubygems'
 require 'quickbooks'
 
 puts "Job Starting!"
-$bootstrap = File.open('bootstrap_suite.rb', 'w')
+$bootstrap = File.open('../../../import_clients_from_qb.rb', 'w')
 $bootstrap << File.read('bootstrap_bootstrap.rb')
 $bootstrap << "puts \"Bootstrap Begin!\""
 
