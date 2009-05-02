@@ -4,7 +4,13 @@ class Address < ActiveRecord::Base
   include 
   belongs_to :client
   
-  before_save :normalize_address
+  before_save :generate_full_address
+  
+  def generate_full_address
+    self.full_address = "#{self.thoroughfare}, #{self.city} #{self.state} #{self.zip}"
+  end
+  
+  # before_save :normalize_address
   
   def normalize_address
     if self.zip == nil
