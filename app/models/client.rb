@@ -60,18 +60,17 @@ class Client < ActiveRecord::Base
     end
     qb_client[:BillAddress] = {}
     client.addresses.each do |address|
-      real_address = Address.normalize_address(address.full_address)
       qb_client[:BillAddress][:Addr1] = client.fullname
       if address.context == "Work" && client.company == true
-        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr2] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
-        real_address["city"] != nil ? qb_client[:BillAddress][:City] = real_address["city"] : qb_client[:BillAddress][:City] = ""
-        real_address["state"] != nil ? qb_client[:BillAddress][:State] = real_address["state"] : qb_client[:BillAddress][:State] = ""
-        real_address["zip"] != nil ? qb_client[:BillAddress][:PostalCode] = real_address["zip"] : qb_client[:BillAddress][:PostalCode] = ""
+        qb_client[:BillAddress][:Addr2] = address.thoroughfare
+        qb_client[:BillAddress][:City] = address.city
+        qb_client[:BillAddress][:State] = address.state
+        qb_client[:BillAddress][:PostalCode] = address.zip
       elsif address.context == "Home" && client.company == false
-        real_address["thoroughfare"] != nil ? qb_client[:BillAddress][:Addr2] = real_address["thoroughfare"] : qb_client[:BillAddress][:Addr1] = ""
-        real_address["city"] != nil ? qb_client[:BillAddress][:City] = real_address["city"] : qb_client[:BillAddress][:City] = ""
-        real_address["state"] != nil ? qb_client[:BillAddress][:State] = real_address["state"] : qb_client[:BillAddress][:State] = ""
-        real_address["zip"] != nil ? qb_client[:BillAddress][:PostalCode] = real_address["zip"] : qb_client[:BillAddress][:PostalCode] = ""
+        qb_client[:BillAddress][:Addr2] = address.thoroughfare
+        qb_client[:BillAddress][:City] = address.city
+        qb_client[:BillAddress][:State] = address.state
+        qb_client[:BillAddress][:PostalCode] = address.zip
       end
     end
     # Finally save the qb client and set the suite client qb_id
