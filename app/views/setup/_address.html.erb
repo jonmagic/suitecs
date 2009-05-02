@@ -3,6 +3,6 @@
 <% fields_for prefix, address do |f| -%>
   <tr class="address">
     <td class="context"><%= f.select :context, ["Home","Work","Other"] %></td>
-    <td class="content"><%= f.text_field :full_address %></td>
+    <td class="content">Street <%= f.text_field :thoroughfare, :title => "Street" %> City <%= f.text_field :city, :title => "City" %> State <%= f.text_field :state, :title => "State" %> Zip <%= f.text_field :zip, :title => "Zip" %></td>
   </tr>
 <% end -%>

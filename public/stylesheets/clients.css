@@ -32,6 +32,10 @@ h2.person_name input {font-size:13pt;width:220px;}
 h2.company_name input {font-size:13pt;width:400px;margin-bottom:10px;}
 h3.company_select select {font-size:11pt;}
 h3.is_a_company {}
+input[title=Street] {width:15em;}
+input[title=City] {width:10em;}
+input[title=State] {width:2em;}
+input[title=Zip] {width:4em;}
 
 /* Search box */
 #applesearch {margin:10px 7px;position:relative;}
