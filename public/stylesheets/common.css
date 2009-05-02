@@ -101,6 +101,11 @@ div.ui-tabs-panel table.itu tr th {padding:3px 0;}
 div.ui-tabs-panel table.itu tr td {padding:2px 5px;}
 .ui-tabs-panel-padding {padding:1.2em;}
 
+/* Forms */
+input[title=Street] {width:15em;}
+input[title=City] {width:10em;}
+input[title=State] {width:2em;}
+input[title=Zip] {width:4em;}
 
 /* Toolbars */
 ul.toolbar {border:1px solid #505050;background:url("../images/footer-button-m-inactive.png") repeat-x;height:16px;display:block;margin:1em 1.2em 0;padding:2px 1em;-moz-border-radius:5px;-webkit-border-radius:5px}
