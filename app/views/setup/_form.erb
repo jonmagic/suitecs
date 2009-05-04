@@ -1,4 +1,5 @@
 <% form_for @client, :url => "/setup", :html => { :multipart => true } do |f| -%>
+    <h2 edit="edit">Configure first user/client</h2>
     <div id="names" class="edit">
       <p class="person_name">FirstName: <%= f.text_field :firstname, :title => "First Name" %> Lastname: <%= f.text_field :lastname, :title => "Last Name" %></p>
       <p class="company_name">Company Name: <%= f.text_field :name, :title => "Company Name" %></p>
@@ -42,8 +43,22 @@
           <%= render :partial => 'address', :object => Address.new(:client => @client) %>
         </tbody>
       </table>
-      <%= f.submit "Save" %>
     </div>
+    <h2 edit="edit">Configure connection to Quickbooks</h2>
+    Address(ip): <input id="qb_ip" name="qb_ip" size="30" title="QB IP" type="text" /> Secret: <input id="qb_secret" name="qb_secret" size="30" title="QB Secret" type="text" />
+    <p>(Leave these blank if Suite Server is running on the same computer as Quickbooks)</p>
+    <h2 edit="edit">Configure mail setup</h2>
+    <p><select id="mail_setup" name="mail_setup">
+      <option value="sendmail">Sendmail</option>
+      <option value="gmail">Gmail</option>
+    </select></p>
+    <p id="gmail_settings" class="hide">
+      Gmail address: <input id="gmail_address" name="gmail_address" size="30" title="Gmail Address" type="text" /><br /> 
+      Gmail password: <input id="gmail_password" name="gmail_password" size="30" title="Gmail Password" type="text" /><br />
+      Local domain: <input id="gmail_password" name="local_domain" size="30" title="Local Domain" type="text" />
+    </p>
+    <h2 edit="edit">Finally, click save</h2>
+    <p><%= f.submit "Save" %></p>
 <% end %>
 
 <script>
@@ -80,6 +95,12 @@
        $("#client p.company_name").addClass("hide")     
       }
     });
-
+    $("select#mail_setup").change(function(){
+      if ($(this).val() == "gmail"){
+        $("p#gmail_settings").removeClass("hide");
+      }else{
+        $("p#gmail_settings").addClass("hide");
+      };
+    });
 	});
 </script>

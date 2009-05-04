@@ -26,10 +26,3 @@ REST_AUTH_SITE_KEY = 'f5945d1c74d3502f8a3de8562e5bf21fe3fec887'
 REST_AUTH_DIGEST_STRETCHES = 10
 
 config.action_mailer.raise_delivery_errors = true
-
-ActionMailer::Base.delivery_method = :sendmail
-
-ActionMailer::Base.sendmail_settings = {
-  :location       => '/usr/sbin/sendmail',
-  :arguments      => '-i -t'
-}
