@@ -4,9 +4,9 @@ class Client < ActiveRecord::Base
       if client = Client.create(:name => name, :firstname => firstname, :lastname => lastname, :company => company, :note => note)
         Email.create(:client_id => client.id, :context => 'Primary', :address => email_address) if !email_address.blank?
 
-        PhoneNumber.create(:client_id => client.id, :context => 'Primary', :number => phone) if !phone.blank?
-        PhoneNumber.create(:client_id => client.id, :context => 'Fax', :number => fax) if !fax.blank?
-        PhoneNumber.create(:client_id => client.id, :context => 'Secondary', :number => phone) if !alt_phone.blank?
+        Phone.create(:client_id => client.id, :context => 'Primary', :number => phone) if !phone.blank?
+        Phone.create(:client_id => client.id, :context => 'Fax', :number => fax) if !fax.blank?
+        Phone.create(:client_id => client.id, :context => 'Secondary', :number => phone) if !alt_phone.blank?
 
         Address.create(:client_id => client.id, :context => 'Billing', :full_address => bill_address) if !bill_address.blank?
         Address.create(:client_id => client.id, :context => 'Shipping', :full_address => bill_address) if !ship_address.blank?

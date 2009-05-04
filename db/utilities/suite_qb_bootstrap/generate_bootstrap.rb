@@ -4,11 +4,11 @@ require 'quickbooks'
 puts "Job Starting!"
 $bootstrap = File.open('../../../import_clients_from_qb.rb', 'w')
 $bootstrap << File.read('db/utilities/suite_qb_bootstrap/bootstrap_bootstrap.rb')
-$bootstrap << "puts \"Bootstrap Begin!\""
+$bootstrap << "puts \"\nBootstrap Begin!\n\""
 
-# uncomment the following line and replace with similar line from config/environments/production.rb to connect to QB on a remote computer
+# uncomment the following line (and comment the one below it) and replace with similar line from config/environments/production.rb to connect to QB on a remote computer
 # Quickbooks.use_adapter :https, 'address', 'SuiteCS', 'secret'
-
+Quickbooks.use_adapter :ole, "SuiteCS"
 
 class Addresser
   def self.parse(qb_address_block)
