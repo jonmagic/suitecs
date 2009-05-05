@@ -57,12 +57,15 @@ class ClientsController < ApplicationController
     
     respond_to do |format|
       if @client.save
-        if params[:save_to_quickbooks] == "1"
-          Client.save_to_quickbooks(@client)
+        if params[:save_to_quickbooks] == "1" && Client.save_to_quickbooks(@client)
+          flash[:notice] = 'Client was created in Suite and Quickbooks.'
+          format.html { redirect_to(@client) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = 'Client was created in Suite, but could not be created in Quickbooks.'
+          format.html { redirect_to(@client) }
+          format.xml  { head :ok }
         end
-        flash[:notice] = 'Client was successfully created.'
-        format.html { redirect_to(@client) }
-        format.xml  { render :xml => @client, :status => :created, :location => @client }
       else
         flash[:error] = @client.errors
         format.html { render :action => "new" }
@@ -79,9 +82,15 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.update_attributes params[:client]
-        flash[:notice] = 'Client was successfully updated.'
-        format.html { redirect_to(@client) }
-        format.xml  { head :ok }
+        if params[:save_to_quickbooks] == "1" && Client.save_to_quickbooks(@client)
+          flash[:notice] = 'Client was updated, and created in Quickbooks.'
+          format.html { redirect_to(@client) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = 'Client was updated, but could not be created in Quickbooks.'
+          format.html { redirect_to(@client) }
+          format.xml  { head :ok }
+        end
       else
         flash[:notice] = @client.errors.inspect       
         format.html { render :action => "edit" }

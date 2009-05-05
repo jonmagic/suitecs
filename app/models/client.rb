@@ -63,20 +63,23 @@ class Client < ActiveRecord::Base
         qb_client[:BillAddress][:Addr2] = address.thoroughfare
         qb_client[:BillAddress][:City] = address.city
         qb_client[:BillAddress][:State] = address.state
-        qb_client[:BillAddress][:PostalCode] = address.zip
+        qb_client[:BillAddress][:PostalCode] = address.zip.to_s
       elsif address.context == "Home" && client.company == false
         qb_client[:BillAddress][:Addr2] = address.thoroughfare
         qb_client[:BillAddress][:City] = address.city
         qb_client[:BillAddress][:State] = address.state
-        qb_client[:BillAddress][:PostalCode] = address.zip
+        qb_client[:BillAddress][:PostalCode] = address.zip.to_s
       end
     end
     # Finally save the qb client and set the suite client qb_id
     if qb_client.save
       client.qb_id = qb_client[:ListID].to_s
       client.save
+      Quickbooks.connection.close
+      return true
+    else
+      return false
     end
-    Quickbooks.connection.close
   end
   
   def qb_lookup
