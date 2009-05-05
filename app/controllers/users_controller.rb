@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :login_required
-  layout 'users', :except => [:show]
+  layout 'users', :except => [:show, :new]
 
   def show
     @user = User.find(current_user.id)
