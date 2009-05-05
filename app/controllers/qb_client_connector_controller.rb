@@ -24,7 +24,7 @@ class QbClientConnectorController < ApplicationController
   
   def show
     @client = Client.find(params[:id])
-    @client.company? ? name = @client.name : @client.lastname
+    @client.company? ? name = @client.name : name = @client.lastname
     begin
       @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{name}"})
     rescue
