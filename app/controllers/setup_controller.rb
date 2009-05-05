@@ -35,7 +35,7 @@ class SetupController < ApplicationController
             file.puts "}"
           elsif params[:mail_setup] == "gmail"
             file.puts "\nrequire 'smtp_tls'\n\n"
-            file.puts "ActionMailer::Base.server_settings = {\n"
+            file.puts "ActionMailer::Base.smtp_settings = {\n"
             file.puts "  :address => 'smtp.gmail.com',\n"
             file.puts "  :port => '587',\n"
             file.puts "  :domain => '#{params[:local_domain]}',\n"
