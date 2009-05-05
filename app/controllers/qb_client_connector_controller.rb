@@ -7,7 +7,7 @@ class QbClientConnectorController < ApplicationController
     if params[:q]
       begin
         @ajax = true
-        @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{params[q]}"})
+        @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{params[:q]}"})
         @clients = []
         render :layout => false
       rescue
