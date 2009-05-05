@@ -27,9 +27,9 @@ class SetupController < ApplicationController
           
           file = File.open(RAILS_ROOT+"/config/environments/production.rb", "a")
           
-          if !params[:qb_ip].blank?
+          if params[:qb_setup] == "https"
             file.puts "\n\nQuickbooks.use_adapter :https, '#{params[:qb_ip]}', 'SuiteCS', '#{params[:qb_secret]}'"
-          else
+          elsif params[:qb_setup] == "ole"
             file.puts "\n\nQuickbooks.use_adapter :ole, 'SuiteCS'"
           end
           
@@ -55,11 +55,11 @@ class SetupController < ApplicationController
           flash[:notice] = 'User & Client were successfully created.'
           redirect_to "/"
         else
-          flash[:notice] = @user.errors
+          flash[:notice] = @user.errors.full_messages.to_sentence
           redirect_to "/setup"
         end
       else
-        flash[:notice] = @client.errors
+        flash[:notice] = @client.errors.full_messages.to_sentence
         redirect_to "/setup"
       end
     else
