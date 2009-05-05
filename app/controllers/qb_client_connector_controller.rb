@@ -5,12 +5,18 @@ class QbClientConnectorController < ApplicationController
     @ajax = false
 
     if params[:q]
-      name = params[:q]
-      @ajax = true
-      @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{name}"})
-      Quickbooks.connection.close
-      @clients = []
-      render :layout => false
+      begin
+        @ajax = true
+        @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{params[q]}"})
+        @clients = []
+        render :layout => false
+      rescue
+        @clients = []
+        @possibles = []
+        render :layout => false
+      ensure
+        Quickbooks.connection.close
+      end
     else
       @clients = Client.find(:all, :conditions => {:qb_id => nil})
     end
@@ -18,11 +24,15 @@ class QbClientConnectorController < ApplicationController
   
   def show
     @client = Client.find(params[:id])
-
-    @client.company? ? name = @client.name : name = @client.lastname
-    @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{name}"})
-
-    Quickbooks.connection.close
+    @client.company? ? name = @client.name : @client.lastname
+    begin
+      @possibles = QB::Customer.all(:MaxReturned => 5, :NameFilter => {:MatchCriterion => "Contains", :Name => "#{name}"})
+    rescue
+      flash[:notice] = "Could not connect to Quickbooks."
+      @possibles = []
+    ensure
+      Quickbooks.connection.close
+    end
   end
   
   def update
