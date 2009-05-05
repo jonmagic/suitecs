@@ -45,8 +45,14 @@
       </table>
     </div>
     <h2 edit="edit">Configure connection to Quickbooks</h2>
-    Address(ip): <input id="qb_ip" name="qb_ip" size="30" title="QB IP" type="text" /> Secret: <input id="qb_secret" name="qb_secret" size="30" title="QB Secret" type="text" />
-    <p>(Leave these blank if Suite Server is running on the same computer as Quickbooks)</p>
+    <p><select id="qb_setup" name="qb_setup">
+      <option value="ole">Quickbooks runs on this computer</option>
+      <option value="https">Quickbooks runs on a remote computer</option>
+    </select></p>
+    <p id="qb_settings" class="hide">
+      Address(ip): <input id="qb_ip" name="qb_ip" size="30" title="QB IP" type="text" /> Secret: <input id="qb_secret" name="qb_secret" size="30" title="QB Secret" type="text" /><br />
+      (Leave these blank if Suite Server is running on the same computer as Quickbooks)
+    </p>
     <h2 edit="edit">Configure mail setup</h2>
     <p><select id="mail_setup" name="mail_setup">
       <option value="sendmail">Sendmail</option>
@@ -99,6 +105,13 @@
         $("p#gmail_settings").removeClass("hide");
       }else{
         $("p#gmail_settings").addClass("hide");
+      };
+    });
+    $("select#qb_setup").change(function(){
+      if ($(this).val() == "gmail"){
+        $("p#qb_settings").removeClass("hide");
+      }else{
+        $("p#qb_settings").addClass("hide");
       };
     });
 	});

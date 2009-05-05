@@ -29,6 +29,8 @@ class SetupController < ApplicationController
           
           if !params[:qb_ip].blank?
             file.puts "\n\nQuickbooks.use_adapter :https, '#{params[:qb_ip]}', 'SuiteCS', '#{params[:qb_secret]}'"
+          else
+            file.puts "\n\nQuickbooks.use_adapter :ole, 'SuiteCS'"
           end
           
           if params[:mail_setup] == "sendmail"
