@@ -27,57 +27,64 @@ class Client < ActiveRecord::Base
   end
   
   def self.save_to_quickbooks(client)
-    # This is a terribly long, but necessary function :-(
-    if client.company != true
-      qb_client = QB::Customer.new(:Name => "#{client.lastname}, #{client.firstname}", :FirstName => client.firstname, :LastName => client.lastname)
-    else
-      qb_client = QB::Customer.new(:Name => client.name, :CompanyName => client.name)
-    end
-    # set the rest of the qb_client attributes
-    client.phones.each do |phone|
-      if phone.context == "Work" && client.company == true
-        qb_client[:Phone] = phone.number
-      elsif phone.context == "Work" && client.company == false
-          qb_client[:AltPhone] = phone.number
-      elsif phone.context == "Fax"
-        qb_client[:Fax] = phone.number
-      elsif phone.context == "Home" && client.company == false
-        qb_client[:Phone] = phone.number
-      elsif phone.context == "Home" && client.company == true
-        qb_client[:AltPhone] = phone.number
-      elsif phone.context == "Cell"
-        qb_client[:AltPhone] = phone.number
-      end
-    end
-    client.emails.each do |email|
-      if email.context == "Work"
-        qb_client[:Email] = email.address
+    begin
+      # This is a terribly long, but necessary function :-(
+      if client.company != true
+        qb_client = QB::Customer.new(:Name => "#{client.lastname}, #{client.firstname}", :FirstName => client.firstname, :LastName => client.lastname)
       else
-        qb_client[:AltContact] = email.address
+        qb_client = QB::Customer.new(:Name => client.name, :CompanyName => client.name)
       end
-    end
-    qb_client[:BillAddress] = {}
-    client.addresses.each do |address|
-      qb_client[:BillAddress][:Addr1] = client.fullname
-      if address.context == "Work" && client.company == true
-        qb_client[:BillAddress][:Addr2] = address.thoroughfare
-        qb_client[:BillAddress][:City] = address.city
-        qb_client[:BillAddress][:State] = address.state
-        qb_client[:BillAddress][:PostalCode] = address.zip.to_s
-      elsif address.context == "Home" && client.company == false
-        qb_client[:BillAddress][:Addr2] = address.thoroughfare
-        qb_client[:BillAddress][:City] = address.city
-        qb_client[:BillAddress][:State] = address.state
-        qb_client[:BillAddress][:PostalCode] = address.zip.to_s
+      # set the rest of the qb_client attributes
+      client.phones.each do |phone|
+        if phone.context == "Work" && client.company == true
+          qb_client[:Phone] = phone.number
+        elsif phone.context == "Work" && client.company == false
+            qb_client[:AltPhone] = phone.number
+        elsif phone.context == "Fax"
+          qb_client[:Fax] = phone.number
+        elsif phone.context == "Home" && client.company == false
+          qb_client[:Phone] = phone.number
+        elsif phone.context == "Home" && client.company == true
+          qb_client[:AltPhone] = phone.number
+        elsif phone.context == "Cell"
+          qb_client[:AltPhone] = phone.number
+        end
       end
-    end
-    # Finally save the qb client and set the suite client qb_id
-    if qb_client.save
-      client.qb_id = qb_client[:ListID].to_s
-      client.save
+      client.emails.each do |email|
+        if email.context == "Work"
+          qb_client[:Email] = email.address
+        else
+          qb_client[:AltContact] = email.address
+        end
+      end
+      qb_client[:BillAddress] = {}
+      client.addresses.each do |address|
+        qb_client[:BillAddress][:Addr1] = client.fullname
+        if address.context == "Work" && client.company == true
+          qb_client[:BillAddress][:Addr2] = address.thoroughfare
+          qb_client[:BillAddress][:City] = address.city
+          qb_client[:BillAddress][:State] = address.state
+          qb_client[:BillAddress][:PostalCode] = address.zip.to_s
+        elsif address.context == "Home" && client.company == false
+          qb_client[:BillAddress][:Addr2] = address.thoroughfare
+          qb_client[:BillAddress][:City] = address.city
+          qb_client[:BillAddress][:State] = address.state
+          qb_client[:BillAddress][:PostalCode] = address.zip.to_s
+        end
+      end
+      # Finally save the qb client and set the suite client qb_id
+
+      if qb_client.save
+        client.qb_id = qb_client[:ListID].to_s
+        client.save
+        Quickbooks.connection.close
+        return true
+      else
+        Quickbooks.connection.close
+        return false
+      end
+    rescue
       Quickbooks.connection.close
-      return true
-    else
       return false
     end
   end

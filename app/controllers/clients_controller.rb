@@ -86,8 +86,12 @@ class ClientsController < ApplicationController
           flash[:notice] = 'Client was updated, and created in Quickbooks.'
           format.html { redirect_to(@client) }
           format.xml  { head :ok }
-        else
+        elsif params[:save_to_quickbooks] == "1" && !Client.save_to_quickbooks(@client)
           flash[:notice] = 'Client was updated, but could not be created in Quickbooks.'
+          format.html { redirect_to(@client) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = 'Client was updated.'
           format.html { redirect_to(@client) }
           format.xml  { head :ok }
         end
