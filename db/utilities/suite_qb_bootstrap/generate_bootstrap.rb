@@ -1,7 +1,7 @@
 puts "Job Starting!"
 $bootstrap = File.open('import_clients_from_qb.rb', 'w')
 $bootstrap << File.read('db/utilities/suite_qb_bootstrap/bootstrap_bootstrap.rb')
-$bootstrap << "puts \"\nBootstrap Begin!\n\""
+$bootstrap << "puts \"Bootstrap Begin!\""
 
 class Addresser
   def self.parse(qb_address_block)
