@@ -9,7 +9,6 @@ class Client < ActiveRecord::Base
         Phone.create(:client_id => client.id, :context => 'Secondary', :number => phone) if !alt_phone.blank?
 
         Address.create(:client_id => client.id, :context => 'Billing', :thoroughfare => bill_address_street, :city => bill_address_city, :state => bill_address_state, :zip => bill_address_zip) if !bill_address_street.blank?
-        Address.create(:client_id => client.id, :context => 'Shipping', :thoroughfare => ship_address_street, :city => ship_address_city, :state => ship_address_state, :zip => ship_address_zip) if !ship_address_street.blank?
       end
     end
   end
