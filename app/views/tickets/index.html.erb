@@ -8,7 +8,7 @@
         <tr class="ticket" title="<%= "#{ticket.description}" %>" alt="<%= ticket.id %>">
           <td class="first"><a href="/tickets/<%= ticket.id %>"><%= ticket.id %></a></td>
           <td><a href="/tickets/<%= ticket.id %>"><%= ticket.description[0...80] + "..." %></a></td>
-          <td><a href="/tickets/<%= ticket.id %>"><%= ticket.client.fullname %></a></td>
+          <td><a href="/tickets/<%= ticket.id %>"><%= fullname_helper(ticket) %></a></td>
           <td><a href="/tickets/<%= ticket.id %>"><%= ticket.user.name %></a></td>
           <td><a href="/tickets/<%= ticket.id %>"><%= ticket.status %></a></td>
         </tr>
