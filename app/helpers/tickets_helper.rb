@@ -17,4 +17,12 @@ module TicketsHelper
   def checklist_status(checklist)
     checklist.complete? ? image_tag('/images/icons/accept.png', :alt => "True") : ""
   end
+  
+  def fullname_helper(ticket)
+    if ticket.client
+      return ticket.client.fullname
+    else
+      return "name not found"
+    end
+  end
 end
