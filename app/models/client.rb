@@ -7,7 +7,7 @@ class Client < ActiveRecord::Base
                     :avatar => "55x60#" }
   
   has_many :devices, :dependent => :destroy
-  has_many :tickets
+  has_many :tickets, :dependent => :destroy
   has_many :things, :as => :attached, :dependent => :destroy
   
   has_many :phones, :dependent => :destroy
