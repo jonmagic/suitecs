@@ -6,10 +6,8 @@ class Invoice
       # set these variables to be used later
       needs_attention = 0
       drive_time = 0
-    
-      # iterate thru my ticket entries
       line_items = []
-
+      # iterate thru my ticket entries
       ticket.ticket_entries.each do |te|
         line_item = {}
         if !te.labor_type.blank?
@@ -20,15 +18,15 @@ class Invoice
               line_item[:ItemRef] = LaborType.warranty.qb_lookup.to_ref
             end
             line_item[:Desc] = te.note+" [#{te.initials}] #{te.created_at.strftime('%m-%d-%y')} Ticket ##{te.ticket.id}"
-            line_item[:Quantity] = ((te.time.to_f/te.labor_type.divisor.to_f)*100).round/100.0
+            line_item[:Quantity] = Invoice.calculate_quantity(te.time, te.labor_type)
             line_items << line_item
           end
         end
+        # add 1 to needs_attention if there are any parts on the ticket
         !te.parts.blank? ? needs_attention += 1 : true
+        # if there is drive time and its billable, add it to my drive_time var
         if !te.drive_time.blank? && te.billable?
           drive_time += te.drive_time
-        elsif !te.drive_time.blank? && !te.billable?
-          line_item[:Quantity] += te.drive_time
         end
       end
     
@@ -37,7 +35,7 @@ class Invoice
         line_item = {}
         line_item[:ItemRef] = LaborType.drive_time.qb_lookup.to_ref
         line_item[:Desc] = "Drive time."
-        line_item[:Quantity] = drive_time/LaborType.drive_time.divisor
+        line_item[:Quantity] = Invoice.calculate_quantity(drive_time, LaborType.drive_time)
         line_items << line_item
       end
 
@@ -53,6 +51,17 @@ class Invoice
                           )
     rescue
       return false
+    end
+  end
+  
+
+  def self.calculate_quantity(time, labor_type)
+    if labor_type.service_item_type == "time_based_rate"
+      ((time.to_f/labor_type.divisor.to_f)*100).round/100.0
+    elsif labor_type.service_item_type == "flat_rate"
+      1
+    else
+      0
     end
   end
 end
