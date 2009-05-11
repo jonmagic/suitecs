@@ -82,13 +82,15 @@
     };
     $("#client h3.is_a_company input").click( function() {
       if ($("#client h3.is_a_company input").attr("checked")) {
-       $("#client h2.person_name").addClass("hide")  
-      $("#client h2.company_name").removeClass("hide")     
-      $("#client h3.company_select").addClass("hide")
+        $("#client h2.person_name").addClass("hide")  
+        $("#client h2.company_name").removeClass("hide")
+        $("#client h3.company_select").addClass("hide")
+        $("input#client_name").focus();
       } else {
-       $("#client h2.person_name").removeClass("hide")
-       $("#client h2.company_name").addClass("hide")     
-       $("#client h3.company_select").removeClass("hide")
+        $("#client h2.person_name").removeClass("hide")
+        $("#client h2.company_name").addClass("hide")     
+        $("#client h3.company_select").removeClass("hide")
+        $("input#client_firstname").focus();
       }
     });
     $("#client_belongs_to").quickselect({
@@ -108,5 +110,7 @@
     $("table#addresses a.add_address").bind("click", function(){
       $("table#addresses tbody tr:first").clone().removeClass("hide").appendTo("table#addresses tbody");
     });
+    // focus on firstname field
+    $("input#client_firstname").focus();
 	});
 </script>
