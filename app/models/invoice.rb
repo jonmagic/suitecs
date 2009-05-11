@@ -45,6 +45,7 @@ class Invoice
       # create the invoice
       invoice = QB::Invoice.new(
                           :CustomerRef => client.qb_lookup.to_ref,
+                          :TxnDate => Date.today,
                           :InvoiceLine => line_items,
                           :IsToBePrinted => is_to_be_printed,
                           :CustomerMsg => QB::CustomerMsg.first()
