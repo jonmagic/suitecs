@@ -13,20 +13,18 @@
 <% if @technicians %>
   <table class="itu">
     <thead>
-      <tr><th class="first">Technician</th><th>Onsite</th><th>Instore</th><th>Remote</th><th>System Build</th><th>Warranty</th><th>Drive Time</th><th>Billable</th><th>Non-Billable</th></tr>
+      <tr>
+        <% @header.each do |name| %>
+          <th><%= name %></th>
+        <% end %>
+      </tr>
     </thead>
     <tbody>
       <% @technicians.each do |technician| %>
         <tr>
-          <td class="first"><%= technician[:name] %></td>
-          <td><%= technician[:onsite]/60 %></td>
-          <td><%= technician[:instore]/60 %></td>
-          <td><%= technician[:remote]/60 %></td>
-          <td><%= technician[:system_build]/60 %></td>
-          <td><%= technician[:warranty]/60 %></td>
-          <td><%= technician[:drive_time]/60 %></td>
-          <td><%= technician[:billable]/60 %></td>
-          <td><%= technician[:non_billable]/60 %></td>
+          <% @header.each do |name| %>
+            <td><%= technician[name].class == String ? technician[name] : technician[name]/60 %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
