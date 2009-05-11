@@ -5,6 +5,9 @@ a {text-decoration:none;color:#000;} /* make all my links black with no underlin
 .remove-margins-padding {padding:0px;margin:0px;}
 .blur {color:#ccc;}
 input.short_field {width:80px;}
+span.delete_object {margin-left:1em;}
+span.delete_object a {color:#bfbfbf;}
+span.delete_object img {margin-bottom:-3px;}
 
 /* flash messages */
 #header div.flash {position:fixed;top:1em;right:1em;z-index:0;text-align:right;font-size:1.2em;color:#555;}

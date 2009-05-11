@@ -49,6 +49,7 @@
       <%= f.submit "Save", :class => "hide" %>
     </div>
 <% end %>
+<span class="delete_object"><%= image_tag '/images/icons/delete.png' %> <%= link_to "Delete this client, #{@client.fullname}, and all associated tickets and devices?", url_for(@client), :confirm => "Are you absolutely sure you want to delete this Client?", :method => :delete %></span>
 
 <script>
   function remove_empty_fields(){
