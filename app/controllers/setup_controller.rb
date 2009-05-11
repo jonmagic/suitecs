@@ -27,10 +27,8 @@ class SetupController < ApplicationController
           
           file = File.open(RAILS_ROOT+"/config/environments/production.rb", "a")
           
-          if params[:qb_setup] == "https"
+          if params[:qb_setup] == "http"
             file.puts "\n\nQuickbooks.use_adapter :http, '#{params[:qb_ip]}', 'SuiteCS', '#{params[:qb_secret]}'"
-          elsif params[:qb_setup] == "ole"
-            file.puts "\n\nQuickbooks.use_adapter :ole, 'SuiteCS'"
           end
           
           if params[:mail_setup] == "sendmail"
