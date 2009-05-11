@@ -13,9 +13,9 @@ class Invoice
         if !te.labor_type.blank?
           if !te.time.blank? || !te.drive_time.blank?
             if te.billable == true
-              line_item[:ItemRef] = te.labor_type.qb_lookup.to_ref
+              line_item[:ItemRef] = {:ListID => te.labor_type.qb_id}
             else
-              line_item[:ItemRef] = LaborType.warranty.qb_lookup.to_ref
+              line_item[:ItemRef] = {:ListID => LaborType.warranty.qb_id}
             end
             line_item[:Desc] = te.note+" [#{te.initials}] #{te.created_at.strftime('%m-%d-%y')} Ticket ##{te.ticket.id}"
             line_item[:Quantity] = Invoice.calculate_quantity(te.time, te.labor_type)
@@ -33,7 +33,7 @@ class Invoice
       # add drive time line item
       if drive_time != 0
         line_item = {}
-        line_item[:ItemRef] = LaborType.drive_time.qb_lookup.to_ref
+        line_item[:ItemRef] = {:ListID => LaborType.drive_time.qb_id}
         line_item[:Desc] = "Drive time."
         line_item[:Quantity] = Invoice.calculate_quantity(drive_time, LaborType.drive_time)
         line_items << line_item
@@ -44,7 +44,7 @@ class Invoice
 
       # create the invoice
       invoice = QB::Invoice.new(
-                          :CustomerRef => client.qb_lookup.to_ref,
+                          :CustomerRef => {:ListID => client.qb_id},
                           :TxnDate => Date.today,
                           :InvoiceLine => line_items,
                           :IsToBePrinted => is_to_be_printed,
