@@ -32,7 +32,7 @@ class LaborTypesController < ApplicationController
   def edit
     @labor_type = LaborType.find(params[:id])
     begin
-      @qb_labor_types = QB::ItemService.all(:NameFilter => {:MatchCriterion => "StartsWith", :Name => "LABOR"})
+      @qb_labor_types = QB::ItemService.all()
     rescue
       flash[:notice] = "Could not connect to Quickbooks."
       @qb_labor_types = []
