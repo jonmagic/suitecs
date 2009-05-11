@@ -7,6 +7,15 @@
       <td class="first">QB Equivalent:</td><td><%= f.select :qb_id, @qb_labor_types.collect {|c| [c[:FullName].to_s, c[:ListID].to_s]}, :include_blank => true %></td>
     </tr>
     <tr>
+      <td class="first">Service Item Type:</td>
+      <td>
+        <select id="labor_type_service_item_type" name="labor_type[service_item_type]">
+          <option value="time_based_rate">Time Based Rate</option>
+          <option value="flat_rate">Flat Rate</option>
+        </select>
+      </td>
+    </tr>
+    <tr id="divisor">
       <td class="first">Divisor:</td><td><%= f.text_field :divisor %></td>
     </tr>
     <tr>
@@ -25,6 +34,13 @@
     $("#footer div.col2").append("<a href='#' class='save'>Save Labor Type</a>");
     $("#footer div.col2 a.save").bind("click", function(){
       $("#labor_type input[type=submit]").click();
+    });
+    $("select#labor_type_service_item_type").change(function(){
+      if ($(this).val() == "time_based_rate"){
+        $("tr#divisor").removeClass("hide");
+      }else{
+        $("tr#divisor").addClass("hide");
+      };
     });
   });
 </script>

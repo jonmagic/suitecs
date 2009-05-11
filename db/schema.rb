@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090421183234) do
+ActiveRecord::Schema.define(:version => 20090511142106) do
 
   create_table "addresses", :force => true do |t|
     t.string   "context",      :default => "Work", :null => false
@@ -122,11 +122,12 @@ ActiveRecord::Schema.define(:version => 20090421183234) do
   create_table "labor_types", :force => true do |t|
     t.string   "name"
     t.string   "qb_id"
-    t.boolean  "visible",    :default => true
-    t.boolean  "deleted",    :default => false
+    t.boolean  "visible",           :default => true
+    t.boolean  "deleted",           :default => false
     t.datetime "deleted_at"
     t.integer  "deleted_by"
     t.integer  "divisor"
+    t.string   "service_item_type"
   end
 
   create_table "notification_queues", :force => true do |t|
