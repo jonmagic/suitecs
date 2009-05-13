@@ -1,5 +1,5 @@
 class Client < ActiveRecord::Base
-  def self.import_qb(qb_id, name, firstname, lastname, company, note, email_address, phone, fax, alt_phone, bill_address_street, bill_address_city, bill_address_state, bill_address_zip, ship_address_street, ship_address_city, ship_address_state, ship_address_zip)
+  def self.import_qb(qb_id, name, firstname, lastname, company, note, email_address, phone, fax, alt_phone, bill_address_street, bill_address_city, bill_address_state, bill_address_zip)
     unless Client.find_by_qb_id(qb_id)
       if client = Client.create(:name => name, :firstname => firstname, :lastname => lastname, :company => company, :note => note, :qb_id => qb_id)
         Email.create(:client_id => client.id, :context => 'Primary', :address => email_address) if !email_address.blank?
