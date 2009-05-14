@@ -15,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Main Resources
   map.search_clients '/clients/search', :controller => 'clients', :action => 'search'
+  map.search_clients_by_phone '/clients/phone_search', :controller => 'clients', :action => 'search'
+  map.all_clients '/clients/all', :controller => 'clients', :action => 'all'
   map.resources :clients do |client|
     client.resources :tickets
     client.resources :devices
