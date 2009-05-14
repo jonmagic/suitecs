@@ -25,11 +25,11 @@ QB::Customer.each do |customer|
     customer[:BillAddress][:PostalCode] != nil ? bill_address_zip = customer[:BillAddress][:PostalCode] : bill_address_zip = ""
   end
   
-  if customer[:FullName].to_s.inspect.include?(", ")
+  if customer[:FullName].to_s.inspect.include?(", ") && customer[:CompanyName] == nil
     customer[:FirstName] == nil ? firstname = '"'+customer[:FullName].to_s.inspect.split(", ")[1] : firstname = customer[:FullName].to_s.inspect
     customer[:LastName] == nil  ? lastname = customer[:FullName].to_s.inspect.split(", ")[0]+'"' : firstname = customer[:LastName].to_s.inspect
     company = false
-  elsif !customer[:FullName].to_s.inspect.include?(", ") && customer[:LastName] == nil
+  elsif !customer[:FullName].to_s.inspect.include?(", ") || customer[:LastName] == nil
     customer[:CompanyName] != nil ? name = customer[:CompanyName].to_s.inspect : name = customer[:FullName].to_s.inspect
     company = true
   end
