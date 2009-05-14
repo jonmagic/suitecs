@@ -139,7 +139,7 @@ class Client < ActiveRecord::Base
   end
   
   def primary_phone
-    if phone = Phone.find(:first, :conditions => {:client_id => self.id, :ordinal => 0}) then phone.number else "" end
+    if phone = Phone.find(:first, :conditions => {:client_id => self.id, :ordinal => 0}) then phone.pretty else "" end
   end
   def primary_email
     if email = Email.find(:first, :conditions => {:client_id => self.id, :ordinal => 0}) then email.address else "" end
