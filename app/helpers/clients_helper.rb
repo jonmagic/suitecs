@@ -60,7 +60,27 @@ module ClientsHelper
   end
   
   def hours_billed_this_week
-    return ""
+    last_saturday = "#{LastDayNextDay.last('saturday')}"
+    next_friday = "#{LastDayNextDay.next('friday')}"
+    if params[:start_date] && params[:end_date]
+      true
+    elsif !params[:start_date] && !params[:end_date]
+      params[:start_date] = last_saturday
+      params[:end_date] = next_friday
+    elsif params[:start_date]
+      Date.today.cwday != next_friday.cwday ? params[:end_date] = next_friday : Date.today
+    elsif params[:end_date]
+      Date.today.cwday != last_saturday.cwday ? params[:start_date] = last_saturday : Date.today
+    end
+    start_date = params[:start_date] + " 00:00:00"
+    end_date = params[:end_date] + " 23:59:59"
+    entries = TicketEntry.find(:all, :conditions => {:created_at.gte => start_date, :created_at.lte => end_date, :billable => true})
+    time = 0.0
+    entries.each do |entry|
+      time += entry.time.to_f/entry.labor_type.divisor.to_f unless entry.time.blank?
+      time += entry.drive_time.to_f/LaborType.drive_time.divisor.to_f unless entry.drive_time.blank?
+    end
+    return time.to_s
   end
 
 end
