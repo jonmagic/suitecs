@@ -1,0 +1,1 @@
+[<% @clients.each do |client| %>{"client":{"id":<%= client.id %>, "name":"<%= client.name %>", "company":<%= client.company? %>, "firstname":"<%= client.firstname %>", "lastname":"<%= client.lastname %>", "lastfirst":"<%= client.lastfirst %>"}}, <% end %>]
