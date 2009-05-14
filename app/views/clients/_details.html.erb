@@ -5,7 +5,7 @@
     </tr>
     <% @client.phones.each do |phone| %>
       <tr>
-        <td><%= phone.context %></td><td><%= phone.number %></td>
+        <td><%= phone.context %></td><td><%= phone.pretty %></td>
       </tr>
     <% end %>
   </table>

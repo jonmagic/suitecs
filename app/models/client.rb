@@ -37,17 +37,17 @@ class Client < ActiveRecord::Base
       # set the rest of the qb_client attributes
       client.phones.each do |phone|
         if phone.context == "Work" && client.company == true
-          qb_client[:Phone] = phone.number
+          qb_client[:Phone] = phone.pretty
         elsif phone.context == "Work" && client.company == false
-            qb_client[:AltPhone] = phone.number
+            qb_client[:AltPhone] = phone.pretty
         elsif phone.context == "Fax"
-          qb_client[:Fax] = phone.number
+          qb_client[:Fax] = phone.pretty
         elsif phone.context == "Home" && client.company == false
-          qb_client[:Phone] = phone.number
+          qb_client[:Phone] = phone.pretty
         elsif phone.context == "Home" && client.company == true
-          qb_client[:AltPhone] = phone.number
+          qb_client[:AltPhone] = phone.pretty
         elsif phone.context == "Cell"
-          qb_client[:AltPhone] = phone.number
+          qb_client[:AltPhone] = phone.pretty
         end
       end
       client.emails.each do |email|
@@ -212,7 +212,7 @@ class Client < ActiveRecord::Base
   end
   
   def primary_phone
-    if phone = Phone.find(:first, :conditions => {:client_id => self.id, :ordinal => 0}) then phone.number else "" end
+    if phone = Phone.find(:first, :conditions => {:client_id => self.id, :ordinal => 0}) then phone.pretty else "" end
   end
   def primary_email
     if email = Email.find(:first, :conditions => {:client_id => self.id, :ordinal => 0}) then email.address else "" end

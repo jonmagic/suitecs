@@ -16,7 +16,7 @@
         <% @client.phones.each do |phone| %>
           <div class="row">
             <label><%= phone.context %>:</label>
-            <span><a href="tel:<%= phone.number %>"><%= phone.number %></a></span>
+            <span><a href="tel:<%= phone.number %>"><%= phone.pretty %></a></span>
           </div>
         <% end %>
       <% end %>
