@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_filter :login_required
+  # before_filter :login_required
   layout 'clients'
   
   def index
@@ -12,7 +12,12 @@ class ClientsController < ApplicationController
     end
   end
   
-  def search
+  def all
+    @clients = Client.find(:all)
+    render :layout => false
+  end
+  
+  def phone_search
     if !params[:q].blank?
       params[:q].gsub!(/^517/, "")
       @clients = Client.search(params[:q], :limit => 100, :include => [:phones])
@@ -24,6 +29,15 @@ class ClientsController < ApplicationController
       format.xml  { render :xml => @clients }
       format.json  { render :json => @clients }
     end
+  end
+  
+  def search
+    if !params[:q].blank?
+      @clients = Client.search(params[:q], :limit => 50, :only => ["name", "firstname", "lastname"])
+    else
+      @clients = []
+    end
+    render :layout => false
   end
   
   def show
