@@ -12,6 +12,10 @@ class ClientsController < ApplicationController
     end
   end
   
+  def stats
+    render :layout => false
+  end
+  
   def all
     if !params[:q].blank?
       @clients = Client.search(params[:q], :limit => 100, :only => ["name", "firstname", "lastname"])
