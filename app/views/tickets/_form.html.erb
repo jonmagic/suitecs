@@ -1,6 +1,14 @@
 <% form_for @ticket do |f| -%>
   <table class="m">
-    <tr><td class="first">Client:</td><td><input id="client_id" name="client_id" type="text" value="" /><%= f.hidden_field :client_id %></td><tr>
+    <tr><td class="first">Client:</td>
+      <td>
+        <% if !@ticket.new_record? %>
+          <input id="client_id" name="client_id" type="text" value="<%= @ticket.client.fullname %>" /><%= f.hidden_field :client_id, :value => @ticket.client.id %>
+        <% else %>
+          <input id="client_id" name="client_id" type="text" value="" /><%= f.hidden_field :client_id %>
+        <% end %>
+      </td>
+    <tr>
     <tr><td class="first">Technician:</td>
       <td>
         <% if User.find(:all).length > 1 %>
@@ -44,7 +52,11 @@
   	});
     // create datepicker widget
     $("#ticket_active_on").datepicker();
-    // focus on client field
-    $("input.auto_select_input:first").focus();
+    // focus on field
+    <% if !@ticket.new_record? %>
+      $("input#ticket_active_on").focus();
+    <% else %>
+      $("input.auto_select_input:first").focus();
+    <% end %>
 	});
 </script>

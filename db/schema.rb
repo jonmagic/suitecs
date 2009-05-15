@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090511142106) do
+ActiveRecord::Schema.define(:version => 20090515121848) do
 
   create_table "addresses", :force => true do |t|
     t.string   "context",      :default => "Work", :null => false
@@ -137,11 +137,11 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
   create_table "labor_types", :force => true do |t|
     t.string   "name"
     t.string   "qb_id"
-    t.boolean  "visible",           :default => true
     t.boolean  "deleted",           :default => false
     t.datetime "deleted_at"
     t.integer  "deleted_by"
     t.integer  "divisor"
+    t.boolean  "visible",           :default => true
     t.string   "service_item_type"
   end
 
@@ -225,6 +225,13 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "settings", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "things", :force => true do |t|
     t.string   "name"
