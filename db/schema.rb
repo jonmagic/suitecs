@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090511142106) do
+ActiveRecord::Schema.define(:version => 20090515121848) do
 
   create_table "addresses", :force => true do |t|
     t.string   "context",      :default => "Work", :null => false
@@ -119,14 +119,29 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
     t.datetime "updated_at"
   end
 
+  create_table "events", :force => true do |t|
+    t.string   "recordable_type"
+    t.integer  "recordable_id"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "goggles", :force => true do |t|
+    t.string "name"
+    t.string "module"
+    t.string "script"
+    t.text   "note"
+  end
+
   create_table "labor_types", :force => true do |t|
     t.string   "name"
     t.string   "qb_id"
-    t.boolean  "visible",           :default => true
     t.boolean  "deleted",           :default => false
     t.datetime "deleted_at"
     t.integer  "deleted_by"
     t.integer  "divisor"
+    t.boolean  "visible",           :default => true
     t.string   "service_item_type"
   end
 
@@ -164,7 +179,7 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
     t.datetime "updated_at"
   end
 
-  add_index "preferences", ["owner_id", "owner_type", "attribute", "group_id", "group_type"], :name => "index_preferences_on_owner_and_attribute_and_preference", :unique => true
+  add_index "preferences", ["attribute", "group_id", "group_type", "owner_id", "owner_type"], :name => "index_preferences_on_owner_and_attribute_and_preference", :unique => true
 
   create_table "roles", :force => true do |t|
     t.string "name"
@@ -184,6 +199,23 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
     t.integer "backup_id"
   end
 
+  create_table "sentries", :force => true do |t|
+    t.boolean  "state"
+    t.text     "message"
+    t.integer  "device_id"
+    t.string   "parameters"
+    t.datetime "last_surveyed_at"
+    t.integer  "survey_interval",          :default => 5,  :null => false
+    t.integer  "notifications_to_send",    :default => 5,  :null => false
+    t.integer  "maximum_notify_frequency", :default => 15, :null => false
+    t.integer  "notifications_sent",       :default => 0,  :null => false
+    t.integer  "schedule_id"
+    t.integer  "goggle_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "last_notified_at"
+  end
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -193,6 +225,13 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "settings", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "things", :force => true do |t|
     t.string   "name"
@@ -211,14 +250,14 @@ ActiveRecord::Schema.define(:version => 20090511142106) do
     t.string   "entry_type"
     t.text     "note"
     t.integer  "time"
-    t.boolean  "billable",                     :default => true,  :null => false
-    t.boolean  "private",                      :default => false, :null => false
+    t.boolean  "billable",      :default => true,  :null => false
+    t.boolean  "private",       :default => false, :null => false
     t.integer  "detail"
     t.integer  "creator_id"
     t.integer  "ticket_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "parts",         :limit => 255
+    t.text     "parts"
     t.integer  "drive_time"
     t.integer  "labor_type_id"
   end

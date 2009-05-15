@@ -7,7 +7,14 @@
       <td>Device Name:</td><td><%= f.text_field :name %></td>
     </tr>
     <tr> 
-      <td>Owner:</td><td><input id="client_id" name="client_id" type="text" value="" /><%= f.hidden_field :client_id %></td>
+      <td>Owner:</td>
+      <td>
+        <% if !@device.new_record? %>
+          <input id="client_id" name="client_id" type="text" value="<%= @device.client.fullname %>" /><%= f.hidden_field :client_id, :value => @device.client.id %>
+        <% else %>
+          <input id="client_id" name="client_id" type="text" value="" /><%= f.hidden_field :client_id %>
+        <% end %>
+      </td>
     </tr>
     <tr> 
       <td>Device Type:</td><td><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></td>
@@ -38,6 +45,10 @@
       $("#device input[type=submit]").click();
     });
     // focus on device name field
-    $("input#device_name").focus();
+    <% if !@device.new_record? %>
+      $("textarea#device_description").focus();
+    <% else %>
+      $("input#device_name").focus();
+    <% end %>
 	});
 </script>
