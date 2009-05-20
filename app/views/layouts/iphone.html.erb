@@ -8,16 +8,17 @@
     <meta name="apple-touch-fullscreen" content="YES" />
     <style type="text/css" media="screen">@import "/stylesheets/jqt/jqtouch.css";</style>
     <%= javascript_include_tag "jquery-1.3.2.min" %>
-    <%= javascript_include_tag "jqtouch.min" %>
+    <%= javascript_include_tag "jqtouch" %>
     <script type="text/javascript" charset="utf-8">
     $(document).jQTouch({
+        fixedViewport: true,
+        fullScreen: true,
         icon: 'sabretech.png',
         statusBar: 'black-translucent',
-        slideInSelector: 'a'
+        slideInSelector: 'li > a, a:not(.slideLeft)'
     });
     $.preloadImages([
         '/images/jqt/chevron_select.png',
-        '/images/jqt/bg_row_select.gif',
         '/images/jqt/back_button.png',
         '/images/jqt/back_button_clicked.png',
         '/images/jqt/button_clicked.png',

@@ -24,21 +24,23 @@
         <span><%= @ticket.status %></span>
       </div>
     </fieldset>
-    <h2>Notes</h2>
-    <div class="textbox">
-      <% TicketEntry.find(:all, :conditions => {:ticket_id => @ticket.id, :detail => 1}).each do |entry| %>
-        <div class="ticket_entry">
-          <%= image_tag entry.creator.avatar.url(:avatar) %>
-          <span class="byline"><b><%= entry.creator.name %></b> <%= entry.updated_at.strftime("%H:%M %m/%d/%Y") %></span>
-          <span class="te_details">Time: <b><%= entry.time %>min</b> Type: <b><%= !entry.labor_type.blank? ? entry.labor_type.name : "" %></b><br />Billable? <b><%= billable(entry) %></b> Private? <b><%= is_this_private(entry) %></b></span>
-          <div class="te_note"><%= textile_to_html(entry.note) %></div>
-          <% if entry.parts != "" %>
-            <h3 class="te-parts">Parts</h3>
-            <div class="te_parts"><%= textile_to_html(entry.parts) %></div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <% if TicketEntry.find(:all, :conditions => {:ticket_id => @ticket.id, :detail => 1}).length > 0 %>
+      <h2>Notes</h2>
+      <div class="textbox">
+        <% TicketEntry.find(:all, :conditions => {:ticket_id => @ticket.id, :detail => 1}).each do |entry| %>
+          <div class="ticket_entry">
+            <%= image_tag entry.creator.avatar.url(:avatar) %>
+            <span class="byline"><b><%= entry.creator.name %></b> <%= entry.updated_at.strftime("%H:%M %m/%d/%Y") %></span>
+            <span class="te_details">Time: <b><%= entry.time %>min</b> Type: <b><%= !entry.labor_type.blank? ? entry.labor_type.name : "" %></b><br />Billable? <b><%= billable(entry) %></b> Private? <b><%= is_this_private(entry) %></b></span>
+            <div class="te_note"><%= textile_to_html(entry.note) %></div>
+            <% if !entry.parts.blank? %>
+              <h3 class="te-parts">Parts</h3>
+              <div class="te_parts"><%= textile_to_html(entry.parts) %></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
     <% if @ticket.devices.length != 0 %>
       <a href="/iphone/tickets/<%= @ticket.id %>/devices" class="grayButton">Devices</a>
     <% end %>
