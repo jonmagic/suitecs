@@ -5,17 +5,7 @@ body {
     -webkit-user-select: none;
 	-webkit-touch-callout: none;
     -webkit-text-size-adjust: none;
-    background-color: #000;
-}
-
-*, a {
-	/*-webkit-tap-highlight-color: rbga(23,126,191,.5) !important;*/
-	-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
-}
-
-.edgetoedge a {
-	/*-webkit-tap-highlight-color: rbga(23,126,191,.5) !important;*/
-	-webkit-tap-highlight-color:rgba(23, 126, 191, .4);
+	-webkit-tap-highlight-color: rbga(0,0,0,0);
 }
 
 body > * {
@@ -25,13 +15,12 @@ body > * {
     padding: 0;
     left: 0;
     width: 100%;
-    min-height: 480px;
+    min-height: 420px;
     -webkit-transform: translate(0px,0px);
-    background-color: #fff;
 }
 
 body[orient="landscape"] > * {
-    min-height: 320px;
+    min-height: 268px;
 }
 
 body > *[selected="true"], body > *[selected="selected"] {
@@ -39,28 +28,25 @@ body > *[selected="true"], body > *[selected="selected"] {
 }
 
 .edgetoedge a[selected=true], .edgetoedge a:active {
-    background-color: #177ebf !important;
-    background-image: url(../../images/jqt/chevron_select.png), url(../../images/jqt/bg_row_select.gif) !important;
+    background-color: #194fdb !important;
+    background-image: url(/images/jqt/listArrowSel.png), url(/images/jqt/selection.png) !important;
     background-repeat: no-repeat, repeat-x;
     background-position: right center, left top;
     color: #FFFFFF !important;
 }
 
 a[selected="progress"] {
-    background-image: url(../../images/jqt/loading.gif), url(../../images/jqt/bg_row_select.gif) !important;
-   background-repeat: no-repeat, repeat-x !important;
-   background-position: right center, left top !important;
-
+    background-image: url(loading.gif), url(/images/jqt/selection.png) !important;
 }
 
 /* @group Toolbar */
 .toolbar {
     -webkit-box-sizing: border-box;
+    border-bottom: 1px solid #2d3642;
+    border-top: 1px solid #6d84a2;
     padding: 10px;
-    height: 60px;
-    padding-top: 28px;
-    background: #000 url(../../images/jqt/toolbar.gif) bottom left repeat-x;
-    position: relative;
+    height: 45px;
+    background: url(/images/jqt/toolbar.png) #6d84a2 repeat-x;
 }
 
 .toolbar > h1 {
@@ -72,11 +58,11 @@ a[selected="progress"] {
     font-size: 20px;
     width: 150px;
     font-weight: bold;
-    text-shadow: rgba(0, 0, 0, .75) -1px -1px 0;
+    text-shadow: rgba(0, 0, 0, 0.4) 0px -1px 0;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #f6f6f6;
+    color: #FFFFFF;
 }
 
 body[orient="landscape"] .toolbar > h1 {
@@ -89,7 +75,7 @@ body[orient="landscape"] .toolbar > h1 {
 .button {
     position: absolute;
     overflow: hidden;
-    bottom: 5px;
+    top: 8px;
     right: 6px;
     margin: 0;
     border-width: 0 5px;
@@ -106,16 +92,11 @@ body[orient="landscape"] .toolbar > h1 {
     text-decoration: none;
     white-space: nowrap;
     background: none;
-    -webkit-border-image: url(../../images/jqt/button.png) 0 5 0 5;
-}
-
-.button:active {
-	    -webkit-border-image: url(../../images/jqt/button_clicked.png) 0 5 0 5;
-
+    -webkit-border-image: url(/images/jqt/toolButton.png) 0 5 0 5;
 }
 
 .blueButton {
-    -webkit-border-image: url(../../images/jqt/blueButton.png) 0 5 0 5;
+    -webkit-border-image: url(/images/jqt/blueButton.png) 0 5 0 5;
     border-width: 0 5px;
 }
 
@@ -129,12 +110,8 @@ body[orient="landscape"] .toolbar > h1 {
     right: auto;
     padding: 0;
     max-width: 55px;
-    border-width: 0 8px 0 15px;
-    -webkit-border-image: url(../../images/jqt/back_button.png) 0 8 0 15;
-}
-
-.toolbar .back:active {
-    -webkit-border-image: url(../../images/jqt/back_button_clicked.png) !important;
+    border-width: 0 8px 0 14px;
+    -webkit-border-image: url(/images/jqt/backButton.png) 0 8 0 14;
 }
 
 .whiteButton,
@@ -150,14 +127,16 @@ body[orient="landscape"] .toolbar > h1 {
 }
 
 .whiteButton {
-    -webkit-border-image: url(../../images/jqt/whiteButton.png) 0 12 0 12;
+    -webkit-border-image: url(/images/jqt/whiteButton.png) 0 12 0 12;
     text-shadow: rgba(255, 255, 255, 0.7) 0 1px 0;
 }
 
 .grayButton {
-    -webkit-border-image: url(../../images/jqt/grayButton.png) 0 12 0 12;
+    -webkit-border-image: url(/images/jqt/grayButton.png) 0 12 0 12;
     color: #FFFFFF;
 }
+
+.pad { padding: 15px; }
 
 
 /* @group Edge to edge */
@@ -176,8 +155,6 @@ body[orient="landscape"] .toolbar > h1 {
     font-size: 20px;
     font-weight: bold;
     list-style: none;
-    background: url(../../../images/jqt/bg_row.gif) 0 2px repeat-x;
-    color: #999;
 }
 
 .edgetoedge > li.group {
@@ -187,7 +164,7 @@ body[orient="landscape"] .toolbar > h1 {
     border-top: 1px solid #7d7d7d;
     border-bottom: 1px solid #999999;
     padding: 1px 10px;
-    background: url(../../images/jqt/listGroup.png) repeat-x;
+    background: url(/images/jqt/listGroup.png) repeat-x;
     font-size: 17px;
     font-weight: bold;
     text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
@@ -204,10 +181,8 @@ body[orient="landscape"] .toolbar > h1 {
     margin: -8px 0 -8px -10px;
     padding: 8px 32px 8px 10px;
     text-decoration: none;
-    color: #000;
-    background-image:  url(../../images/jqt/bg_row.gif), url(../../images/jqt/chevron.png);
-    background-repeat: repeat-x, no-repeat;
-    background-position: 0 1px, right center;
+    color: inherit;
+    background: url(/images/jqt/listArrow.png) no-repeat right center;
 }
 /* @end */
 
@@ -240,7 +215,7 @@ body > .dialog {
     border: none;
     border-top: 1px solid #6d84a2;
     padding: 10px 6px;
-    background: url(../../images/jqt/toolbar.png) #7388a5 repeat-x;
+    background: url(/images/jqt/toolbar.png) #7388a5 repeat-x;
 }
 
 .dialog > fieldset > h1 {
@@ -271,15 +246,11 @@ input {
 }
 
 
-.panel {
+body > .panel {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    background: #c8c8c8 url(../../images/jqt/pinstripes.png);
+    background: #c8c8c8 url(/images/jqt/pinstripes.png);
     overflow: auto;
-}
-
-.pad {
-	padding: 15px;
 }
 
 .panel fieldset {
@@ -301,7 +272,7 @@ input {
     text-align: right;
 }
 
-fieldset .row:last-child {
+fieldset > .row:last-child {
     border-bottom: none !important;
 }
 
@@ -333,7 +304,7 @@ fieldset .row:last-child {
 .toggle {
     border: 1px solid #888888;
     -webkit-border-radius: 6px;
-    background: #FFFFFF url(../../images/jqt/toggle.png) repeat-x;
+    background: #FFFFFF url(/images/jqt/toggle.png) repeat-x;
     font-size: 19px;
     font-weight: bold;
     line-height: 30px;
@@ -341,7 +312,7 @@ fieldset .row:last-child {
 
 .toggle[toggled="true"] {
     border: 1px solid #143fae;
-    background: #194fdb url(../../images/jqt/toggleOn.png) repeat-x;
+    background: #194fdb url(/images/jqt/toggleOn.png) repeat-x;
 }
 
 .toggleOn {
@@ -380,7 +351,7 @@ fieldset .row:last-child {
     height: 28px;    
     border: 1px solid #888888;
     -webkit-border-radius: 6px;
-    background: #ffffff url(../../images/jqt/thumb.png) repeat-x;
+    background: #ffffff url(/images/jqt/thumb.png) repeat-x;
 }
 
 .toggle[toggled="true"] > .thumb {
@@ -388,21 +359,10 @@ fieldset .row:last-child {
     right: -1px;
 }
 
-.panel h2 {
+.panel > h2 {
     margin: 0 0 8px 14px;
     font-size: inherit;
     font-weight: bold;
-    color: rgb(17, 20, 23, .5);
-    text-shadow: rgba(255, 255, 255, 0.75) 1px 1px 0;
-}
-
-.panel p a {
-	color: #4195ca;
-}
-
-#about {
-	background: rgb(17, 20, 23);
-	color: #ddd;
-    text-shadow: rgba(255, 255, 255, 0.3) 0px -1px 0;
-    font-size: 20px;
+    color: #4d4d70;
+    text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 0;
 }

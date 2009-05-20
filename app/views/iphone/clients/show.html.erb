@@ -32,7 +32,12 @@
         <% @client.addresses.each do |address| %>
           <div class="row">
             <label><%= address.context %>:</label>
-            <span><a href="http://maps.google.com/maps?q=<%= address.full_address %>"><%= address.full_address[0..20] %></a></span>
+            <span>
+              <a href="http://maps.google.com/maps?q=<%= address.full_address %>">
+                <small><%= address.thoroughfare %></small>
+                <small><%= address.city %>, <%= address.state %> <%= address.zip %></small>
+              </a>
+            </span>
           </div>
         <% end %>
       <% end %>
