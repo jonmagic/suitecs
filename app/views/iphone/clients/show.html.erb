@@ -16,7 +16,7 @@
         <% @client.phones.each do |phone| %>
           <div class="row">
             <label><%= phone.context %>:</label>
-            <span><a href="tel:<%= phone.number %>"><%= phone.pretty %></a></span>
+            <span><a href="tel:<%= phone.number %>" target="_blank"><%= phone.pretty %></a></span>
           </div>
         <% end %>
       <% end %>
@@ -24,7 +24,7 @@
         <% @client.emails.each do |email| %>
           <div class="row">
             <label><%= email.context %>:</label>
-            <span><a href="mailto:<%= email.address %>"><%= email.address[0..20] %></a></span>
+            <span><a href="mailto:<%= email.address %>" target="_blank"><%= email.address[0..20] %></a></span>
           </div>
         <% end %>
       <% end %>
@@ -33,7 +33,7 @@
           <div class="row">
             <label><%= address.context %>:</label>
             <span>
-              <a href="http://maps.google.com/maps?q=<%= address.full_address %>">
+              <a href="http://maps.google.com/maps?q=<%= address.full_address %>" target="_blank">
                 <small><%= address.thoroughfare %></small>
                 <small><%= address.city %>, <%= address.state %> <%= address.zip %></small>
               </a>
