@@ -60,10 +60,10 @@ module ClientsHelper
   end
   
   def hours_billed_this_week
-    last_saturday = "#{LastDayNextDay.last('saturday')}"
-    next_friday = "#{LastDayNextDay.next('friday')}"
-    start_date = last_saturday + " 00:00:00"
-    end_date = next_friday + " 23:59:59"
+    first_day = LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value).to_s
+    last_day = LastDayNextDay.next(Setting.find(:first, :conditions => {:key => "last_day_of_payroll"}).value).to_s
+    start_date = first_day + " 00:00:00"
+    end_date = last_day + " 23:59:59"
     entries = TicketEntry.find(:all, :conditions => {:created_at.gte => start_date, :created_at.lte => end_date, :billable => true})
     time = 0.0
     entries.each do |entry|

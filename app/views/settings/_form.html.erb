@@ -1,0 +1,28 @@
+<% form_for @setting do |f| -%>
+  <table class="m">
+    <tr>
+      <td>Key:</td><td class="blur"><%= f.text_field :key %> (Auto-Generated)</td>
+    </tr>
+    <tr> 
+      <td>Value:</td><td><%= f.text_field :value %></td>
+    </tr>
+  </table>
+  <p><%= f.submit "Save", :class => "hide" %></p>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    // add save button to footer
+    $("#footer div.col2").append("<a href='#' class='save'>Save</a>");
+  	// bind some clicks
+    $("#footer a.save").bind("click", function(){
+      $("#setting input[type=submit]").click();
+    });
+    // focus on device name field
+    <% if !@setting.new_record? %>
+      $("input#setting_value").focus();
+    <% else %>
+      $("input#setting_key").focus();
+    <% end %>
+	});
+</script>

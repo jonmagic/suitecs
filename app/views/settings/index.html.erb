@@ -1,0 +1,22 @@
+<div id="settings">
+  <table class="itu">
+    <thead>
+      <tr><th class="first">Key Name</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <% @settings.each do |setting| %>
+        <tr>
+          <td><a href="/settings/<%= setting.id %>/edit"><%= setting.key %></a></td>
+          <td><a href="/settings/<%= setting.id %>/edit"><%= setting.value %></a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // add new button to footer
+    $("#footer div.col2").append("<a href='/settings/new' class='new'>New Setting</a>");
+  });
+</script>

@@ -6,17 +6,17 @@ class Report::TimeSheetController < ApplicationController
   
   def index
     # set my start and end dates, either taken from the form or generated on the fly
-    last_saturday = "#{LastDayNextDay.last('saturday')}"
-    next_friday = "#{LastDayNextDay.next('friday')}"
+    first_day = LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value).to_s
+    last_day = LastDayNextDay.next(Setting.find(:first, :conditions => {:key => "last_day_of_payroll"}).value).to_s
     if params[:start_date] && params[:end_date]
       true
     elsif !params[:start_date] && !params[:end_date]
-      params[:start_date] = last_saturday
-      params[:end_date] = next_friday
+      params[:start_date] = first_day
+      params[:end_date] = last_day
     elsif params[:start_date]
-      Date.today.cwday != next_friday.cwday ? params[:end_date] = next_friday : Date.today
+      Date.today.cwday != last_day.cwday ? params[:end_date] = last_day : Date.today
     elsif params[:end_date]
-      Date.today.cwday != last_saturday.cwday ? params[:start_date] = last_saturday : Date.today
+      Date.today.cwday != first_day.cwday ? params[:start_date] = first_day : Date.today
     end
     start_date = params[:start_date] + " 00:00:00"
     end_date = params[:end_date] + " 23:59:59"
