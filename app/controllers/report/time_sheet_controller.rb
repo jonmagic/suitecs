@@ -35,7 +35,7 @@ class Report::TimeSheetController < ApplicationController
     # create them when requested
     technicians = Hash.new {|h,k| h[k] = { "Technician" => User.find(k).name }}
     # set all labor types for each tech to 0.0
-    technician_ids.dups.each do |t|  
+    technician_ids.uniq.each do |t|
       @labor_types.each do |lt|
         technicians[t][lt.name] = 0.0
       end
@@ -54,6 +54,7 @@ class Report::TimeSheetController < ApplicationController
     
     # iterate thru the entries and add time to the counters
     entries.each do |entry|
+      puts entry.inspect+"\n\n"
       @labor_types.each do |lt|
         if entry.labor_type == lt
           technicians[entry.creator_id][lt.name] += entry.time unless entry.time.blank?
@@ -75,10 +76,4 @@ class Report::TimeSheetController < ApplicationController
     @end_date = params[:end_date]
   end
   
-end
-
-module Enumerable
-  def dups
-    inject({}) {|h,v| h[v]=h[v].to_i+1; h}.reject{|k,v| v==1}.keys
-  end
 end
