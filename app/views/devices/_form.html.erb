@@ -30,12 +30,11 @@
   $(document).ready(function() {
     // change client dropdown to quickselect box
     $("input#client_id").quickselect({
-      url:'/clients/all',
-    	delay:500,
-    	mustMatch:false,
-    	minChars:1,
+      ajax:'/clients/all',
     	match:'quicksilver',
-    	maxItemsToShow:15,
+      autoSelectFirst:true,
+    	maxVisibleItems:15,
+    	autoFill: false,
     	additional_fields:$("input#device_client_id")
     });
     // add save button to footer
