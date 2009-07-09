@@ -36,19 +36,18 @@
     });
     // add quickselects for client and technician
     $("input#client_id").quickselect({
-      url:'/clients/all',
-    	delay:500,
-    	mustMatch:false,
-    	minChars:1,
+      ajax:'/clients/all',
     	match:'quicksilver',
-    	maxItemsToShow:15,
+      autoSelectFirst:true,
+    	maxVisibleItems:15,
+    	autoFill: false,
     	additional_fields:$("input#ticket_client_id")
     });
   	$("#ticket_user_id").quickselect({
-  		delay:10,
-  		minChars:1,
   		match:'quicksilver',
-  		maxItemsToShow:12
+      autoSelectFirst:true,
+    	maxVisibleItems:15,
+    	autoFill: false
   	});
     // create datepicker widget
     $("#ticket_active_on").datepicker();
@@ -56,7 +55,7 @@
     <% if !@ticket.new_record? %>
       $("input#ticket_active_on").focus();
     <% else %>
-      $("input.auto_select_input:first").focus();
+      $("input#client_id").focus();
     <% end %>
 	});
 </script>
