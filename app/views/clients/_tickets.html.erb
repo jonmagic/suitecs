@@ -7,7 +7,7 @@
   </div>
   <table class="itu">
     <tr><th>Description</th><th>Technician</th><th>Status</th></tr>
-    <% @client.open_tickets.each do |ticket| %>
+    <% @client.all_tickets.each do |ticket| %>
       <tr>
         <td><%= link_to ticket.description[0...60], "/tickets/#{ticket.id}" %></td>
         <td><%= link_to ticket.technician.name, "/tickets/#{ticket.id}" %></td>
