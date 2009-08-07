@@ -2,6 +2,8 @@ class TicketEntry < ActiveRecord::Base
   belongs_to :ticket
   belongs_to :labor_type
   
+  # default_scope :order => "created_at DESC"
+  
   def creator
     creator = User.find(self.creator_id)
   end

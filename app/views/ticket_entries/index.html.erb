@@ -17,8 +17,10 @@
       <div class="ticket_entry_bottom">&nbsp;</div>
     </div>
   <% end %>
+  <hr />
+  <span>Billable Time on Ticket: <b><%= @ticket.billable_time %> minutes</b>  -  Non-Billable Time on Ticket: <b><%= @ticket.non_billable_time %> minutes</b></span>
 </div>
-<br />
+
 
 <script>
   $(document).ready(function() {
