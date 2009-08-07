@@ -77,6 +77,28 @@ class Ticket < ActiveRecord::Base
     return self
   end
   
+  def billable_time
+    billable_time = 0
+    self.ticket_entries.each do |entry|
+      if entry.billable
+        if !entry.time.blank? then billable_time += entry.time end
+        if !entry.drive_time.blank? then billable_time += entry.drive_time end
+      end
+    end
+    return billable_time
+  end
+  
+  def non_billable_time
+    non_billable_time = 0
+    self.ticket_entries.each do |entry|
+      if !entry.billable
+        if !entry.time.blank? then non_billable_time += entry.time end
+        if !entry.drive_time.blank? then billable_time += entry.drive_time end
+      end
+    end
+    return non_billable_time
+  end
+  
   def self.totals(user)
     future = Date.today + 100.years
     past = Date.today - 100.years
