@@ -11,7 +11,7 @@ class Report::TimeSheetController < ApplicationController
     if params[:start_date] && params[:end_date]
       true
     elsif !params[:start_date] && !params[:end_date]
-      params[:start_date] = first_day
+      LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value).cwday == Date.today.cwday ? params[:start_date] = Date.today.strftime("%Y-%m-%d") : params[:start_date] = first_day
       params[:end_date] = last_day
     elsif params[:start_date]
       Date.today.cwday != last_day.cwday ? params[:end_date] = last_day : Date.today
