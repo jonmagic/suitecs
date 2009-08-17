@@ -1,5 +1,5 @@
 <div id="content_search">
-  <% form_tag "/report/time_sheet", :method => "get" do %>
+  <% form_tag "/report/time_per_client", :method => "get" do %>
     <p>
       <label>Start Date:</label>
       <%= text_field_tag :start_date, @start_date %>
@@ -10,7 +10,7 @@
   <% end %>
 </div>
 
-<% if @technicians %>
+<% if @clients %>
   <table class="itu">
     <thead>
       <tr>
