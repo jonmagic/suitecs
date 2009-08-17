@@ -30,7 +30,9 @@ class Report::TimePerClientController < ApplicationController
     # find the techs in these tickets
     client_ids = []
     entries.each do |entry|
-      client_ids << entry.ticket.client_id
+      if !entry.time.blank? || !entry.drive_time.blank?
+        client_ids << entry.ticket.client_id
+      end
     end
     # create them when requested
     clients = Hash.new {|h,k| h[k] = { "Client" => Client.find(k).fullname }}
@@ -54,7 +56,6 @@ class Report::TimePerClientController < ApplicationController
     
     # iterate thru the entries and add time to the counters
     entries.each do |entry|
-      puts entry.inspect+"\n\n"
       @labor_types.each do |lt|
         if entry.labor_type == lt
           clients[entry.ticket.client_id][lt.name] += entry.time unless entry.time.blank?

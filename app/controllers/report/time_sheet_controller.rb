@@ -54,7 +54,6 @@ class Report::TimeSheetController < ApplicationController
     
     # iterate thru the entries and add time to the counters
     entries.each do |entry|
-      puts entry.inspect+"\n\n"
       @labor_types.each do |lt|
         if entry.labor_type == lt
           technicians[entry.creator_id][lt.name] += entry.time unless entry.time.blank?
