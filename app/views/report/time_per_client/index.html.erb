@@ -1,0 +1,41 @@
+<div id="content_search">
+  <% form_tag "/report/time_sheet", :method => "get" do %>
+    <p>
+      <label>Start Date:</label>
+      <%= text_field_tag :start_date, @start_date %>
+      <label>End Date:</label>
+      <%= text_field_tag :end_date, @end_date %>
+      <%= submit_tag "Run report" %>
+    </p>
+  <% end %>
+</div>
+
+<% if @technicians %>
+  <table class="itu">
+    <thead>
+      <tr>
+        <% @header.each do |name| %>
+          <th><%= name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @clients.each do |client| %>
+        <tr>
+          <% @header.each do |name| %>
+            <td><%= client[name].class == String ? client[name] : client[name]/60 %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    // create datepicker widget
+    $("#start_date").datepicker();
+    $("#end_date").datepicker();
+	});
+</script>

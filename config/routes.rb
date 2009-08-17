@@ -80,6 +80,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :report do |report|
     report.resources :time_sheet
     report.resources :average_hours_comparison
+    report.resources :time_per_client
   end
   
   # Home Page
