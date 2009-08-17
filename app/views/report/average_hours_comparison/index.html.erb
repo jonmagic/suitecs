@@ -1,0 +1,43 @@
+<div id="content_search">
+  <% form_tag "/report/average_hours_comparison", :method => "get" do %>
+    <p>
+      <label>Start Date:</label>
+      <%= text_field_tag :start_date, @start_date %>
+      <label>End Date:</label>
+      <%= text_field_tag :end_date, @end_date %>
+      <label>Report Scope</label>
+      <%= select_tag :scope, options_for_select(["Billable", "Non-Billable", "All Time"]) %>
+      <%= submit_tag "Run report" %>
+    </p>
+  <% end %>
+</div>
+
+<% if @technicians %>
+  <table class="itu">
+    <thead>
+      <tr>
+        <% @header.each do |name| %>
+          <th><%= name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @technicians.each do |technician| %>
+        <tr>
+          <% @header.each do |name| %>
+            <td><%= technician[name].class == String ? technician[name] : technician[name] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    // create datepicker widget
+    $("#start_date").datepicker();
+    $("#end_date").datepicker();
+	});
+</script>

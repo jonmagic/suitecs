@@ -7,7 +7,7 @@
     <%= javascript_include_tag "jquery", "jquery-ui" %>
     <%= javascript_include_tag "jquery.metadata", "quicksilver", "jquery.quickselect", "strftime" %>
     <%= javascript_include_tag "common", "devices" %>
-		<%= stylesheet_link_tag "blueprint/screen", "jquery-theme", "common", "settings", "jquery.quickselect", :media => "screen", :cache => "devices-css-combined" %>
+		<%= stylesheet_link_tag "blueprint/screen", "jquery-theme", "common", "reports", "jquery.quickselect", :media => "screen", :cache => "devices-css-combined" %>
     <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
   </head>
   <body>
@@ -27,7 +27,8 @@
     <div id="sidebar" class="sidebar-list">
       <h2>Reports</h2>
       <ul id="configuration" class="itu">
-        <li><a href="/report/time_sheet" class="">Time Sheet</a></li>
+        <li><a href="/report/time_sheet" class="time_sheet_report">Time Sheet</a></li>
+        <li><a href="/report/average_hours_comparison" class="average_hours_comparison_report">Average Hours Comparison</a></li>
       </ul>
     </div>
     <div id="center" class="container">

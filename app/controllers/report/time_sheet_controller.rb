@@ -6,17 +6,17 @@ class Report::TimeSheetController < ApplicationController
   
   def index
     # set my start and end dates, either taken from the form or generated on the fly
-    first_day = LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value).to_s
-    last_day = LastDayNextDay.next(Setting.find(:first, :conditions => {:key => "last_day_of_payroll"}).value).to_s
+    first_day = LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value)
+    last_day = LastDayNextDay.next(Setting.find(:first, :conditions => {:key => "last_day_of_payroll"}).value)
     if params[:start_date] && params[:end_date]
       true
     elsif !params[:start_date] && !params[:end_date]
-      LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value).cwday == Date.today.cwday ? params[:start_date] = Date.today.strftime("%Y-%m-%d") : params[:start_date] = first_day
-      params[:end_date] = last_day
-    elsif params[:start_date]
-      Date.today.cwday != last_day.cwday ? params[:end_date] = last_day : Date.today
-    elsif params[:end_date]
-      Date.today.cwday != first_day.cwday ? params[:start_date] = first_day : Date.today
+      LastDayNextDay.last(Setting.find(:first, :conditions => {:key => "first_day_of_payroll"}).value).cwday == Date.today.cwday ? params[:start_date] = Date.today.strftime("%Y-%m-%d") : params[:start_date] = first_day.to_s
+      params[:end_date] = last_day.to_s
+    elsif params[:start_date] && !params[:end_date]
+      Date.today.cwday != last_day.cwday ? params[:end_date] = last_day.to_s : params[:end_date] = Date.today
+    elsif params[:end_date] && !params[:start_date]
+      Date.today.cwday != first_day.cwday ? params[:start_date] = first_day.to_s : params[:start_date] = Date.today
     end
     start_date = params[:start_date] + " 00:00:00"
     end_date = params[:end_date] + " 23:59:59"

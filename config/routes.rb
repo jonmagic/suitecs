@@ -79,6 +79,7 @@ ActionController::Routing::Routes.draw do |map|
   # report routes
   map.namespace :report do |report|
     report.resources :time_sheet
+    report.resources :average_hours_comparison
   end
   
   # Home Page
