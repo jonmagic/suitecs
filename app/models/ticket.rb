@@ -93,7 +93,7 @@ class Ticket < ActiveRecord::Base
     self.ticket_entries.each do |entry|
       if !entry.billable
         if !entry.time.blank? then non_billable_time += entry.time end
-        if !entry.drive_time.blank? then billable_time += entry.drive_time end
+        if !entry.drive_time.blank? then non_billable_time += entry.drive_time end
       end
     end
     return non_billable_time
