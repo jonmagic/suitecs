@@ -2,41 +2,35 @@
     <div class="toolbar">
         <h1>Suite</h1>
     </div>
-    <ul class="edgetoedge">
-        <li><a href="#client_search">Clients</a></li>
-        <li><a href="/iphone/tickets">Tickets</a></li>
-        <li><a href="#device_search">Devices</a></li>
+    <ul>
+        <li class="forward"><a href="#client_search">Clients</a></li>
+        <li class="forward"><a href="/iphone/tickets">Tickets</a></li>
+        <li class="forward"><a href="#device_search">Devices</a></li>
     </ul>
 </div>
 
-<% form_tag "/iphone/clients", :method => "get", :class => "panel", :title => "Client Search", :id => "client_search" do %>
+<% form_tag "/iphone/clients", :method => "get", :class => "form", :title => "Client Search", :id => "client_search" do %>
   <div class="toolbar">
     <h1>Client Search</h1>
-    <a class="back button" href="#home">Home</a>
+    <a class="back" href="#home">Home</a>
   </div>
-  <div class="pad">
-    <fieldset>
-      <div class="row">
-        <label>Name</label>
-        <%= text_field_tag :q %>
-      </div>
-    </fieldset>
-    <input type="submit" />
-  </div>
+  <ul>
+    <li>
+      <input type="text" name="q" value="" placeholder="Name" />
+    </li>
+  </ul>  
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
 <% end %>
 
-<% form_tag "/iphone/devices", :method => "get", :class => "panel", :title => "Device Search", :id => "device_search" do %>
+<% form_tag "/iphone/devices", :method => "get", :class => "form", :title => "Device Search", :id => "device_search" do %>
   <div class="toolbar">
     <h1>Device Search</h1>
-    <a class="back button" href="#home">Home</a>
+    <a class="back" href="#home">Home</a>
   </div>
-  <div class="pad">
-    <fieldset>
-      <div class="row">
-        <label>Query:</label>
-        <%= text_field_tag :q %>
-      </div>
-    </fieldset>
-  </div>
-  <input type="submit" />
+  <ul>
+    <li>
+      <input type="text" name="q" value="" placeholder="Query" />
+    </li>
+  </ul>  
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
 <% end %>

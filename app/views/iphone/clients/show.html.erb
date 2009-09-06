@@ -1,63 +1,49 @@
-<div id="client<%= @client.id.to_s %>" class="panel client">
+<div id="client<%= @client.id.to_s %>">
   <div class="toolbar">
     <h1>Client</h1>
     <a class="back button" href="#">Back</a>
     <a class="button" id="infoButton" href="#home">Home</a>
   </div>
-  <div id="clientHeader">
-    <%= image_tag @client.mugshot.url(:avatar) %>
-    <h2 id="fullname"><%= @client.fullname %></h2>
-    <h3 id="company"><%= @client.company_name %></h3>
-  </div>
-  <div class="pad">
+  <h2 class="name"><%= @client.fullname %></h2>
+  <h3 class="company"><%= @client.company_name %></h3>
+  <ul>
     <% if @client.phones.length != 0 || @client.emails.length != 0 || @client.addresses.length != 0 %>
-      <fieldset class="ss">
       <% if @client.phones.length != 0 %>
         <% @client.phones.each do |phone| %>
-          <div class="row">
-            <label><%= phone.context %>:</label>
-            <span><a href="tel:<%= phone.number %>" target="_blank"><%= phone.pretty %></a></span>
-          </div>
+          <li><small><%= phone.context %></small> <a href="tel:<%= phone.number %>" target="_blank"><%= phone.pretty %></a></li>
         <% end %>
       <% end %>
       <% if @client.emails.length != 0 %>
         <% @client.emails.each do |email| %>
-          <div class="row">
-            <label><%= email.context %>:</label>
-            <span><a href="mailto:<%= email.address %>" target="_blank"><%= email.address[0..20] %></a></span>
-          </div>
+          <li><small><%= email.context %></small> <a href="mailto:<%= email.address %>" target="_blank"><%= email.address[0..20] %></a></li>
         <% end %>
       <% end %>
       <% if @client.addresses.length != 0 %>
         <% @client.addresses.each do |address| %>
-          <div class="row">
-            <label><%= address.context %>:</label>
-            <span>
-              <a href="http://maps.google.com/maps?q=<%= address.full_address %>" target="_blank">
-                <small><%= address.thoroughfare %></small>
-                <small><%= address.city %>, <%= address.state %> <%= address.zip %></small>
-              </a>
-            </span>
-          </div>
+          <li>
+            <small><%= address.context %></small>
+            <a href="http://maps.google.com/maps?q=<%= address.full_address %>" target="_blank" style="font-size:11px">
+              <%= address.thoroughfare %> <%= address.city %> <%= address.state %> <%= address.zip %>
+            </a>
+          </li>
         <% end %>
       <% end %>
-      </fieldset>
     <% end %>
-
-    <% if @client.note != nil && @client.note != "" %>
-      <h2>Notes</h2>
-      <div class="textbox">
-        <%= textile_to_html(@client.note) %>
-      </div>
-    <% end %>
-    
+  </ul>
+  <% if @client.note != nil && @client.note != "" %>
+    <h2>Notes</h2>
+    <ul>
+      <li class="paragraph"><%= textile_to_html(@client.note) %></li>
+    </ul>
+  <% end %>
+  
+  <ul class="individual">  
     <% if @client.tickets.length != 0 %>
-      <a href="/iphone/clients/<%= @client.id %>/tickets" class="grayButton">Tickets</a>
+      <li><a href="/iphone/clients/<%= @client.id %>/tickets">Tickets</a></li>
     <% end %>
-    <br />
     <% if @client.devices.length != 0 %>
-      <a href="/iphone/clients/<%= @client.id %>/devices" class="grayButton">Devices</a>
+      <li><a href="/iphone/clients/<%= @client.id %>/devices">Devices</a></li>
     <% end %>
-  </div>
+  </ul>
 
 </div>

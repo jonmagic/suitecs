@@ -1,65 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!doctype html>
+<html>
 	<head>
+	  <meta charset="UTF-8" />
 		<title>Suite</title>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
-    <link rel="apple-touch-icon" href="/images/iphone-sabretech-swords.png" />
-    <meta name="apple-touch-fullscreen" content="YES" />
-    <style type="text/css" media="screen">@import "/stylesheets/jqt/jqtouch.css";</style>
-    <%= javascript_include_tag "jquery-1.3.2.min" %>
-    <%= javascript_include_tag "jqtouch" %>
+		<style type="text/css" media="screen">@import "/stylesheets/jqt/jqtouch.css";</style>
+    <style type="text/css" media="screen">@import "/stylesheets/jqt/themes/jqt/theme.css";</style>
+    <script src="/javascripts/jquery.1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/jqtouch.js" type="application/x-javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-    $(document).jQTouch({
-        fixedViewport: true,
-        fullScreen: true,
-        icon: 'sabretech.png',
-        statusBar: 'black-translucent',
-        slideInSelector: 'li > a, a:not(.slideLeft)'
-    });
-    $.preloadImages([
-        '/images/jqt/chevron_select.png',
-        '/images/jqt/back_button.png',
-        '/images/jqt/back_button_clicked.png',
-        '/images/jqt/button_clicked.png',
-        '/images/jqt/grayButton.png',
-        '/images/jqt/whiteButton.png'
-        ]);
+        $.jQTouch({
+            icon: '/sabretech.png',
+            addGlossToIcon: true,
+            startupScreen: '/suite_loader.png',
+            statusBar: 'black',
+            preloadImages: [
+                '/stylesheets/jqt/themes/jqt/img/back_button.png',
+                '/stylesheets/jqt/themes/jqt/img/back_button_clicked.png',
+                '/stylesheets/jqt/themes/jqt/img/button_clicked.png',
+                '/stylesheets/jqt/themes/jqt/img/grayButton.png',
+                '/stylesheets/jqt/themes/jqt/img/whiteButton.png',
+                '/stylesheets/jqt/themes/jqt/img/loading.gif'
+                ]
+        });
     </script>
     <style>
-      /* general */
-      div.pad > fieldset.ss > div.row > span {position:absolute;right:10px;line-height:42px;font-weight:bold;}
-      div.pad > fieldset.ss > div.row > span > a {color:#000;}
-      .panel div.textbox {position:relative;margin:0 0 20px 0;padding:5px 15px;background:#FFFFFF;-webkit-border-radius:10px;border:1px solid #999999;font-size:14px;}
-      
-      /* Client Panel CSS */
-      div.client > div#clientHeader {position:relative;height:70px;}
-      div.client > div#clientHeader > img {position:absolute;top:10px;left:12px;}
-      div.client > div#clientHeader > h2#fullname {position:absolute;top:10px;left:77px;font-size:18px;color:#333;margin:0;padding:0;}
-      div.client > div#clientHeader > h3#company {position:absolute;top:35px;left:77px;font-size:14px;color:#666;margin:0;padding:0;}
-
-      /* Ticket List CSS */
-      div#tickets_by_status li > a > span.totals {position:absolute;top:5px;right:30px;padding:3px 10px;color:#fff;background-color:#999;-webkit-border-radius: 12px;-moz-border-radius: 12px;}
-      div#tickets li span.description {font-size:16px;}
-      div#tickets li table {font-size:11px;color:#999;}
-      
-      /* Ticket Panel CSS */
-      div.ticket_entry {position:relative;border-bottom:1px solid #999;margin-top:20px;padding-top:50px;}
-      div.ticket_entry:last-child {border-bottom:none !important;}
-      div.ticket_entry img {position:absolute;top:0;left:0;}
-      div.ticket_entry span.byline {font-size:12px;position:absolute;top:0;left:65px;}
-      div.ticket_entry span.te_details {font-size:12px;position:absolute;top:20px;left:65px;}
-      div.ticket_entry div.te_note {font-size:14px;}
-      div.ticket_entry h3.te_parts {font-size:16px;}
-      div.ticket_entry div.te_parts {font-size:14px;}
-      .ticket > fieldset > div.row > span {padding: 12px 10px 0 80px;}
-            
-      /* Device List CSS */
-      div#devices li span {font-size:16px;}
-      div#devices li table {font-size:11px;color:#999;}
-    </style>
+      h2.name {font: bold 18px Helvetica;text-shadow: rgba(255,255,255,.2) 0 1px 1px;color: #ccc;margin: 10px 20px 5px;}
+      h3 {font: bold 12px Helvetica;text-shadow: rgba(255,255,255,.2) 0 1px 1px;color: #000;margin: 5px 20px 8px;}
+      li.paragraph {font-size:12px;color:#fff;}
+      ul li span.description {font-size:13px;color:#eee;}
+      ul li table {font-size:11px;color:#999;}
+      div#ticket li {position:relative}
+      div#ticket li img {position:absolute;}
+      div#ticket li span.byline {position:absolute;left:70px;top:10px;font-size:11px;color:#ccc;}
+      div#ticket li span.te_details {position:absolute;left:70px;top:33px;font-size:11px;color:#ccc;}
+      div#ticket li div.te_note {margin:60px 0px 0px;font-size:13px;color:#fff;} 
+    </style
 	</head>
-	<body onclick="console.log('Hello', event.target);">
+	<body>
     <%= yield %>
 	</body>
 </html>

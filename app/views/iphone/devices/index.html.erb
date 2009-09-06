@@ -1,14 +1,14 @@
 <div id="devices">
   <div class="toolbar">
     <h1>Search Results</h1>
-    <a class="back button" href="#device_search">Back</a>
+    <a class="back" href="#device_search">Back</a>
     <a class="button" id="infoButton" href="#home">Home</a>
   </div>
   <ul class="edgetoedge">
     <% @devices.each do |device| %>
-      <li>
+      <li class="arrow">
         <a href="/iphone/devices/<%= device.id %>">
-          <span><%= device.service_tag %></span>
+          <span class="description"><%= device.service_tag %></span>
           <table>
             <tr><td>Name:</td><td><%= device.name %></td></tr>
             <tr><td>Client:</td><td><%= device.client.fullname %></td></tr>

@@ -1,37 +1,25 @@
 <div id="device" class="panel">
   <div class="toolbar">
     <h1>Device</h1>
-    <a class="back button" href="#">Back</a>
+    <a class="back" href="#">Back</a>
     <a class="button" id="infoButton" href="#home">Home</a>
   </div>
-  <div class="pad">
-    <fieldset class="ss">
-      <div class="row">
-        <label>sTag:</label>
-        <span><%= @device.service_tag %></span>
-      </div>
-      <div class="row">
-        <label>Name:</label>
-        <span><%= @device.name %></span>
-      </div>
-      <div class="row">
-        <label>Type:</label>
-        <span><%= @device.device_type.description %></span>
-      </div>
-      <div class="row">
-        <label>Client:</label>
-        <span><a href="/iphone/clients/<%= @device.client.id %>"><%= @device.client.fullname[0..20] %>...</a></span>
-      </div>
-    </fieldset>
-    <% if @device.description != nil && @device.description != "" %>
-      <h2>Description</h2>
-      <div class="textbox">
-        <%= textile_to_html(@device.description) %>
-      </div>
-    <% end %>
+  <ul>
+    <li><small>sTag</small> <a href="#"><%= @device.service_tag %></a></li>
+    <li><small>Name</small> <a href="#"><%= @device.name %></a></li>
+    <li><small>Type</small> <a href="#"><%= @device.device_type.description %></a></li>
+    <li><small>Client</small> <a href="/iphone/clients/<%= @device.client.id %>"><%= @device.client.fullname[0..20] %>...</a></li>
+  </ul>
+  <% if @device.description != nil && @device.description != "" %>
+    <h2>Description</h2>
+    <ul>
+      <li class="paragraph"><%= textile_to_html(@device.description) %></li>
+    </ul>
+  <% end %>
   
+  <ul class="individual">
     <% if @device.tickets.length != 0 %>
-      <a href="/iphone/devices/<%= @device.id %>/tickets" class="grayButton">Tickets</a>
+      <li><a href="/iphone/devices/<%= @device.id %>/tickets">Tickets</a></li>
     <% end %>
-  </div>
+  </ul>
 </div>

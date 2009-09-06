@@ -4,11 +4,11 @@
       <h1>Tickets</h1>
       <a class="back button" href="#">Home</a>
     </div>
-    <ul class="edgetoedge">
-      <li><a href="/iphone/tickets/?status=open">Open Tickets <%= totals_helper(:open) %></a></li>
-      <li><a href="/iphone/tickets/?status=scheduled">Scheduled Tickets <%= totals_helper(:scheduled) %></a></li>
-      <li><a href="/iphone/tickets/?status=completed">Completed Tickets <%= totals_helper(:completed) %></a></li>
-      <li><a href="/iphone/tickets/?status=all&scope=all">All Tickets <%= totals_helper(:all) %></a></li>
+    <ul>
+      <li class="arrow"><a href="/iphone/tickets/?status=open">Open Tickets</a> <small class="counter"><%= @totals[:open] %></small></li>
+      <li class="arrow"><a href="/iphone/tickets/?status=scheduled">Scheduled Tickets</a> <small class="counter"><%= @totals[:scheduled] %></small></li>
+      <li class="arrow"><a href="/iphone/tickets/?status=completed">Completed Tickets</a> <small class="counter"><%= @totals[:completed] %></small></li>
+      <li class="arrow"><a href="/iphone/tickets/?status=all&scope=all">All Tickets</a> <small class="counter"><%= @totals[:all] %></small></li>
     </ul>
   </div>
   <% else %>
@@ -20,7 +20,7 @@
     </div>
     <ul class="edgetoedge">
       <% @tickets.each do |ticket| %>
-        <li>
+        <li class="arrow">
           <a href="/iphone/tickets/<%= ticket.id %>">
             <span class="description"><%= ticket.description %></span>
             <table>
