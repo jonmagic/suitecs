@@ -23,6 +23,22 @@ class Iphone::TicketsController < ApplicationController
     end
   end
   
+  def new
+    @ticket = Ticket.new
+    @client = Client.find(params[:client_id])
+  end
+  
+  def create
+    @ticket = Ticket.new(params[:ticket])
+    
+    if @ticket.save
+      render :text => @ticket.id.to_s, :status => 200
+    else
+      render :text => "failed", :status => 500
+    end
+  
+  end
+  
   protected
   
     def load_totals

@@ -110,7 +110,7 @@
 				headerList: [],
 				dateFormat: "us",
 				decimal: '.',
-				debug: true
+				debug: false
 			};
 			
 			/* debuging utils */

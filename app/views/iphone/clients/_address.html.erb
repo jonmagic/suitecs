@@ -1,0 +1,10 @@
+<% states = ["Select State","AK","AL","AR","AS","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"]%>
+<% new_or_existing = address.new_record? ? 'new' : 'existing' %>
+<% prefix = "client[#{new_or_existing}_address_attributes][]" %>
+<% fields_for prefix, address do |f| -%>
+  <li><%= f.text_field :thoroughfare, :placeholder => "Street" %><%= f.hidden_field :context, :value => context %></li>
+  <li><%= f.text_field :city, :placeholder => "City" %></li>
+  <li><%= f.select :state, states %></li>
+  <li><%= f.text_field :zip, :placeholder => "Zip" %></li>
+<% end -%>
+

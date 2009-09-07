@@ -1,0 +1,82 @@
+<% form_for @client, :url => iphone_clients_path, :html => {:class => "form"} do |f| %>
+  <div class="toolbar">
+    <h1>New Client</h1>
+    <a class="back" href="#">Back</a>
+    <a class="button" href="#home">Home</a>
+  </div>
+  <ul>
+    <li>Company? <span class="toggle"><%= f.check_box :company %></span></li>
+  </ul>
+  <ul id="person_name">
+    <li><%= f.text_field :firstname, :placeholder => "First Name" %></li>
+    <li><%= f.text_field :lastname, :placeholder => "Last Name" %></li>
+  </ul>
+  <ul id="company_name" class="hide">
+    <li><%= f.text_field :name, :placeholder => "Company Name" %></li>
+  </ul>
+  <h2>Phones</h2>
+  <ul>
+    <% ["Cell","Work","Home","Fax"].each do |context| %>
+      <%= render :partial => 'phone', :object => Phone.new(:client => @client), :locals => {:context => context} %>
+    <% end %>
+  </ul>
+  <h2>Emails</h2>
+  <ul>
+    <% ["Work","Personal"].each do |context| %>
+      <%= render :partial => 'email', :object => Email.new(:client => @client), :locals => {:context => context} %>
+    <% end %>
+  </ul>
+  <% ["Home","Work"].each do |context| %>
+    <h2><%= context %> Address</h2>
+    <ul>
+      <%= render :partial => 'address', :object => Address.new(:client => @client), :locals => {:context => context} %>
+    </ul>
+  <% end %>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+<% end %>
+
+<script>
+  // company true false code
+  $("form#new_client input#client_company").click( function() {
+    if ($("form#new_client input#client_company").attr("checked")) {
+      $("ul#person_name").addClass("hide")  
+      $("ul#company_name").removeClass("hide")
+    } else {
+      $("ul#person_name").removeClass("hide")
+      $("ul#company_name").addClass("hide")
+    }
+  });
+  // remove empty fields before submitting
+  function remove_empty_fields(){
+    // fix form saves so that empty boxes don't get saved :-)
+    $("ul li input").each(function(){
+      if ($(this).attr("value") == "") {
+        $(this).parent().remove();
+      };
+      if ($(this).attr("value") == null) {
+        $(this).parent().remove();
+      };
+    });
+    $("ul li select").each(function(){
+      if ($(this).attr("value") == "Select State") {
+        $(this).parent().remove();
+      };
+    });
+  };
+  // form submission code
+  $("form a.submit").bind("click", function(){
+    remove_empty_fields();
+    $("form#new_client").ajaxSubmit({
+      type: 'post',
+      success: function(data){
+        var link = "<a href='/iphone/clients/"+data+"' class='slideup'>Go to client</a>";
+        $("form a.submit").after(link);
+        $("form a.submit").next("a").click();
+      }// ,
+      //       complete: function(data, status){
+      //         alert(data["responseText"]);
+      //         alert(status);
+      //       }
+    });
+  });
+</script>

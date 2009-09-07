@@ -1,0 +1,46 @@
+<% form_for @device, :url => iphone_devices_path, :html => {:class => "form"} do |f| %>
+  <div class="toolbar">
+    <h1>New Device</h1>
+    <a class="back" href="#">Back</a>
+    <a class="button" href="#home">Home</a>
+  </div>
+  <h2>Client</h2>
+  <ul>
+    <li><%= @client.fullname %></li>
+  </ul>
+  <h2>Service Tag</h2>
+  <ul>
+    <li><%= f.text_field :service_tag, :placeholder => "Auto-generated" %></li>
+  </ul>
+  <h2>Device Name</h2>
+  <ul>
+    <li><%= f.text_field :name %></li>
+  </ul>
+  <h2>Device Type</h2>
+  <ul>
+    <li><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></li>
+  </ul>
+  <h2>Description</h2>
+  <ul>
+    <li><%= f.text_area :description %></li>
+  </ul>
+  <%= f.hidden_field :client_id, :value => @client.id %>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+<% end %>
+
+<script>
+  $("form a.submit").bind("click", function(){
+    $("form#new_device").ajaxSubmit({
+      type: 'post',
+      success: function(data){
+        var link = "<a href='/iphone/devices/"+data+"' class='slideup'>Go to device</a>";
+        $("form a.submit").after(link);
+        $("form a.submit").next("a").click();
+      }
+    });
+  });
+  // complete: function(data, status){
+  //   alert(data["responseText"]);
+  //   alert(status);
+  // }
+</script>
