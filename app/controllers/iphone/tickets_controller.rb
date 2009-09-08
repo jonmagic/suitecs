@@ -1,6 +1,6 @@
 class Iphone::TicketsController < ApplicationController
   before_filter :login_required
-  before_filter :load_totals, :except => [:create, :update]
+  before_filter :load_totals, :except => [:create, :update, :show]
   layout nil
   
   def show
@@ -36,7 +36,19 @@ class Iphone::TicketsController < ApplicationController
     else
       render :text => "failed", :status => 500
     end
+  end
   
+  def edit
+    @ticket = Ticket.find(params[:id])
+  end
+
+  def update
+    @ticket = Ticket.find(params[:id])
+    if @ticket.update_attributes(params[:ticket])
+      render :text => @ticket.id.to_s, :status => 200
+    else
+      render :text => "failed", :status => 500
+    end
   end
   
   protected

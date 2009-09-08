@@ -1,0 +1,42 @@
+<% form_for @ticket_entry, :url => iphone_ticket_ticket_entries_path, :html => {:class => "form"} do |f| %>
+  <h2>Entry and Labor Types</h2>
+  <ul>
+    <li><%= f.select :entry_type, ["Work Done", "Research", "Note", "HowTo"] %></li>
+    <li><%= f.select :labor_type_id, LaborType.find(:all, :order => "name", :conditions => {:visible => true}).collect {|c| [c.name, c.id]}, :include_blank => true %></li>
+    <li><%= f.check_box :billable, :title => "Billable?" %></li>
+    <li><%= f.check_box :private, :title => "Private?" %></li>
+  </ul>
+  <h2 class="times hide">Time Entry</h2>
+  <ul class="times hide">
+    <li><%= f.text_field :time, :title => "minutes", :placeholder => "Time (minutes)" %></li>
+    <li><%= f.text_field :drive_time, :title => "minutes", :placeholder => "Drive Time (minutes)" %></li>
+  </ul>
+  <h2>Notes</h2>
+  <ul>
+    <li><%= f.text_area :note %></li>
+  </ul>
+  <h2>Parts</h2>
+  <ul>
+    <li><%= f.text_area :parts %></li>
+  </ul>
+  <%= f.hidden_field :detail, :value => 1 %>
+  <%= f.hidden_field :ticket_id, :value => params[:ticket_id] %>
+  <%= f.hidden_field :creator_id, :value => current_user.id %>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+<% end %>
+
+<script>
+  $("form#new_ticket_entry a.submit").bind("click", function(){
+    $("form#new_ticket_entry").ajaxSubmit({
+      type: 'post',
+      success: function(data){
+        var link = "<a href='/iphone/tickets/"+data+"' class='slideup'>Go to ticket</a>";
+        $("form#new_ticket_entry a.submit").after(link);
+        $("form#new_ticket_entry a.submit").next("a").click();
+      }
+    });
+  });
+  $("select#ticket_entry_labor_type_id").change(function(){
+    $("ul.times").removeClass("hide");
+  });
+</script>

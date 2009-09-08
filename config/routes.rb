@@ -71,6 +71,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     iphone.resources :tickets do |ticket|
       ticket.resources :devices
+      ticket.resources :ticket_entries
     end
     iphone.resources :devices do |device|
       device.resources :tickets

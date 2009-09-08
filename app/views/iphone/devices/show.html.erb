@@ -1,8 +1,8 @@
-<div id="device" class="panel">
+<div id="device_<%= @device.id %>" selected="true">
   <div class="toolbar">
     <h1>Device</h1>
     <a class="back" href="#">Back</a>
-    <a class="button" id="infoButton" href="#home">Home</a>
+    <a class="button flip" href="#edit_device_<%= @device.id %>">Edit</a>
   </div>
   <ul>
     <li><small>sTag</small> <a href="#"><%= @device.service_tag %></a></li>
@@ -23,3 +23,49 @@
     <% end %>
   </ul>
 </div>
+
+<% form_for @device, :url => iphone_device_path(@device), :html => {:class => "form"} do |f| %>
+  <div class="toolbar">
+    <h1>Edit Device</h1>
+    <a class="back" href="#">Back</a>
+    <a class="button" href="#device_<%= @device.id %>">Cancel</a>
+  </div>
+  <h2>Client</h2>
+  <ul>
+    <li><%= @device.client.fullname %></li>
+  </ul>
+  <h2>Service Tag</h2>
+  <ul>
+    <li><%= f.text_field :service_tag, :placeholder => "Auto-generated" %></li>
+  </ul>
+  <h2>Device Name</h2>
+  <ul>
+    <li><%= f.text_field :name %></li>
+  </ul>
+  <h2>Device Type</h2>
+  <ul>
+    <li><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></li>
+  </ul>
+  <h2>Description</h2>
+  <ul>
+    <li><%= f.text_area :description %></li>
+  </ul>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+<% end %>
+
+<script>
+  $("form#edit_device_<%= @device.id %> a.submit").bind("click", function(){
+    $("form#edit_device_<%= @device.id %>").ajaxSubmit({
+      type: 'post',
+      success: function(data){
+        var link = "<a href='/iphone/devices/"+data+"' class='slideup'>Go to device</a>";
+        $("form#edit_device_<%= @device.id %> a.submit").after(link);
+        $("form#edit_device_<%= @device.id %> a.submit").next("a").click();
+      }
+    });
+  });
+  // complete: function(data, status){
+  //   alert(data["responseText"]);
+  //   alert(status);
+  // }
+</script>

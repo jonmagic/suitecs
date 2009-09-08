@@ -1,8 +1,8 @@
-<div id="ticket">
+<div id="ticket_<%= @ticket.id %>" class="ticket" selected="true">
   <div class="toolbar">
     <h1>Ticket #<%= @ticket.id %></h1>
     <a class="back" href="#">Back</a>
-    <a class="flip" href="#edit">Edit</a>
+    <a class="button flip" href="#edit_ticket_<%= @ticket.id %>">Edit</a>
   </div>
   <div class="pad">
     <div class="info" style="text-align:left;">
@@ -20,6 +20,9 @@
       <li>
         <small>Status</small>
         <a href="#"><%= @ticket.status %></a>
+      </li>
+      <li>
+        <a href="<%= new_iphone_ticket_ticket_entry_path(@ticket) %>">New Ticket Entry</a>
       </li>
     <% if TicketEntry.find(:all, :conditions => {:ticket_id => @ticket.id, :detail => 1}).length > 0 %>
       <% TicketEntry.find(:all, :order => "created_at DESC", :conditions => {:ticket_id => @ticket.id, :detail => 1}).each do |entry| %>
@@ -45,3 +48,37 @@
     </ul>
   </div>
 </div>
+
+<% form_for @ticket, :url => iphone_ticket_path(@ticket), :html => {:class => "form"} do |f| %>
+  <div class="toolbar">
+    <h1>Edit Ticket</h1>
+    <a class="back" href="#">Back</a>
+    <a class="button" href="#ticket_<%= @ticket.id %>">Cancel</a>
+  </div>
+  <h2>Client</h2>
+  <ul>
+    <li><%= @ticket.client.fullname %></li>
+  </ul>
+  <h2>Technician</h2>
+  <ul>
+    <li><%= f.select :user_id, User.find(:all).collect {|c| [c.name, c.id]} %></li>
+  </ul>
+  <h2>Description</h2>
+  <ul>
+    <li><%= f.text_area :description %></li>
+  </ul>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+<% end %>
+
+<script>
+  $("form a.submit").bind("click", function(){
+    $("form#edit_ticket_<%= @ticket.id %>").ajaxSubmit({
+      type: 'post',
+      success: function(data){
+        var link = "<a href='/iphone/tickets/"+data+"' class='slideup'>Go to ticket</a>";
+        $("form a.submit").after(link);
+        $("form a.submit").next("a").click();
+      }
+    });
+  });
+</script>

@@ -35,4 +35,14 @@ class Iphone::DevicesController < ApplicationController
     end
   end
   
+  def update
+    @device = Device.find(params[:id])
+    
+    if @device.update_attributes(params[:device])
+      render :text => @device.id.to_s, :status => 200
+    else
+      render :text => @device.errors.inspect.to_s, :status => 500
+    end
+  end
+  
 end
