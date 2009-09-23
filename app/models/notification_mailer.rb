@@ -10,8 +10,8 @@ class NotificationMailer < ActionMailer::Base
     @body[:message] = message
   end
   
-  def ticket_updated(subject, message, technician)
-    technician = Client.find(technician.client_id)
+  def ticket_updated(subject, message, user)
+    technician = Client.find(user.client_id)
     email = Email.find(:first, :conditions => {:client_id => technician.id})
     @recipients = "#{email.address}"
     @from = "tickets@suite.sabretechllc.com"

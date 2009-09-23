@@ -11,7 +11,8 @@ class Ticket < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :description
   
-  after_create :add_created_note, :notify_tech
+  before_create :notify_tech
+  after_create :add_created_note
   before_update :add_status_change_note, :notify_tech
   
   def add_created_note
@@ -28,11 +29,12 @@ class Ticket < ActiveRecord::Base
   def notify_tech
     subject = "Ticket# #{self.id} needs your attention"
     message = "#{APP_CONFIG[:site_url]}/tickets/#{self.id}"
+
     if self.new_record? && self.creator_id != self.user_id
       NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
-    else
+    elsif self.id
       before = Ticket.find(self.id)
-      if self.user_id != before.user_id && self.status =~ /on/
+      if self.user_id != before.user_id && !self.status.has("on")
         NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
       end
     end
@@ -137,4 +139,10 @@ class Ticket < ActiveRecord::Base
     complete == 0
   end
   
+end
+
+class String
+  def has(word)
+    self =~ /#{word}/ ? true : false
+  end
 end
