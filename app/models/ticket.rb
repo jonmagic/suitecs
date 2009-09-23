@@ -11,18 +11,30 @@ class Ticket < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :description
   
-  after_create :add_created_note
-  before_update :add_status_change_note
+  after_create :add_created_note, :notify_tech
+  before_update :add_status_change_note, :notify_tech
   
   def add_created_note
     TicketEntry.create(:entry_type => "State change", :note => "Ticket created.", :billable => false, :private => true, :detail => 6, :ticket => self, :creator_id => self.creator_id)
   end
   
   def add_status_change_note
-    before_update = Ticket.find(self.id)
-    after_update = self
-    if after_update.status != before_update.status
-      TicketEntry.create(:entry_type => "State change", :note => "Status changed to #{after_update.status}", :billable => false, :private => true, :detail => 6, :ticket => self, :creator_id => self.creator_id)
+    before = Ticket.find(self.id)
+    if self.status != before.status
+      TicketEntry.create(:entry_type => "State change", :note => "Status changed to #{self.status}", :billable => false, :private => true, :detail => 6, :ticket => self, :creator_id => self.creator_id)
+    end
+  end
+  
+  def notify_tech
+    subject = "Ticket# #{self.id} needs your attention"
+    message = "#{APP_CONFIG[:site_url]}/tickets/#{self.id}"
+    if self.new_record? && self.creator_id != self.user_id
+      NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
+    else
+      before = Ticket.find(self.id)
+      if self.user_id != before.user_id && self.status =~ /on/
+        NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
+      end
     end
   end
   

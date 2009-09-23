@@ -10,6 +10,16 @@ class NotificationMailer < ActionMailer::Base
     @body[:message] = message
   end
   
+  def ticket_updated(subject, message, technician)
+    technician = Client.find(technician.client_id)
+    email = Email.find(:first, :conditions => {:client_id => technician.id})
+    @recipients = "#{email.address}"
+    @from = "tickets@suite.sabretechllc.com"
+    @subject = "#{subject}"
+    @sent_on = Time.now
+    @body[:message] = message
+  end
+  
   def attention(ticket, invoice)
     @recipients = "sabretechllc@gmail.com"
     @from = APP_CONFIG[:admin_email]
