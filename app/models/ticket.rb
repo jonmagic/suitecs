@@ -28,8 +28,8 @@ class Ticket < ActiveRecord::Base
   
   def notify_tech
     subject = "Ticket# #{self.id} needs your attention"
-    message = "#{APP_CONFIG[:site_url]}/tickets/#{self.id}"
-
+    message = "#{User.find(self.creator_id).name} created or updated this ticket for you: #{APP_CONFIG[:site_url]}/tickets/#{self.id}\n\n#{self.description}"
+    
     if self.new_record? && self.creator_id != self.user_id
       NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
     elsif self.id

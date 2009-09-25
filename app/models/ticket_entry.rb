@@ -3,8 +3,8 @@ class TicketEntry < ActiveRecord::Base
   belongs_to :labor_type
   
   # default_scope :order => "created_at DESC"
-  after_create :touch_ticket
-  after_update :touch_ticket
+  after_create :notify_tech
+  after_update :notify_tech
   
   def creator
     User.find(self.creator_id)
@@ -15,10 +15,10 @@ class TicketEntry < ActiveRecord::Base
     initials = client.firstname[0,1]+client.lastname[0,1]
   end
 
-  def touch_ticket
-    if self.creator.id != self.ticket.user_id
+  def notify_tech
+    if self.creator_id != self.ticket.user_id && !self.ticket.status.has("on")
       subject = "Ticket# #{self.ticket.id} needs your attention"
-      message = "#{APP_CONFIG[:site_url]}/tickets/#{self.ticket.id}"
+      message = "#{self.creator.name} updated or added a note to #{APP_CONFIG[:site_url]}/tickets/#{self.ticket.id}\n\n#{self.note}"
       NotificationMailer.deliver_ticket_updated(subject, message, self.ticket.technician)
     end
   end
