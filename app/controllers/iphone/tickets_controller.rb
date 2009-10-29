@@ -32,7 +32,7 @@ class Iphone::TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     
     if @ticket.save
-      render :text => @ticket.id.to_s, :status => 200
+      redirect_to iphone_ticket_path(@ticket)
     else
       render :text => "failed", :status => 500
     end
@@ -45,7 +45,7 @@ class Iphone::TicketsController < ApplicationController
   def update
     @ticket = Ticket.find(params[:id])
     if @ticket.update_attributes(params[:ticket])
-      render :text => @ticket.id.to_s, :status => 200
+      redirect_to iphone_ticket_path(@ticket)
     else
       render :text => "failed", :status => 500
     end

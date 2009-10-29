@@ -12,7 +12,7 @@ class Iphone::TicketEntriesController < ApplicationController
     @ticket = Ticket.find(params[:ticket_id])
     
     if @ticket_entry.save
-      render :text => @ticket.id.to_s, :status => 200
+      redirect_to iphone_ticket_path(@ticket)
     else
       render :text => "failed", :status => 500
     end

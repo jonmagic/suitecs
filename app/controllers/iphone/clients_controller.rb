@@ -25,7 +25,7 @@ class Iphone::ClientsController < ApplicationController
     @client = Client.new(params[:client])
     
     if @client.save
-      render :text => @client.id.to_s, :status => 200
+      redirect_to iphone_client_path(@client)
     else
       render :text => @client.errors.inspect.to_s, :status => 500
     end
@@ -38,7 +38,7 @@ class Iphone::ClientsController < ApplicationController
     @client = Client.find(params[:id])
     
     if @client.update_attributes params[:client]
-      render :text => @client.id.to_s, :status => 200
+      redirect_to iphone_client_path(@client)
     else
       render :text => @client.errors.inspect.to_s, :status => 500
     end

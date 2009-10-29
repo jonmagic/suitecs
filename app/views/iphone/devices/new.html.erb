@@ -29,18 +29,18 @@
 <% end %>
 
 <script>
-  $("form a.submit").bind("click", function(){
-    $("form#new_device").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/devices/"+data+"' class='slideup'>Go to device</a>";
-        $("form a.submit").after(link);
-        $("form a.submit").next("a").click();
-      }
-    });
-  });
-  // complete: function(data, status){
-  //   alert(data["responseText"]);
-  //   alert(status);
-  // }
+  // $("form a.submit").bind("click", function(){
+  //   $("form#new_device").ajaxSubmit({
+  //     type: 'post',
+  //     success: function(data){
+  //       var link = "<a href='/iphone/devices/"+data+"' class='slideup'>Go to device</a>";
+  //       $("form a.submit").after(link);
+  //       $("form a.submit").next("a").click();
+  //     }
+  //   });
+  // });
+  // // complete: function(data, status){
+  // //   alert(data["responseText"]);
+  // //   alert(status);
+  // // }
 </script>

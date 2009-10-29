@@ -1,29 +1,28 @@
-<div id="ticket_<%= @ticket.id %>" class="ticket" selected="true">
+<div id="ticket_<%= @ticket.id %>" class="ticket">
   <div class="toolbar">
     <h1>Ticket #<%= @ticket.id %></h1>
     <a class="back" href="#">Back</a>
     <a class="button flip" href="#edit_ticket_<%= @ticket.id %>">Edit</a>
   </div>
-  <div class="pad">
-    <div class="info" style="text-align:left;">
-      <p><%= textile_to_html(@ticket.description) %></p>
-    </div>
-    <ul>
-      <li>
-        <small>Client</small>
-        <a href="/iphone/clients/<%= @ticket.client.id %>"><%= @ticket.client.fullname[0..23] %></a>
-      </li>
-      <li>
-        <small>Tech</small>
-        <a href="/iphone/clients/<%= @ticket.technician.client_id.to_s %>"><%= @ticket.technician.name %></a>
-      </li>
-      <li>
-        <small>Status</small>
-        <a href="#"><%= @ticket.status %></a>
-      </li>
-      <li>
-        <a href="<%= new_iphone_ticket_ticket_entry_path(@ticket) %>">New Ticket Entry</a>
-      </li>
+  <div class="info" style="text-align:left;">
+    <p><%= textile_to_html(@ticket.description) %></p>
+  </div>
+  <ul class="rounded">
+    <li>
+      <small>Client</small>
+      <a href="/iphone/clients/<%= @ticket.client.id %>"><%= @ticket.client.fullname[0..23] %></a>
+    </li>
+    <li>
+      <small>Tech</small>
+      <a href="/iphone/clients/<%= @ticket.technician.client_id.to_s %>"><%= @ticket.technician.name %></a>
+    </li>
+    <li>
+      <small>Status</small>
+      <a href="#"><%= @ticket.status %></a>
+    </li>
+    <li>
+      <a href="<%= new_iphone_ticket_ticket_entry_path(@ticket) %>">New Ticket Entry</a>
+    </li>
     <% if TicketEntry.find(:all, :conditions => {:ticket_id => @ticket.id, :detail => 1}).length > 0 %>
       <% TicketEntry.find(:all, :order => "created_at DESC", :conditions => {:ticket_id => @ticket.id, :detail => 1}).each do |entry| %>
         <li>
@@ -40,16 +39,15 @@
         </li>
       <% end %>
     <% end %>
-    </ul>
-    <ul class="individual">
-      <% if @ticket.devices.length != 0 %>
-        <li><a href="/iphone/tickets/<%= @ticket.id %>/devices">Devices</a></li>
-      <% end %>
-    </ul>
-  </div>
+  </ul>
+  <ul class="individual">
+    <% if @ticket.devices.length != 0 %>
+      <li><a href="/iphone/tickets/<%= @ticket.id %>/devices">Devices</a></li>
+    <% end %>
+  </ul>
 </div>
 
-<% form_for @ticket, :url => iphone_ticket_path(@ticket), :html => {:class => "form"} do |f| %>
+<% form_for @ticket, :url => iphone_ticket_path(@ticket) do |f| %>
   <div class="toolbar">
     <h1>Edit Ticket</h1>
     <a class="back" href="#">Back</a>
@@ -69,16 +67,3 @@
   </ul>
   <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
 <% end %>
-
-<script>
-  $("form a.submit").bind("click", function(){
-    $("form#edit_ticket_<%= @ticket.id %>").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/tickets/"+data+"' class='slideup'>Go to ticket</a>";
-        $("form a.submit").after(link);
-        $("form a.submit").next("a").click();
-      }
-    });
-  });
-</script>

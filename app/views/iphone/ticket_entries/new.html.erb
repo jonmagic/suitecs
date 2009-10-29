@@ -26,16 +26,16 @@
 <% end %>
 
 <script>
-  $("form#new_ticket_entry a.submit").bind("click", function(){
-    $("form#new_ticket_entry").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/tickets/"+data+"' class='slideup'>Go to ticket</a>";
-        $("form#new_ticket_entry a.submit").after(link);
-        $("form#new_ticket_entry a.submit").next("a").click();
-      }
-    });
-  });
+  // $("form#new_ticket_entry a.submit").bind("click", function(){
+  //   $("form#new_ticket_entry").ajaxSubmit({
+  //     type: 'post',
+  //     success: function(data){
+  //       var link = "<a href='/iphone/tickets/"+data+"' class='slideup'>Go to ticket</a>";
+  //       $("form#new_ticket_entry a.submit").after(link);
+  //       $("form#new_ticket_entry a.submit").next("a").click();
+  //     }
+  //   });
+  // });
   $("select#ticket_entry_labor_type_id").change(function(){
     $("ul.times").removeClass("hide");
   });

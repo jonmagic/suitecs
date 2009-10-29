@@ -6,7 +6,7 @@
   </div>
   <h2 class="name"><%= @client.fullname %></h2>
   <h3 class="company"><%= @client.company_name %></h3>
-  <ul>
+  <ul class="rounded">
     <% if @client.phones.length != 0 || @client.emails.length != 0 || @client.addresses.length != 0 %>
       <% if @client.phones.length != 0 %>
         <% @client.phones.each do |phone| %>
@@ -32,7 +32,7 @@
   </ul>
   <% if @client.note != nil && @client.note != "" %>
     <h2>Notes</h2>
-    <ul>
+    <ul class="rounded">
       <li class="paragraph"><%= textile_to_html(@client.note) %></li>
     </ul>
   <% end %>
@@ -57,19 +57,19 @@
     <a class="back" href="#">Back</a>
     <a class="button" href="#client_<%= @client.id %>">Cancel</a>
   </div>
-  <ul>
+  <ul class="rounded">
     <li>Company? <span class="toggle"><%= f.check_box :company %></span></li>
   </ul>
-  <ul id="person_name">
+  <ul id="person_name" class="rounded">
     <li><%= f.text_field :firstname, :placeholder => "First Name" %></li>
     <li><%= f.text_field :lastname, :placeholder => "Last Name" %></li>
   </ul>
-  <ul id="company_name" class="hide">
+  <ul id="company_name" class="hide rounded">
     <li><%= f.text_field :name, :placeholder => "Company Name" %></li>
   </ul>
   <h2>Phones</h2>
-  <ul>
-  <% array = ["Cell","Work","Home","Fax"]  %>
+  <ul class="rounded">
+    <% array = ["Cell","Work","Home","Fax"]  %>
     <% @client.phones.each do |phone| %>
       <%= render :partial => 'phone', :object => phone, :locals => {:context => phone.context} %>
       <% array.delete(phone.context) %>
@@ -79,7 +79,7 @@
     <% end %>
   </ul>
   <h2>Emails</h2>
-  <ul>
+  <ul class="rounded">
     <% array = ["Work","Personal"] %>
     <% @client.emails.each do |email| %>
       <%= render :partial => 'email', :object => email, :locals => {:context => email.context} %>
@@ -92,18 +92,19 @@
   <% array = ["Home","Work"] %>
   <% @client.addresses.each do |address| %>
     <h2><%= address.context %> Address</h2>
-    <ul>
+    <ul class="rounded">
       <%= render :partial => 'address', :object => address, :locals => {:context => address.context} %>
     </ul>
     <% array.delete(address.context) %>
   <% end %>
   <% array.each do |context| %>
     <h2><%= context %> Address</h2>
-    <ul>
+    <ul class="rounded">
       <%= render :partial => 'address', :object => Address.new(:client => @client), :locals => {:context => context} %>
     </ul>
   <% end %>
-  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="whiteButton">Submit</a>
+  <a href="#" class="submit hide">Submit</a>
 <% end %>
 
 <script>
@@ -141,16 +142,20 @@
       };
     });
   };
-  // form submission code
-  $("form#edit_client_<%= @client.id %> a.submit").bind("click", function(){
+  $("form#edit_client_<%= @client.id %> a.whiteButton").bind("click", function(){
     remove_empty_fields();
-    $("form#edit_client_<%= @client.id %>").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/clients/"+data+"' class='slideup'>Go to client</a>";
-        $("form#edit_client_<%= @client.id %> a.submit").after(link);
-        $("form#edit_client_<%= @client.id %> a.submit").next("a").click();
-      }
-    });
+    $("form#edit_client_<%= @client.id %> a.submit").click();
   });
+    // // form submission code
+    // $("form#edit_client_<%= @client.id %> a.submit").bind("click", function(){
+    //   remove_empty_fields();
+    //   $("form#edit_client_<%= @client.id %>").ajaxSubmit({
+    //     type: 'post',
+    //     success: function(data){
+    //       var link = "<a href='/iphone/clients/"+data+"' class='slideup'>Go to client</a>";
+    //       $("form#edit_client_<%= @client.id %> a.submit").after(link);
+    //       $("form#edit_client_<%= @client.id %> a.submit").next("a").click();
+    //     }
+    //   });
+    // });
 </script>

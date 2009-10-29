@@ -29,7 +29,7 @@ class Iphone::DevicesController < ApplicationController
     @device = Device.new(params[:device])
     
     if @device.save
-      render :text => @device.id.to_s, :status => 200
+      redirect_to iphone_device_path(@device)
     else
       render :text => @device.errors.inspect.to_s, :status => 500
     end
@@ -39,7 +39,7 @@ class Iphone::DevicesController < ApplicationController
     @device = Device.find(params[:id])
     
     if @device.update_attributes(params[:device])
-      render :text => @device.id.to_s, :status => 200
+      redirect_to iphone_device_path(@device)
     else
       render :text => @device.errors.inspect.to_s, :status => 500
     end

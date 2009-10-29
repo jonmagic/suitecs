@@ -1,38 +1,39 @@
-<% form_for @client, :url => iphone_clients_path, :html => {:class => "form"} do |f| %>
+<% form_for @client, :url => iphone_clients_path do |f| %>
   <div class="toolbar">
     <h1>New Client</h1>
     <a class="back" href="#">Back</a>
     <a class="button" href="#home">Home</a>
   </div>
-  <ul>
+  <ul class="rounded">
     <li>Company? <span class="toggle"><%= f.check_box :company %></span></li>
   </ul>
   <ul id="person_name">
     <li><%= f.text_field :firstname, :placeholder => "First Name" %></li>
     <li><%= f.text_field :lastname, :placeholder => "Last Name" %></li>
   </ul>
-  <ul id="company_name" class="hide">
+  <ul id="company_name" class="hide rounded">
     <li><%= f.text_field :name, :placeholder => "Company Name" %></li>
   </ul>
   <h2>Phones</h2>
-  <ul>
+  <ul class="rounded">
     <% ["Cell","Work","Home","Fax"].each do |context| %>
       <%= render :partial => 'phone', :object => Phone.new(:client => @client), :locals => {:context => context} %>
     <% end %>
   </ul>
   <h2>Emails</h2>
-  <ul>
+  <ul class="rounded">
     <% ["Work","Personal"].each do |context| %>
       <%= render :partial => 'email', :object => Email.new(:client => @client), :locals => {:context => context} %>
     <% end %>
   </ul>
   <% ["Home","Work"].each do |context| %>
     <h2><%= context %> Address</h2>
-    <ul>
+    <ul class="rounded">
       <%= render :partial => 'address', :object => Address.new(:client => @client), :locals => {:context => context} %>
     </ul>
   <% end %>
-  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
+  <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="whiteButton">Submit</a>
+  <a href="#" class="submit hide">Submit</a>
 <% end %>
 
 <script>
@@ -63,20 +64,23 @@
       };
     });
   };
-  // form submission code
-  $("form a.submit").bind("click", function(){
+  $("form#new_client a.whiteButton").bind("click", function(){
     remove_empty_fields();
-    $("form#new_client").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/clients/"+data+"' class='slideup'>Go to client</a>";
-        $("form a.submit").after(link);
-        $("form a.submit").next("a").click();
-      }// ,
-      //       complete: function(data, status){
-      //         alert(data["responseText"]);
-      //         alert(status);
-      //       }
-    });
+    $("form#new_client a.submit").click();
   });
+  // form submission code
+  // $("form a.submit").bind("click", function(){
+  //   remove_empty_fields();
+  //   $("form#new_client").ajaxSubmit({
+  //     type: 'post',
+  //     success: function(data){
+  //       var link = "<a href='/iphone/clients/"+data+"' class='slideup'>Go to client</a>";
+  //       $("form a.submit").after(link);
+  //       $("form a.submit").next("a").click();
+  //     }// ,
+  //     //       complete: function(data, status){
+  //     //         alert(data["responseText"]);
+  //     //         alert(status);
+  //     //       }
+  //   });
 </script>

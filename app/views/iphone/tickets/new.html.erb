@@ -5,11 +5,11 @@
     <a class="button" href="#home">Home</a>
   </div>
   <h2>Client</h2>
-  <ul>
+  <ul class="rounded">
     <li><%= @client.fullname %></li>
   </ul>
   <h2>Technician</h2>
-  <ul>
+  <ul class="rounded">
     <li><%= f.select :user_id, User.find(:all).collect {|c| [c.name, c.id]}, :selected => current_user.id %></li>
   </ul>
   <h2>Description</h2>
@@ -21,16 +21,3 @@
   <%= f.hidden_field :active_on, :value => Date.today.strftime("%m/%d/%Y") %>
   <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#" class="submit whiteButton">Submit</a>
 <% end %>
-
-<script>
-  $("form a.submit").bind("click", function(){
-    $("form#new_ticket").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/tickets/"+data+"' class='slideup'>Go to ticket</a>";
-        $("form a.submit").after(link);
-        $("form a.submit").next("a").click();
-      }
-    });
-  });
-</script>

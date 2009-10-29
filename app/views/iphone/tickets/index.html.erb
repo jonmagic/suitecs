@@ -4,7 +4,7 @@
       <h1>Tickets</h1>
       <a class="back button" href="#">Home</a>
     </div>
-    <ul>
+    <ul class="rounded">
       <li class="arrow"><a href="/iphone/tickets/?status=open">Open Tickets</a> <small class="counter"><%= @totals[:open] %></small></li>
       <li class="arrow"><a href="/iphone/tickets/?status=scheduled">Scheduled Tickets</a> <small class="counter"><%= @totals[:scheduled] %></small></li>
       <li class="arrow"><a href="/iphone/tickets/?status=completed">Completed Tickets</a> <small class="counter"><%= @totals[:completed] %></small></li>

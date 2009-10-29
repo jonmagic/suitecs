@@ -54,18 +54,18 @@
 <% end %>
 
 <script>
-  $("form#edit_device_<%= @device.id %> a.submit").bind("click", function(){
-    $("form#edit_device_<%= @device.id %>").ajaxSubmit({
-      type: 'post',
-      success: function(data){
-        var link = "<a href='/iphone/devices/"+data+"' class='slideup'>Go to device</a>";
-        $("form#edit_device_<%= @device.id %> a.submit").after(link);
-        $("form#edit_device_<%= @device.id %> a.submit").next("a").click();
-      }
-    });
-  });
-  // complete: function(data, status){
-  //   alert(data["responseText"]);
-  //   alert(status);
-  // }
+  // $("form#edit_device_<%= @device.id %> a.submit").bind("click", function(){
+  //   $("form#edit_device_<%= @device.id %>").ajaxSubmit({
+  //     type: 'post',
+  //     success: function(data){
+  //       var link = "<a href='/iphone/devices/"+data+"' class='slideup'>Go to device</a>";
+  //       $("form#edit_device_<%= @device.id %> a.submit").after(link);
+  //       $("form#edit_device_<%= @device.id %> a.submit").next("a").click();
+  //     }
+  //   });
+  // });
+  // // complete: function(data, status){
+  // //   alert(data["responseText"]);
+  // //   alert(status);
+  // // }
 </script>
