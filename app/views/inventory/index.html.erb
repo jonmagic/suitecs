@@ -1,0 +1,30 @@
+<div id="inventory">
+  <table class="itu">
+    <thead>
+      <tr><th class="first">Barcode</th><th>Name</th><th>Description</th><th>Cost</th><th>Retail</th></tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item|  %>
+        <tr title="<%= "#{item.description}" %>" data-item-id="<%= item.id %>" class="item">
+          <td class="first"><a href="#/inventory/<%= item.id %>"><%= item.barcode %></a></td>
+          <td><a href="#/inventory/<%= item.id %>"><%= item.name %></a></td>
+          <td><a href="#/inventory/<%= item.id %>"><%= item.description %></a></td>
+          <td><a href="#/inventory/<%= item.id %>"><%= item.cost %></a></td>
+          <td><a href="#/inventory/<%= item.id %>"><%= item.retail %></a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('div#inventory > table tbody tr').quicksearch({
+      attached: $('div#content_search'),
+      position: 'prepend',
+      stripeRowClass: ['odd', 'even'],
+      delay: 200
+    });
+    
+  });
+</script>

@@ -22,7 +22,7 @@ div.panel fieldset {background-color:#efefef;}
 /* Setup my layout */
 #header {position:fixed;top:0;left:0;z-index:10;width:100%;height:49px;}
 #footer {position:fixed;bottom:0;left:0;z-index:10;width:100%;height:29px;}
-#sidebar {position:fixed;top:50px;left:0;width:240px;overflow-y:scroll;} /* we use javascript to set the height */
+#sidebar {position:fixed;top:50px;left:0;width:237px;overflow-y:hidden;border-right:3px solid #ccc;} /* we use javascript to set the height */
 #center {position:absolute;top:50px;left:240px;z-index:0;} /* we use javascript to set the width */
 
 /* Header styles */
@@ -43,6 +43,7 @@ div.panel fieldset {background-color:#efefef;}
 #footer .col3 {position:absolute;top:5px;right:5px;}
 #footer a {margin-right:5px;color:#252525;padding:2px 5px;background:url("../images/footer-button-itu-inactive.png") repeat-x -5px;border:1px solid #494949;-moz-border-radius:2px;-webkit-border-radius:2px}
 #footer a:hover {background:url("../images/footer-button-itu-active.png") repeat-x -5px;}
+#footer a img {margin-bottom:-4px;}
 
 /* Sidebar styles */
 #sidebar {background-color:#d1d7e2;}
@@ -74,7 +75,7 @@ div.panel fieldset {background-color:#efefef;}
 #center h4 {font-weight:bold;font-size:1.2em;color:#606060;margin:.5em 1em 0;padding:0px;}
 #center p {margin:.5em 1.5em;padding:0px;}
 #center ol.align, #center ul.align {margin:.5em 3em;padding:0px;}
-div#content_search {padding:5px;background-color:#ccc;border-bottom:1px solid #505050;position:relative;}
+#content_search {padding:5px;background-color:#ccc;border-bottom:1px solid #505050;position:relative;}
 
 /* Tables */
 table.itu {border-bottom:1px solid #505050;width:100%;}
@@ -117,6 +118,9 @@ ul.toolbar li a {position:relative;padding:4px 1em;}
 ul.toolbar li a:hover {background:url("../images/footer-button-m-active.png") repeat-x;}
 div.ui-tabs-panel ul.toolbar li a {position:relative;top:2px;}
 div.toolbox {padding:10px 10px 1px;margin:1em;border:1px solid #ddd;-moz-border-radius:5px;-webkit-border-radius:5px;}
+
+/* Dialogs */
+.ui-dialog-overlay {background:#000;opacity:0.5;filter:alpha(opacity=50);}
 
 /* autocomplete */
 .auto_select_results {padding: 0px;border: 1px solid WindowFrame;background-color: Window;overflow: hidden;}

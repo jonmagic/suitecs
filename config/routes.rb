@@ -54,6 +54,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :labor_types
   map.resources :qb_client_connector
   map.resources :invoices
+  map.resources :inventory
+  map.resources :locations
   
   # Custom Routes
   map.device_details '/tickets/:ticket_id/devices/:id/details', :controller => 'devices', :action => 'details'

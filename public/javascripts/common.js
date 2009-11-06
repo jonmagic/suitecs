@@ -1,21 +1,22 @@
-// set div heights, including on resize
+function resize(){
+  var height = $(window).height();
+  var width = $(window).width();
+  $("#sidebar").css({height: height - 65});
+  $("#center").css({width: width - 256})
+};
+
+
 $(document).ready(function() {
-  function resize(){
-    var height = $(window).height();
-    var width = $(window).width();
-    $("#sidebar").css({height: height - 65});
-    $("#center").css({width: width - 256})
-  };  
+  // set div heights, including on resize
   resize();
   $(window).bind('resize', function(){
     resize();
   });
-});
-
-// add borders and backgrounds to buttons
-$(document).ready(function() {
+  // add borders and backgrounds to buttons
   $("#header a").addClass("header-button-itu");
   $("#footer a").addClass("footer-button-itu");
+  // build my tables
+  buildTables()
 });
 
 function buildTables(){
@@ -53,12 +54,6 @@ function buildTables(){
   // add padding where necessary
   $("#center div.ui-tabs-panel table.itu").wrap("<div></div>").parent().addClass("ui-tabs-panel-padding");
 }
-
-// build my tables
-$(document).ready(function() {
-  buildTables()
-});
-
     
 // Cool time function for parsing UTC 8601 time formats
 Date.from_iso8601 = function(string){
@@ -136,4 +131,13 @@ function gup( name )
     return "";
   else
     return results[1];
+}
+
+function flash( message )
+{
+  $("div#header div.flash").append("<p>"+message+"</p>");
+  setTimeout(function(){
+    $("div#header div.flash p").effect('drop');
+    setTimeout(function(){$("div#header div.flash").empty()}, 500)
+  }, 2000);
 }

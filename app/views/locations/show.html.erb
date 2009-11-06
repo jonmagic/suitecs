@@ -1,0 +1,48 @@
+<table class="m" id="location_items">
+  <thead>
+    <tr><th>Barcode</th><th>Item Name</th><th>Quantity</th><th>Remove</th></tr>
+  </thead>
+  <tbody>
+    <% @location.items.each do |k, v| %>
+      <% item = Item.find(k) %>
+      <tr>
+        <td><%= item.barcode %></td>
+        <td><%= item.name %></td>
+        <td><%= v['quantity'] %></td>
+        <td><a href="javascript:void(0)" class="remove" data-item-id="<%= k %>" data-location-id="<%= @location.id %>"><img src="/images/icons/delete.png" /></a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />
+<p><%= link_to("Delete location", { :action => "destroy", :id => @location }, :confirm => "Are you sure you want to delete this location?", :method => :delete) %></p>
+
+<script>
+  $('#location_items a.remove').click(function(){
+    var link = $(this);
+    $('#quantity').dialog('option', 'buttons', { 
+      "Remove Item": function() { 
+        var url = '/locations/'+link.attr('data-location-id')
+        $.ajax({
+          url: url,
+          type: "POST",
+          data: '_method=put&type=remove_item&item_id='+link.attr('data-item-id')+'&quantity='+$('#quantity input').val(),
+          success: function(){
+            flash('Successfully removed the item.');
+            $(this).dialog('close');
+            $('#location').dialog('close');
+          },
+          error: function(){
+            flash('Was not able to remove the item.');
+            $(this).dialog('close');
+            $('#location').dialog('close');
+          }
+        });
+        $('#quantity input').val('')
+        $(this).dialog('close');
+      }
+    });
+    $('#quantity').dialog('open');
+    $('#quantity input').focus();
+  });
+</script>

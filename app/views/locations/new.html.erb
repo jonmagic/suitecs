@@ -1,0 +1,5 @@
+<h3 style="display:none">New Location</h3>
+<% form_for @location do |form| %>
+  <p><label>Name:</label> <%= form.text_field :name %></p>
+  <p><%= form.submit %></p>
+<% end %>
