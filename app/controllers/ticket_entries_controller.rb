@@ -4,7 +4,8 @@ class TicketEntriesController < ApplicationController
   
   def index
     @ticket = Ticket.find(params[:ticket_id])
-    @ticket_entries = TicketEntry.find_all_by_ticket_id(params[:ticket_id], :order => "created_at DESC")
+    array = TicketEntry.find_all_by_ticket_id(@ticket.id) + TicketItem.find_all_by_ticket_id(@ticket.id)
+    @ticket_entries = array.sort_by(&:created_at).reverse
   end
   
   def show

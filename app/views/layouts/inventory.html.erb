@@ -4,9 +4,9 @@
   <head>
 	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	  <title>Suite</title>
-    <%= javascript_include_tag "jquery", "jquery-ui" %>
-    <%= javascript_include_tag "jquery.quicksearch", "common" %>
-		<%= stylesheet_link_tag "blueprint/screen", "jquery-theme", "common", "inventory", :media => "screen", :cache => "inventory-css-combined" %>
+    <%= javascript_include_tag "jquery-1.3.2.min", "jquery-ui", "jquery.form", "underscore-min" %>
+    <%= javascript_include_tag "common", "locations", "inventory" %>
+		<%= stylesheet_link_tag "blueprint/screen", "jquery-theme", "common", "inventory", "locations", :media => "screen", :cache => "inventory-css-combined" %>
     <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
   </head>
   <body>
@@ -18,77 +18,17 @@
     
     <div id="sidebar" class="sidebar-list">
       <h2>Locations</h2>
-      <ul class="itu">
+      <ul class="m">
         <% Location.all.each do |location| %>
           <li class="droppable" data-location-id="<%= location.id %>" data-location-url="<%= location_path(location) %>" data-location-title="<%=h location.name %>"><a href="javascript:void(0);" class="location"><%= location.name %></a></li>
         <% end %>
       </ul>
-      <script>
-        $(document).ready(function(){
-          // setup add item to location dialog
-          $('#quantity').dialog({
-            autoOpen: false,
-            resizable: false,
-            modal: true
-          });
-          // make inventory items draggable
-          $(".item").draggable({
-            cursorAt: { left: 100 },
-            helper: 'clone',
-            opacity: 0.3
-          });
-          // make locations droppable
-          $("#sidebar .droppable").droppable({
-            accept: '.item',
-            over: function(){
-              $(this).addClass('selected');
-            },
-            out: function(){
-              $(this).removeClass('selected');
-            },
-            drop: function(event, ui){
-              $(this).removeClass('selected');
-              var url = '/locations/'+$(this).attr('data-location-id')
-              $('#quantity').dialog('option', 'buttons', { 
-                "Add Item": function() { 
-                  $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: '_method=put&type=add_item&item_id='+ui.draggable.attr('data-item-id')+'&quantity='+$('#quantity input').val(),
-                    success: function(){
-                      flash('Successfully added the item.')
-                    },
-                    error: function(){
-                      flash('Was not able to add the item.')
-                    }
-                  });
-                  $('#quantity input').val('')
-                  $(this).dialog('close');
-                }
-              });
-              $('#quantity').dialog('open');
-              $('#quantity input').focus();
-            }
-          });
-          // location dialog
-          $('#location').dialog({
-            autoOpen: false,
-            modal: true,
-            width: 600,
-            height: 400
-          });
-          $('[data-location-url]').click(function() {
-            var $item = $(this),
-                title = $item.attr('data-location-title'),
-                url   = $item.attr('data-location-url');          
-            $('#location').dialog('option', 'title', title).html('Loading...').load(url).dialog('open');
-          });
-        });
-      </script>
     </div>
 
     <div id="center" class="container">
-      <div id="content_search"></div>
+      <div id="content_search">
+        <div id="applesearch"><form action="/inventory/"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span></form></div>
+      </div>
       <%= yield %>
     </div>
     

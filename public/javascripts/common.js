@@ -2,7 +2,7 @@ function resize(){
   var height = $(window).height();
   var width = $(window).width();
   $("#sidebar").css({height: height - 65});
-  $("#center").css({width: width - 256})
+  $("#center").css({width: width - 240});
 };
 
 
@@ -15,9 +15,29 @@ $(document).ready(function() {
   // add borders and backgrounds to buttons
   $("#header a").addClass("header-button-itu");
   $("#footer a").addClass("footer-button-itu");
-  // build my tables
-  buildTables()
+  buildTables();
+  setupToolbarsAndButtons();
 });
+
+function setupToolbarsAndButtons(){
+  var toolbar_links = $('.toolbar a');
+  addButtonStyles(toolbar_links);
+  var buttons = $('input[type=submit]');
+  addButtonStyles(buttons);
+};
+function addButtonStyles(thing){
+  thing.addClass('ui-state-default');
+  thing.addClass('ui-corner-all');
+  thing.addClass('fg-button');
+  thing.hover(
+  	function(){ 
+  		$(this).addClass("ui-state-hover"); 
+  	},
+  	function(){ 
+  		$(this).removeClass("ui-state-hover"); 
+  	}
+  );
+}
 
 function buildTables(){
   // table style 1, inspired by itunes

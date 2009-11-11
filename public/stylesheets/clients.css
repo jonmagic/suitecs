@@ -22,7 +22,7 @@ div#preferences div.avatar img {float:left;}
 
 /* form */
 div#names {margin:0 0 1.5em 0;}
-div#details table {margin:1.5em;}
+div#details table {margin:1.5em 0;}
 div#details.edit td.edit, div#details.edit th.add {text-align:center;width:30px;}
 div#details.edit td.add a, div#details.edit th.add a {text-align:center;}
 div#details.edit td.context, div#details.edit th.context {text-align:right;width:6em;}

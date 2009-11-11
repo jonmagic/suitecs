@@ -10,8 +10,7 @@ $(document).ready(function() {
     $("#sidebar ul li a.open").parent("li").addClass("selected");
   };
   // setup tabs
-  var $tabs = $("#ticket_content > ul").tabs(function(){
-  });
+  var $tabs = $("#ticket_content").tabs();
   buildTables();
 });
 
@@ -29,3 +28,8 @@ function ticket_state(){
     };
   };
 };
+
+function reload_ticket_entries(ticket_id){
+  $('div#entries').empty();
+  $('div#entries').load('/tickets/'+ticket_id+'/ticket_entries');
+}

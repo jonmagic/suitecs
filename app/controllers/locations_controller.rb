@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  before_filter :login_required
   layout nil
   skip_before_filter :verify_authenticity_token, :only => ['update']
   

@@ -45,7 +45,7 @@ $(document).ready(function() {
 
 // setup tabs
 $(document).ready(function() {
-  $("#client_content > ul").tabs();
+  $("#client_content").tabs();
   $("#center div.ui-tabs-panel table.itu").wrap("<div></div>").parent().addClass("ui-tabs-panel-padding");
 });
 

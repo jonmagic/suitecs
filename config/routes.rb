@@ -26,6 +26,7 @@ ActionController::Routing::Routes.draw do |map|
   map.search_tickets '/tickets/search', :controller => 'tickets', :action => 'search'
   map.resources :tickets do |ticket|
     ticket.resources :ticket_entries
+    ticket.resources :ticket_items
     ticket.resources :devices
     ticket.resources :checklists
   end
@@ -56,6 +57,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :invoices
   map.resources :inventory
   map.resources :locations
+  map.resources :ticket_items
   
   # Custom Routes
   map.device_details '/tickets/:ticket_id/devices/:id/details', :controller => 'devices', :action => 'details'

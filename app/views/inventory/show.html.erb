@@ -1,0 +1,78 @@
+<% form_for @item, :url => inventory_path(@item) do |form| %>
+  <table class="m" data-item-id="<%= @item.id %>">
+    <tr>
+      <td><b>Barcode</b></td>
+      <td><%= form.text_field :barcode %></td>
+    </tr>
+    <tr>
+      <td><b>Name</b></td>
+      <td><%= @item.name %></td>
+    </tr>
+    <tr>
+      <td><b>Description</b></td>
+      <td><%= @item.description %></td>
+    </tr>
+    <tr>
+      <td><b>Name</b></td>
+      <td><%= @item.name %></td>
+    </tr>
+    <tr>
+      <td><b>Quantity</b></td>
+      <td><%= @item.quantity %></td>
+    </tr>
+  </table>
+  <%= form.hidden_field :requires_serialnumber %>
+<% end %>
+<div class="has_serialnumber">
+  <p>Do you want to record serial numbers for this product?</p>
+</div>
+
+<script>
+  $(function(){
+    $('div.has_serialnumber').dialog({
+      title: 'Product Serial Number',
+      modal: true,
+      autoOpen: false,
+      buttons: {
+        "Yes" : function(){update_product_with_serialnumber("Yes")},
+        "No"  : function(){update_product_with_serialnumber("No")}
+      }
+    });
+    var item_id = "<%= @item.id %>";
+    $("form#edit_item_"+item_id).ajaxForm();
+    $('input#item_barcode').focus();
+    $('input#item_barcode').keyup(function(e) {
+    	if(e.keyCode == 13) {
+        $('div.has_serialnumber').dialog('open');
+    	}
+    });
+  });
+  function submitItemForm(){
+    $("form#edit_item_<%= @item.id %>").ajaxSubmit({
+      success: function(){
+        var item_id = "<%= @item.id %>";
+        $('td[data-item-id="'+item_id+'"]').html($("input#item_barcode").val());
+        $('input#item_barcode').empty();
+        $('div.has_serialnumber').dialog('close');
+        $("#item").dialog('close');
+        flash("Updated item barcode");
+      },
+      error: function(){
+        var item_id = "<%= @item.id %>";
+        $('input#item_barcode').empty();
+        $('div.has_serialnumber').dialog('close');
+        $("#item").dialog('close');
+        flash("Failed to update items barcode");
+      }
+    });
+  }
+  function update_product_with_serialnumber(answer){
+    if(answer=="Yes"){
+      $("form#edit_item_<%= @item.id %> input#item_requires_serialnumber").val('true');
+      submitItemForm();
+    }else{
+      $("form#edit_item_<%= @item.id %> input#item_requires_serialnumber").val('false');
+      submitItemForm();
+    }
+  }
+</script>

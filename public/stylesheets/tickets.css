@@ -4,6 +4,7 @@
 #tickets {}
 #tickets table a {display:block;}
 .first {text-align:center;}
+h3.description {margin-top:0;}
 
 /* Sidebar icons */
 
@@ -17,15 +18,17 @@
 #ticket {margin:0 1em;padding:1.5em 0 0 0;}
 #ticket table.details {position:absolute;right:1.5em;top:3.8em;}
 #ticket div.description {width:50%;min-height:5em;}
-div#ticket_entries {margin:1em;}
-div.ticket_entry {position:relative;border-top:1px solid #ddd;padding:5px;}
-.ticket_entry:hover {background-color:#d4dde6;}
+div#ticket_entries {margin:1em 0;}
+div.ticket_entry, div.ticket_item {position:relative;border-top:1px solid #ddd;padding:5px;}
+.ticket_entry:hover, .ticket_item:hover {background-color:#d4dde6;}
 .ticket_entry_details {font-size:10pt;line-height:8pt;}
 .ticket_entry_byline {font-size:10pt;margin-left:55px;line-height:8pt;color:#666;}
 .ticket_entry_mugshot {float:left;display:block;margin-right:5px;width:50px;height:50px;background-color:#eee;}
 div.ticket_entry_note {float:left;width:65%;}
 div.ticket_entry_parts {margin-left:70%;padding-top:5px;padding-bottom:5px;background-color:#fbfbfb;}
 div.ticket_entry_bottom {clear:both;}
+input.ticket_item_quantity {width:2em;}
+#ticket_content {margin-top:3.5em;}
 
 td.new_ticket_entry_note {width:70%;}
 td.new_ticket_entry_note textarea {width:100%;height:6em;}
@@ -42,5 +45,4 @@ input#ticket_active_on {width:8em;}
 /* devices details pop up */
 
 /* Search box */
-#applesearch .sbox input {width:300px;}
 div#user_select {position:absolute;top:2px;right:1em;}

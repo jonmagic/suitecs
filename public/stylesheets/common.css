@@ -30,7 +30,8 @@ div.panel fieldset {background-color:#efefef;}
 #header h1 {display:none;}
 #header ul {position:absolute;top:16px;}
 #header ul li {display:inline;}
-#header .header-button-itu {font-weight:bold;color:#252525;padding:5px 10px;background:url("../images/header-button-itu-inactive.png") repeat-x -5px;border:1px solid #494949;-moz-border-radius:5px;-webkit-border-radius:5px}
+#header ul li img {margin:0 4px -4px 0 ;}
+#header .header-button-itu {font-weight:bold;color:#252525;padding:5px 6px;background:url("../images/header-button-itu-inactive.png") repeat-x -5px;border:1px solid #494949;-moz-border-radius:5px;-webkit-border-radius:5px}
 #header .header-button-itu:hover {background:url("../images/header-button-itu-active.png") repeat-x -5px;}
 #header .header-button-m {font-weight:bold;color:#444;padding:5px 10px;background:url("../images/header-button-m-inactive.png") repeat-x -5px;border:1px solid #53585c;-moz-border-radius:12px;-webkit-border-radius:12px}
 #header .header-button-m:hover {background:url("../images/header-button-m-active.png") repeat-x -5px;}
@@ -70,12 +71,13 @@ div.panel fieldset {background-color:#efefef;}
 
 /* Center (Main Content) styles */
 #center {padding-bottom:4em;}
-#center h2 {font-weight:bold;font-size:1.5em;color:#404040;margin:.5em 1em 0;padding:0px;}
-#center h3 {font-weight:bold;font-size:1.3em;color:#505050;margin:.5em 1em 0;padding:0px;}
+#center h2 {font-weight:bold;font-size:1.5em;color:#404040;margin:1em 0 .5em;padding:0px;}
+#center h3 {font-weight:bold;font-size:1.3em;color:#505050;margin:1em 0 .5em;padding:0px;}
 #center h4 {font-weight:bold;font-size:1.2em;color:#606060;margin:.5em 1em 0;padding:0px;}
-#center p {margin:.5em 1.5em;padding:0px;}
+#center p {margin:.5em 0;padding:0px;}
 #center ol.align, #center ul.align {margin:.5em 3em;padding:0px;}
 #content_search {padding:5px;background-color:#ccc;border-bottom:1px solid #505050;position:relative;}
+#content_search input[type="search"] {width:300px;}
 
 /* Tables */
 table.itu {border-bottom:1px solid #505050;width:100%;}
@@ -98,12 +100,11 @@ table.tablesorter thead tr .headerSortUp {background-image: url("../images/table
 table.tablesorter thead tr .headerSortDown {background-image: url("../images/tablesorter/desc.gif");}
 
 /* Tabs */
-ul.ui-tabs-nav {margin:1em 1em 0;}
-div.ui-tabs-panel {margin:0 1em;padding:.5em 0;}
+
 div.ui-tabs-panel table.itu {font-size:12px;border-top:1px solid #505050;border-left:1px solid #505050;border-right:1px solid #505050;}
 div.ui-tabs-panel table.itu tr th {padding:3px 0;}
 div.ui-tabs-panel table.itu tr td {padding:2px 5px;}
-.ui-tabs-panel-padding {padding:1.2em;}
+
 
 /* Forms */
 input[title=Street] {width:15em;}
@@ -112,13 +113,11 @@ input[title=State] {width:2em;}
 input[title=Zip] {width:4em;}
 
 /* Toolbars */
-ul.toolbar {border:1px solid #505050;background:url("../images/footer-button-m-inactive.png") repeat-x;height:16px;display:block;margin:1em 1.2em 0;padding:2px 1em;-moz-border-radius:5px;-webkit-border-radius:5px}
-ul.toolbar li {display:inline;}
-ul.toolbar li a {position:relative;padding:4px 1em;}
-ul.toolbar li a:hover {background:url("../images/footer-button-m-active.png") repeat-x;}
-div.ui-tabs-panel ul.toolbar li a {position:relative;top:2px;}
-div.toolbox {padding:10px 10px 1px;margin:1em;border:1px solid #ddd;-moz-border-radius:5px;-webkit-border-radius:5px;}
-
+.fg-button { outline: 0; margin:0 4px 0 0; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+ul.toolbar {margin:1em 0;padding:0;}
+ul.toolbar li {list-style:none;display:inline;}
+div.toolbox {padding:10px 10px 1px;margin:1em 0;border:1px solid #ddd;-moz-border-radius:5px;-webkit-border-radius:5px;}
+   
 /* Dialogs */
 .ui-dialog-overlay {background:#000;opacity:0.5;filter:alpha(opacity=50);}
 

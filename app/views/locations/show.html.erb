@@ -5,12 +5,14 @@
   <tbody>
     <% @location.items.each do |k, v| %>
       <% item = Item.find(k) %>
-      <tr>
-        <td><%= item.barcode %></td>
-        <td><%= item.name %></td>
-        <td><%= v['quantity'] %></td>
-        <td><a href="javascript:void(0)" class="remove" data-item-id="<%= k %>" data-location-id="<%= @location.id %>"><img src="/images/icons/delete.png" /></a></td>
-      </tr>
+      <% if v['quantity'] != 0 %>
+        <tr>
+          <td><%= item.barcode %></td>
+          <td><%= item.name %></td>
+          <td><%= v['quantity'] %></td>
+          <td><a href="javascript:void(0)" class="remove" data-item-id="<%= k %>" data-location-id="<%= @location.id %>"><img src="/images/icons/delete.png" /></a></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

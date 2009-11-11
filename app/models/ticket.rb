@@ -2,6 +2,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :client
   belongs_to :user
   has_many :ticket_entries
+  has_many :ticket_items
   has_and_belongs_to_many :devices
   has_many :checklists
   has_many :things, :as => :attached, :dependent => :destroy

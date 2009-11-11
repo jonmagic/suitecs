@@ -4,10 +4,10 @@
   <head>
 	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	  <title>Suite</title>
-    <%= javascript_include_tag "jquery", "jquery-ui" %>
-    <%= javascript_include_tag "jquery.metadata", "quicksilver", "jquery.quickselect", "jquery.url", "jquery.jeditable", "jquery.tablesorter" %>
+    <%= javascript_include_tag "jquery-1.3.2.min", "jquery-ui" %>
+    <%= javascript_include_tag "jquery.form", "jquery.metadata", "quicksilver", "jquery.quickselect", "jquery.url", "jquery.jeditable", "jquery.tablesorter" %>
     <%= javascript_include_tag "common", "tickets" %>
-		<%= stylesheet_link_tag "blueprint/screen", "jquery-theme", "common", "tickets", "jquery.quickselect", :media => "screen", :cache => "tickets-css-combined" %>
+		<%= stylesheet_link_tag "blueprint/screen", "smoothness/jquery-ui-1.7.2.custom", "common", "tickets", "jquery.quickselect", :media => "screen", :cache => "tickets-css-combined" %>
 		<%= stylesheet_link_tag "blueprint/print", "print", :media => "print", :cache => "print-css-combined" %>
     <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
   </head>
@@ -32,7 +32,7 @@
     
     <div id="center">
       <div id="content_search">
-        <div id="applesearch"><form action="/tickets/search"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span> <input id="srch_button" name="commit" type="submit" value="Search" onclick="" /></form></div>
+        <div id="applesearch"><form action="/inventory/search"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span> <input id="srch_button" name="commit" type="submit" value="Search" onclick="" /></form></div>
         <% @users = User.find(:all).collect {|c| [c.name, c.id]} %>
         <div id="user_select"></div>
       </div>

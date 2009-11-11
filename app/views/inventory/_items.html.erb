@@ -1,0 +1,10 @@
+<% @items.each do |item| %>
+  <tr title="<%= "#{item.description}" %>" class="item" data-item-id="<%= item.id %>">
+    <td class="first" data-item-id="<%= item.id %>"><a href="javascript:void(0);"><%= item.barcode %></a></td>
+    <td><img src="/images/icons/mouse.png" data-item-id="<%= item.id %>" /></td>
+    <td><a href="javascript:void(0);"><%= item.name %></a></td>
+    <td><a href="javascript:void(0);"><%= item.description %></a></td>
+    <td><a href="javascript:void(0);"><%= item.cost %></a></td>
+    <td><a href="javascript:void(0);"><%= item.retail %></a></td>
+  </tr>
+<% end %>
