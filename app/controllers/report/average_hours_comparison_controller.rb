@@ -24,7 +24,12 @@ class Report::AverageHoursComparisonController < ApplicationController
     !params[:scope] ? scope = "Billable" : scope = params[:scope]
     
     # find all ticket entries in the date range
-    entries = TicketEntry.find(:all, :conditions => {:created_at.gte => start_date, :created_at.lte => end_date})
+    entries = TicketEntry.find(:all) do
+      all do
+        created_at > start_date
+        created_at < end_date
+      end
+    end
     
     # setup my time spans
     time_span = (end_date.to_time + 1.second) - start_date.to_time

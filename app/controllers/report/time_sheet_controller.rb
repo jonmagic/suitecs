@@ -22,7 +22,12 @@ class Report::TimeSheetController < ApplicationController
     end_date = params[:end_date] + " 23:59:59"
     
     # find all ticket entries in the date range
-    entries = TicketEntry.find(:all, :conditions => {:created_at.gte => start_date, :created_at.lte => end_date})
+    entries = TicketEntry.find(:all) do
+      all do
+        created_at > start_date
+        created_at < end_date
+      end
+    end
     
     # what are all my labor types, set it global so the view can see it
     @labor_types = LaborType.find(:all)
