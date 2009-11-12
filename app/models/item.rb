@@ -14,7 +14,7 @@ class Item
   has_many :ticket_items
 
   before_create :build_keywords
-  before_update :update_keywords
+  before_update :build_keywords
   
   def build_keywords
     keywords = []
@@ -22,9 +22,6 @@ class Item
     self.name.downcase.sub(',','').split(":").each { |k| k.split(" ").each { |k2| keywords << k2 } }
     self.description.downcase.sub(',','').split(":").each { |k| k.split(" ").each { |k2| keywords << k2 } } unless self.description == nil
     self._keywords = keywords.uniq
-  end
-  
-  def update_keywords
     self._keywords << self.barcode
   end
   

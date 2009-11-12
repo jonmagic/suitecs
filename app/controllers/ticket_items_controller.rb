@@ -2,10 +2,12 @@ class TicketItemsController < ApplicationController
   before_filter :login_required
   layout nil
   
+  def index
+    render :nothing => true
+  end
+  
   def show
-    @item = Item.find_by_barcode(params[:id])
-    @ticket_item = TicketItem.new()
-    @ticket_id = params[:ticket_id]
+    @ticket_item = TicketItem.new(:item_id => Item.find_by_barcode(params[:id]).id, :ticket_id => params[:ticket_id])
   end
   
   def create

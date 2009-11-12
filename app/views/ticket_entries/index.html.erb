@@ -20,7 +20,7 @@
       </div>
     <% else %>
       <div id="ticket_item_<%= entry.id %>" data-ticket-item-id="<%= entry.id %>" class="ticket_item entry">
-        <p><b><%= entry.quantity %></b> x (<%= entry.item.barcode %>) <b><%= entry.item.name %></b> added by <b><%= User.find(entry.creator_id).name %></b> <div class="delete_button hide"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_item_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this item?" %></div></p>
+        <p><b><%= entry.quantity %></b> x (<%= entry.item.barcode %>) <b><%= entry.item.name %></b> <% if entry.serial_number %>(SN: <%= entry.serial_number %>)<% end %> added by <b><%= User.find(entry.creator_id).name %></b> <div class="delete_button hide"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_item_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this item?" %></div></p>
       </div>
     <% end %>
   <% end %>
@@ -29,27 +29,29 @@
 </div>
 <div id="add_item_dialog">
   <p><label>Scan Barcode</label> <input type="text" id="barcode" /></p>
-  <div id="items_list"></div>
+  <ul id="items_list"></ul>
 </div>
 
 <script>
   $(document).ready(function() {
     setupToolbarsAndButtons();
-    // alert(<%= @ticket_entries.length %>);
     // add item form dialog
     $("#add_item_dialog").dialog({
       autoOpen: false,
       modal: true,
-      width: 600,
+      width: 700,
       height: 400,
-      title: "Add Inventory Items to Ticket"
+      title: "Add Inventory Items to Ticket",
+      close: function(){
+        $('#items_list').empty();
+      }
     });
     // bind keypress event
     $('#add_item_dialog input#barcode').keyup(function(e) {
     	//alert(e.keyCode);
     	if(e.keyCode == 13) {
     	  $.get(window.location.pathname+"/ticket_items/"+$(this).val(), function(data){
-    	    $('#items_list').append(data);
+    	    $('#items_list').prepend(data);
     	  });
     	  $(this).val('');
     	}
@@ -60,11 +62,7 @@
         $('#items_list form').each(function(){
           $(this).ajaxSubmit();
         });
-        setTimeout(function(){
-          reload_ticket_entries(<%= @ticket.id %>);
-          $('#add_item_dialog').dialog('close');
-          flash("Added Items to Ticket...")          
-        }, 2000)
+        window.location.reload();
       }
     });
     // open add item dialog

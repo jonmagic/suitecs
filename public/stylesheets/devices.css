@@ -1,4 +1,4 @@
-#device {}
+#device {margin:0 1em;padding:0;}
 
 /* Sidebar */
 div.sidebar-list ul#devices li a.search {background:url("/images/icons/find.png") no-repeat;}

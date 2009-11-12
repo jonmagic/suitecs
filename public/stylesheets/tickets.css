@@ -19,7 +19,7 @@ h3.description {margin-top:0;}
 #ticket table.details {position:absolute;right:1.5em;top:3.8em;}
 #ticket div.description {width:50%;min-height:5em;}
 div#ticket_entries {margin:1em 0;}
-div.ticket_entry, div.ticket_item {position:relative;border-top:1px solid #ddd;padding:5px;}
+div.ticket_entry, div.ticket_item {position:relative;border-top:1px solid #ddd;padding:5px;font-size:.9em;}
 .ticket_entry:hover, .ticket_item:hover {background-color:#d4dde6;}
 .ticket_entry_details {font-size:10pt;line-height:8pt;}
 .ticket_entry_byline {font-size:10pt;margin-left:55px;line-height:8pt;color:#666;}
@@ -46,3 +46,9 @@ input#ticket_active_on {width:8em;}
 
 /* Search box */
 div#user_select {position:absolute;top:2px;right:1em;}
+
+/* inventory */
+ul#items_list {list-style:none;margin:0;padding:0;}
+ul#items_list li {position:relative;;border-bottom:3px solid #eee;margin-bottom:10px;}
+ul#items_list span.item_name {display:block;height:2.2em;width:360px;overflow:hidden;font-weight:bold;white-space:nowrap;}
+ul#items_list span.item_fields {position:absolute;right:0;top:-5px;}
