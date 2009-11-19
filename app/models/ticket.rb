@@ -2,7 +2,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :client
   belongs_to :user
   has_many :ticket_entries
-  has_many :ticket_items
+  # has_many :ticket_items
   has_and_belongs_to_many :devices
   has_many :checklists
   has_many :things, :as => :attached, :dependent => :destroy
@@ -16,6 +16,17 @@ class Ticket < ActiveRecord::Base
   after_create :add_created_note
   before_update :add_status_change_note, :notify_tech
   
+  attr_accessor :ticket_item_data
+  before_save :save_ticket_item_data
+  
+  def save_ticket_item_data
+    return if ticket_item_data.blank?
+    ticket_item_data.each do |item|
+      ticket_item = TicketItem.new(item.merge(:ticket_id => id))
+      ticket_item.update_or_save
+    end
+  end
+    
   def add_created_note
     TicketEntry.create(:entry_type => "State change", :note => "Ticket created.", :billable => false, :private => true, :detail => 6, :ticket => self, :creator_id => self.creator_id)
   end

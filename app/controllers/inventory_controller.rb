@@ -4,7 +4,10 @@ class InventoryController < ApplicationController
   def index
     if params[:q]
       @items = Item.all(:_keywords => /#{params[:q]}/i)
-      render :partial => 'inventory/items', :layout => false
+      respond_to do |format|
+        format.html { render :partial => 'inventory/items', :layout => false }
+        format.json
+      end
     end
   end
   

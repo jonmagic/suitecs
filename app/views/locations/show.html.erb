@@ -22,7 +22,7 @@
 <script>
   $('#location_items a.remove').click(function(){
     var link = $(this);
-    $('#quantity').dialog('option', 'buttons', { 
+    $('div#quantity').dialog('option', 'buttons', { 
       "Remove Item": function() { 
         var url = '/locations/'+link.attr('data-location-id')
         $.ajax({
@@ -44,7 +44,7 @@
         $(this).dialog('close');
       }
     });
-    $('#quantity').dialog('open');
-    $('#quantity input').focus();
+    $('div#quantity').dialog('open');
+    $('div#quantity input').focus();
   });
 </script>

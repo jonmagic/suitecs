@@ -1,0 +1,39 @@
+<li>
+  <span class="item_name"><%= @ticket_item.item.name %></span>
+  <span class="item_fields">
+    <% if @locations.length > 0 %>
+      <select name="ticket[ticket_item_data][][location]">
+        <option value="">Store</option>
+        <% @locations.each do |location| %>
+          <option value="<%= location.id %>"><%= location.name %></option>
+        <% end %>
+      </select>
+    <% else %>
+      <%= hidden_field_tag 'ticket[ticket_item_data][][location]', 'store' %>
+    <% end %>
+    <% if @ticket_item.item.requires_serialnumber %>
+      <%= text_field_tag 'ticket[ticket_item_data][][serial_number]' %>
+    <% else %>
+      <%= hidden_field_tag 'ticket[ticket_item_data][][serial_number]', '' %>
+    <% end %>
+  </span>
+  <%= hidden_field_tag 'ticket[ticket_item_data][][quantity]', "1" %>
+  <%= hidden_field_tag 'ticket[ticket_item_data][][item_id]', @ticket_item.item.id %>
+  <%= hidden_field_tag 'ticket[ticket_item_data][][creator_id]', current_user.id %>
+</li>
+
+
+<script>
+  $(function(){
+    <% if @ticket_item.item.requires_serialnumber %>
+      $('ul#items_list li:first-child input#ticket_ticket_item_data__serial_number').focus();
+      $('ul#items_list li:first-child input#ticket_ticket_item_data__serial_number').keypress(function(e){
+        if(e.keyCode == 13) {
+          $('input#barcode').focus();
+          return false;
+        }
+      });
+    <% end %>
+    console.log(<%= @locations.length %>)
+  });
+</script>

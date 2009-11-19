@@ -58,6 +58,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :inventory
   map.resources :locations
   map.resources :ticket_items
+  map.ticket_item_by_barcode '/tickets/:ticket_id/ticket_items/barcode/:id', :controller => 'ticket_items', :action => 'barcode'
+  map.ticket_item_by_item_id '/tickets/:ticket_id/ticket_items/item_id/:id', :controller => 'ticket_items', :action => 'item_id'
   
   # Custom Routes
   map.device_details '/tickets/:ticket_id/devices/:id/details', :controller => 'devices', :action => 'details'

@@ -30,6 +30,8 @@ div.ticket_entry_bottom {clear:both;}
 input.ticket_item_quantity {width:2em;}
 #ticket_content {margin-top:3.5em;}
 
+#item_search {width:400px;}
+
 td.new_ticket_entry_note {width:70%;}
 td.new_ticket_entry_note textarea {width:100%;height:6em;}
 td.new_ticket_entry_parts {width:30%;}

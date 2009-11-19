@@ -21,7 +21,7 @@ $(document).ready(function(){
     title: "Edit Item" 
   });
   // 
-  $('tbody tr a').live('click', function(){
+  $('div#center tbody tr a').live('click', function(){
     $('#item').empty();
     $('#item').load('/inventory/'+$(this).parent().parent().attr('data-item-id'));
     $('#item').dialog('open');

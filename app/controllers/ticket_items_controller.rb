@@ -6,21 +6,17 @@ class TicketItemsController < ApplicationController
     render :nothing => true
   end
   
-  def show
+  def barcode
     @ticket_item = TicketItem.new(:item_id => Item.find_by_barcode(params[:id]).id, :ticket_id => params[:ticket_id])
+    @locations = []
+    Location.all('items.'+@ticket_item.item.id => {"$exists" => true}).each { |l| if l.items[@ticket_item.item.id][:quantity] > 0 then @locations << l end }
+    render :partial => 'item_form'
   end
   
-  def create
-    @ticket_item = TicketItem.new(params[:ticket_item])
-    if @ticket_item.update_or_save
-      render :nothing => true, :status => 200
-    else
-      render :nothing => true, :status => 500
-    end
-  end
-  
-  def update
-    
+  def item_id
+    @ticket_item = TicketItem.new(:item_id => Item.find(params[:id]).id, :ticket_id => params[:ticket_id])
+    @locations = Location.all('items.'+@ticket_item.item.id => {"$exists" => true})
+    render :partial => 'item_form'
   end
   
   def destroy
@@ -31,4 +27,5 @@ class TicketItemsController < ApplicationController
       render :nothing => true, :status => 500
     end      
   end
+
 end

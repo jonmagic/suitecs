@@ -61,11 +61,9 @@ class TicketsController < ApplicationController
       if @ticket.update_attributes(params[:ticket])
         flash[:notice] = 'Ticket was successfully updated.'
         format.html { redirect_to(@ticket) }
-        format.xml  { head :ok }
         format.js
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
         format.js
       end
     end
