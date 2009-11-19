@@ -9,7 +9,7 @@
         <% end %>
       </select>
     <% else %>
-      <%= hidden_field_tag 'ticket[ticket_item_data][][location]', 'store' %>
+      <%= hidden_field_tag 'ticket[ticket_item_data][][location]', '' %>
     <% end %>
     <% if @ticket_item.item.requires_serialnumber %>
       <%= text_field_tag 'ticket[ticket_item_data][][serial_number]' %>
