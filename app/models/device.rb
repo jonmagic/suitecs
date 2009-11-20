@@ -14,7 +14,13 @@ class Device < ActiveRecord::Base
   
   def create_service_tag
     if self.service_tag.blank?
-      recent_device = Device.find(:first, :order => 'created_at DESC', :conditions => {:created_at.gt => Time.now.beginning_of_day.utc, :created_at.lt => Time.now.end_of_day.utc, :device_type_id => self.device_type_id})
+      recent_device = Device.find(:first, :order => 'created_at DESC') do
+        all do
+          created_at > Time.now.beginning_of_day.utc
+          created_at < Time.now.end_of_day.utc
+          device_type_id == self.device_type_id
+        end
+      end
       device_type = DeviceType.find(self.device_type_id)
       if recent_device != nil
         service_tag_parts= recent_device.service_tag.split("-")
