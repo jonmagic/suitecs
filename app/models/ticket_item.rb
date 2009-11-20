@@ -2,7 +2,7 @@ class TicketItem
   include MongoMapper::Document
 
   key :ticket_id, Integer, :require => true
-  key :item_id, String, :require => true
+  key :item_id, ObjectId, :require => true
   key :quantity, Integer, :require => true, :default => 1
   key :serial_number, String
   key :creator_id, :require => true

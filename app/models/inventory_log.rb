@@ -4,7 +4,7 @@ class InventoryLog
   key :user_id, Integer, :require => true
   key :action, String, :require => true
   key :quantity, Integer
-  key :item_id, String, :require => true
+  key :item_id, ObjectId, :require => true
   key :source, Hash
   key :destination, Hash
   key :created_at, Time, :require => true
