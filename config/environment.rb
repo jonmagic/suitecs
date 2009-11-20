@@ -18,6 +18,6 @@ Rails::Initializer.run do |config|
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
-MongoMapper.connection = Mongo::Connection.new('127.0.0.1', 27017, :auto_reconnect => true)#, :logger => Rails.logger)
+MongoMapper.connection = Mongo::Connection.new('127.0.0.1', 27017, :auto_reconnect => true, :logger => Rails.logger)
 MongoMapper.database = "suite-#{Rails.env}"
 MongoMapper.ensure_indexes!

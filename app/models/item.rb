@@ -6,10 +6,12 @@ class Item
   key :description, String
   key :cost, Float
   key :retail, Float  
-  key :barcode, String, :unique => true
+  key :barcode, String
   key :quantity, Integer
   key :_keywords, Array
   key :requires_serialnumber, Boolean
+  
+  validates_uniqueness_of :barcode, :allow_blank => true
   
   has_many :ticket_items
 
@@ -22,7 +24,7 @@ class Item
     self.name.downcase.sub(',','').split(":").each { |k| k.split(" ").each { |k2| keywords << k2 } }
     self.description.downcase.sub(',','').split(":").each { |k| k.split(" ").each { |k2| keywords << k2 } } unless self.description == nil
     self._keywords = keywords.uniq
-    self._keywords << self.barcode
+    self._keywords << self.barcode unless self.barcode.blank?
   end
   
   def self.sync_inventory_with_qb
