@@ -30,14 +30,26 @@ class LocationsController < ApplicationController
   def update
     @location = Location.find(params[:id])
     if params[:type] == "add_item"
-      @location.add_item(params[:item_id], params[:quantity])
+      if @location.add_item(params[:item_id], params[:quantity])
+        InventoryLog.create(:user_id => current_user.id, 
+                            :action => "Moved", 
+                            :quantity => params[:quantity], 
+                            :item_id => params[:item_id],
+                            :destination => {'type' => 'location', 'id' => @location.id})
+      end
       if @location.save
         render :nothing => true, :status => 200
       else
         render :nothing => true, :status => 500
       end
     elsif params[:type] == "remove_item"
-      @location.remove_item(params[:item_id], params[:quantity])
+      if @location.remove_item(params[:item_id], params[:quantity])
+        InventoryLog.create(:user_id => current_user.id, 
+                            :action => "Removed",
+                            :quantity => params[:quantity],
+                            :item_id => params[:item_id],
+                            :source => {'type' => 'location', 'id' => @location.id})
+      end
       if @location.save
         render :nothing => true, :status => 200
       else

@@ -1,2 +1,19 @@
+div.sidebar-list li a.search {background:url("/images/icons/zoom.png") no-repeat 0px 1px;}
+div.sidebar-list li a.log {background:url("/images/icons/report_edit.png") no-repeat 0px 1px;}
 div.sidebar-list li a.location {background:url("/images/icons/briefcase.png") no-repeat 0px 1px;}
+
 table tr td img {padding:2px 5px;}
+
+div#inventory ul {list-style:none;margin:0;padding:0;}
+div#inventory ul li {padding:.3em .5em;border-bottom:2px solid #ccc;font-size:1em;font-weight:bold;}
+div#inventory ul li a, div#inventory ul li span {padding:.2em .4em;}
+div#inventory ul li a.user {background-color:#91b6ec;}
+div#inventory ul li a.user:hover {background-color:#397bd9;}
+div#inventory ul li span.action {background-color:#fe7874;}
+div#inventory ul li span.action:hover {background-color:#f33d41;}
+div#inventory ul li a.item {background-color:#91c094;}
+div#inventory ul li a.item:hover {background-color:#61b057;}
+div#inventory ul li a.source {background-color:#f7b6fa;}
+div#inventory ul li a.source:hover {background-color:#ca79ff;}
+div#inventory ul li a.destination {background-color:#f7fbb8;}
+div#inventory ul li a.destination:hover {background-color:#f3e567;}

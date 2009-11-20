@@ -55,6 +55,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :labor_types
   map.resources :qb_client_connector
   map.resources :invoices
+  map.inventory_activity '/inventory/activity', :controller => 'inventory_log', :action => 'index'
   map.resources :inventory
   map.resources :locations
   map.resources :ticket_items

@@ -29,18 +29,20 @@ class TicketItem
       if serial_number.blank?
         new_quantity = item.quantity + self.quantity
         item.quantity = new_quantity
-        RAILS_DEFAULT_LOGGER.info 'item already exists on ticket, incrementing quantity'
-        RAILS_DEFAULT_LOGGER.info item.inspect
         if item.save
           Location.find(location).remove_item(self.item.id, 1).save unless location.blank?
+          return true
+        else
+          return false
         end
       end
     else
       valid?
-      RAILS_DEFAULT_LOGGER.info 'not found in database, creating'
-      RAILS_DEFAULT_LOGGER.info self.inspect
       if save
         Location.find(location).remove_item(self.item.id, 1).save unless location.blank?
+        return true
+      else
+        return false
       end
     end
   end

@@ -23,7 +23,14 @@ class Ticket < ActiveRecord::Base
     return if ticket_item_data.blank?
     ticket_item_data.each do |item|
       ticket_item = TicketItem.new(item.merge(:ticket_id => id))
-      ticket_item.update_or_save
+      if ticket_item.update_or_save
+        InventoryLog.create(:user_id => ticket_item.creator_id, 
+                            :action => "Added", 
+                            :quantity => 1, 
+                            :item_id => ticket_item.item_id, 
+                            :source => {'type' => 'location', 'id' => ticket_item.location},
+                            :destination => {'type' => 'ticket', 'id' => ticket_item.ticket_id})
+      end
     end
   end
     

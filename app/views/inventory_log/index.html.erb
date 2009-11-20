@@ -1,0 +1,32 @@
+<div id="content_search">
+  <div id="applesearch"><form action="/inventory/"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span></form></div>
+</div>
+<div id="inventory">
+  <ul>
+    <% @log_items.each do |item| %>
+      <li><%= log_item_helper(item) %></li>
+    <% end %>
+  </ul>
+</div>
+<div id="item"></div>
+
+<script>
+  $(function(){
+    // select sidebar
+    $("#sidebar ul li a.log").parent("li").addClass("selected");
+    // edit item dialog
+    $('#item').dialog({
+      autoOpen: false,
+      resizable: false,
+      modal: true,
+      width: 600,
+      height: 240,
+      title: "Edit Item" 
+    });
+    $('[data-item-id]').live('click', function(){
+      $('#item').empty();
+      $('#item').load('/inventory/'+$(this).attr('data-item-id'));
+      $('#item').dialog('open');
+    });
+  });
+</script>
