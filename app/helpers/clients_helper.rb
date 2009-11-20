@@ -64,7 +64,12 @@ module ClientsHelper
     last_day = LastDayNextDay.next(Setting.find(:first, :conditions => {:key => "last_day_of_payroll"}).value).to_s
     start_date = first_day + " 00:00:00"
     end_date = last_day + " 23:59:59"
-    entries = TicketEntry.find(:all, :conditions => {:created_at.gte => start_date, :created_at.lte => end_date, :billable => true})
+    entries = TicketEntry.find(:all) do
+      all do
+        created_at > start_date
+        created_at < end_date
+      end
+    end
     time = 0.0
     entries.each do |entry|
       time += entry.time.to_f/60.0 unless entry.time.blank?
