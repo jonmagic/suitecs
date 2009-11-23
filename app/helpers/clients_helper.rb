@@ -68,6 +68,7 @@ module ClientsHelper
       all do
         created_at > start_date
         created_at < end_date
+        billable == true
       end
     end
     time = 0.0
