@@ -22,7 +22,7 @@ class TicketItemsController < ApplicationController
   def destroy
     @ticket_item = TicketItem.find(params[:id])
     if @ticket_item.destroy
-      InventoryLog.create(:user_id => @ticket_item.creator_id, 
+      InventoryLog.create(:user_id => current_user.id, 
                           :action => "Removed", 
                           :quantity => @ticket_item.quantity, 
                           :item_id => @ticket_item.item_id,
