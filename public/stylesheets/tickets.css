@@ -24,7 +24,10 @@ div.ticket_entry, div.ticket_item {position:relative;border-top:1px solid #ddd;p
 .ticket_entry_details {font-size:10pt;line-height:8pt;}
 .ticket_entry_byline {font-size:10pt;margin-left:55px;line-height:8pt;color:#666;}
 .ticket_entry_mugshot {float:left;display:block;margin-right:5px;width:50px;height:50px;background-color:#eee;}
-div.ticket_entry_note {float:left;width:65%;}
+div.ticket_entry_note {float:left;width:100%;}
+div.ticket_entry_note_old {float:left;width:65%;}
+div.ticket_entry_note_text_area {padding-right:10px;}
+div.ticket_entry_note_text_area textarea {height:75px;width:100%;}
 div.ticket_entry_parts {margin-left:70%;padding-top:5px;padding-bottom:5px;background-color:#fbfbfb;}
 div.ticket_entry_bottom {clear:both;}
 input.ticket_item_quantity {width:2em;}

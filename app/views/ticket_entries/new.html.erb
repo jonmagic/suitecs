@@ -12,16 +12,8 @@
       <td class="first hide">Drive Time</td><td class="hide"><%= f.text_field :drive_time, :title => "minutes", :class => "short_field" %></td>
     </tr>
   </table>
-  <table>
-    <tr>
-      <td class="new_ticket_entry_note">Notes</td>
-      <td class="new_ticket_entry_parts">Parts</td>
-    </tr>
-    <tr>
-      <td class="new_ticket_entry_note"><%= f.text_area :note %></td>
-      <td class="new_ticket_entry_parts"><%= f.text_area :parts %></td>
-    </tr>
-  </table>
+  <h4>Notes</h4>
+  <div class="ticket_entry_note_text_area"><%= f.text_area :note %></div>
   <%= f.hidden_field :detail, :value => 1 %>
   <%= f.hidden_field :ticket_id, :value => params[:ticket_id] %>
   <%= f.hidden_field :creator_id, :value => current_user.id %>
