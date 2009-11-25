@@ -24,5 +24,6 @@ module InventoryLogHelper
     elsif item.action == "Removed"
       string << "from #{source_link}"
     end
+    string << " at #{item.created_at.strftime('%I:%M%p on %x')}"
   end
 end

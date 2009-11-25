@@ -1,7 +1,21 @@
 <div id="content_search">
-  <div id="applesearch"><form action="/inventory/"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span></form></div>
+  <div id="applesearch">
+    <form action="/inventory/activity/search" id="inventory_log_search_form">
+      User: <%= select_tag 'user_id', options_for_select(@user_options) %> 
+      Action: <%= select_tag 'action_type', options_for_select(['', 'Added', 'Moved', 'Removed']) %> 
+      Item: <span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span> 
+      <%= hidden_field_tag 'item_id' %><br />
+      To: <%= select_tag 'to', options_for_select(@to_options) %> 
+      <%= text_field_tag 'to_id' %> 
+      From: <%= select_tag 'from', options_for_select(@from_options) %> 
+      <%= text_field_tag 'from_id' %> 
+      <!-- Start: <%= text_field_tag 'start_date' %> 
+      End: <%= text_field_tag 'end_date' %>  -->
+      <%= submit_tag 'Search' %>
+    </form>
+  </div>
 </div>
-<div id="inventory">
+<div id="inventory_log">
   <ul>
     <% @log_items.each do |item| %>
       <li><%= log_item_helper(item) %></li>
@@ -28,5 +42,39 @@
       $('#item').load('/inventory/'+$(this).attr('data-item-id'));
       $('#item').dialog('open');
     });
+    // product search
+    $('#srch_fld').quickselect({
+      ajax: '/inventory/',
+    	maxVisibleItems:50,
+      onItemSelect: function(li){
+        var item = li.item;
+        var values = item.values || (item.value ? [item.value] : (typeof(item)==='string' ? [item] : item));
+        $('#item_id').val(values);
+      }
+    });
+    // ajaxify form
+    $('#inventory_log_search_form').ajaxForm({
+      target: '#inventory_log'
+    });
+    // hide/show to and from fields
+    $('#to_id').hide();
+    $('#to').change(function(){
+      if($(this).val()=='ticket'){
+        $('#to_id').show().focus();
+      }else{
+        $('#to_id').hide();
+      }
+    });
+    $('#from_id').hide();
+    $('#from').change(function(){
+      if($(this).val()=='ticket'){
+        $('#from_id').show().focus();
+      }else{
+        $('#from_id').hide();
+      }
+    });
+    // add calendars to start and end fields
+    $('#start_date').datepicker();
+    $('#end_date').datepicker();
   });
 </script>

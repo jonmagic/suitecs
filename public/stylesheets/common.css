@@ -77,7 +77,9 @@ div.panel fieldset {background-color:#efefef;}
 #center p {margin:.5em 0;padding:0px;}
 #center ol.align, #center ul.align {margin:.5em 3em;padding:0px;}
 #content_search {padding:5px;background-color:#ccc;border-bottom:1px solid #505050;position:relative;}
-#content_search input[type="search"] {width:300px;}
+#content_search input[type="search"] {width:30em;}
+#content_search input#start_date {width:5em;}
+#content_search input#end_date {width:5em;}
 
 /* Tables */
 table.itu {border-bottom:1px solid #505050;width:100%;}
