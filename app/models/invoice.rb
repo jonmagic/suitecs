@@ -1,6 +1,6 @@
 class Invoice
-  def self.create_for(ticket)
-    begin
+  def self.create_for(ticket, invoice_number=nil)
+    # begin
       client = Client.find(ticket.client_id)
 
       # set these variables to be used later
@@ -20,8 +20,8 @@ class Invoice
               else
                 line_item[:ItemRef] = {:ListID => LaborType.warranty.qb_id}
               end
-              line_item[:Desc] = te.note+" [#{te.initials}] #{te.created_at.strftime('%m-%d-%y')} Ticket ##{te.ticket.id}"
               line_item[:Quantity] = Invoice.calculate_quantity(te.time, te.labor_type)
+              line_item[:Desc] = te.note+" [#{te.initials}] #{te.created_at.strftime('%m-%d-%y')} Ticket ##{te.ticket.id}"
               line_items << line_item
             end
           end
@@ -36,6 +36,7 @@ class Invoice
           line_item = {}
           line_item[:ItemRef] = {:ListID => te.item.qb_id}
           line_item[:Quantity] = te.quantity
+          line_item[:Desc] = "Serial# #{te.serial_number}, Device: #{te.device.service_tag}"
           line_items << line_item
         end
       end
@@ -52,16 +53,49 @@ class Invoice
       needs_attention == 0 ? is_to_be_printed = true : is_to_be_printed = false
 
       # create the invoice
-      invoice = QB::Invoice.new(
-                          :CustomerRef => {:ListID => client.qb_id},
-                          :TxnDate => Date.today,
-                          :InvoiceLine => line_items,
-                          :IsToBePrinted => is_to_be_printed,
-                          :CustomerMsg => QB::CustomerMsg.first()
-                          )
-    rescue
-      return false
-    end
+      if invoice_number != nil
+        if invoice = QB::Invoice.first(:RefNumber => invoice_number.to_s, :IncludeLineItems => true)
+          invoice_mod = invoice.to_element
+          # preserve the existing line items
+          existing_lines = invoice_mod[:InvoiceLineMod]
+          line_mods = []
+          existing_lines.each do |line|
+            line_mods << QB::InvoiceLineMod.new(:TxnLineID => line[:TxnLineID])
+          end
+          line_items.each do |line_item|
+            new_line_item = QB::InvoiceLineMod.new(:ItemRef => line_item[:ItemRef], :Quantity => line_item[:Quantity], :Desc => line_item[:Desc])
+            new_line_item[:TxnLineID] = '-1'
+            line_mods << new_line_item
+          end
+          invoice_mod.delete(:InvoiceLineMod)
+          invoice_mod.attributes.concat(line_mods)
+          if invoice_mod.valid?
+            save_ret = Quickbooks.execute(QB::InvoiceModRq.new(:InvoiceMod => invoice_mod))
+            invoice = save_ret[:QBXMLMsgsRs][:InvoiceModRs][0][:InvoiceRet].to_model
+          else
+            raise "Invoice is not valid for save."
+          end
+        else
+          raise "Failed to find invoice."
+        end
+      else
+        invoice = QB::Invoice.new(
+                            :CustomerRef => {:ListID => client.qb_id},
+                            :TxnDate => Date.today,
+                            :InvoiceLine => line_items,
+                            :IsToBePrinted => is_to_be_printed,
+                            :CustomerMsg => QB::CustomerMsg.first()
+                            )
+        if invoice.save
+          invoice.instance_variable_set(:@new_record, false)
+          return invoice
+        else
+          raise "Failed to save invoice."
+        end
+      end
+    # rescue
+    #   return false
+    # end
   end
   
 

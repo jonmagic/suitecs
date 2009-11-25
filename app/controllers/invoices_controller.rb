@@ -4,13 +4,14 @@ class InvoicesController < ApplicationController
   def create
     # Lookup my ticket and my client
     ticket = Ticket.find(params[:ticket_id])
-    
-    invoice = false
+
+    invoice_saved = false
     if !ticket.client.qb_id.blank?
-      invoice = Invoice.create_for(ticket)
+      !params[:invoice_number].blank? ? invoice = Invoice.create_for(ticket, params[:invoice_number]) : invoice = Invoice.create_for(ticket)
+      invoice_saved = !invoice.new_record?
     end
-    
-    if invoice != false && invoice.save
+
+    if invoice_saved
       Quickbooks.connection.close
       ticket.invoiced = true
       ticket.save
@@ -21,7 +22,7 @@ class InvoicesController < ApplicationController
       redirect_to url_for(ticket)
     else
       Quickbooks.connection.close
-      
+
       flash[:notice] = "Problem creating the invoice."
       redirect_to url_for(ticket)
     end

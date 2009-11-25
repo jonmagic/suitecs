@@ -43,9 +43,16 @@
     <form action="/invoices/" class="create_invoice" id="create_invoice" method="post">
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <input id="ticket_id" name="ticket_id" type="hidden" value="<%= @ticket.id %>" />
+      <input id="invoice_number" name="invoice_number" type="hidden" />
       <input id="ticket_submit" name="commit" type="submit" value="Save" />
     </form>
   </div>
+</div>
+<div id="save_invoice_dialog">
+  <p>Do you want to create a new invoice, or add to an existing one?</p>
+</div>
+<div id="add_to_existing_invoice">
+  <h4>Invoice #<input type="text" id="invoice_number_input" /></h4>
 </div>
 
 <script>
@@ -89,7 +96,7 @@
       <% if !@ticket.invoiced? && !@ticket.client.qb_id.blank? %>
         $("#footer div.col2").append("<a href='javascript:void(0)' class='invoice_ticket'>Invoice</a>");
         $("a.invoice_ticket").click(function(){
-          $("div#invoice form input[type=submit]").click();
+          $("#save_invoice_dialog").dialog('open');
         });
       <% end %>  
       $("#footer div.col2").append("<a href='#' class='archive_ticket'>Archive</a>");
@@ -106,9 +113,34 @@
       $("#footer div.col2").append("<a href='#' class='unarchive_ticket'>Un-Archive</a>");
       $("#footer a.unarchive_ticket").bind("click", function(){
         $("div#archive form input#ticket_archived_on").val("");
-        $("div#archive form input[type=submit]").click();
+        $("div#invoice form input[type=submit]").click();
       });
     };
+    // add to existing invoice dialog
+    $("#save_invoice_dialog").dialog({
+      autoOpen: false,
+      resizable: false,
+      modal: true,
+      width: 500,
+      height: 120,
+      title: "Create Invoice",
+      buttons: {
+        "Existing" : function(){$("#save_invoice_dialog").dialog('close');$("#add_to_existing_invoice").dialog('open');},
+        "New"  : function(){$("div#invoice form input[type=submit]").click();}
+      }
+    });
+    $("#add_to_existing_invoice").dialog({
+      autoOpen: false,
+      resizable: false,
+      modal: true,
+      width: 500,
+      height: 120,
+      title: "Add to Existing Invoice",
+      buttons: {
+        "Cancel" : function(){$("#add_to_existing_invoice").dialog('close');},
+        "Save" : function(){$("input#invoice_number").val($("input#invoice_number_input").val());$("div#invoice form input[type=submit]").click();}
+      }
+    });
     // Load ticket entries
     var entriesURL = "/tickets/"+<%= @ticket.id %>+"/ticket_entries"
     $("#entries").load(entriesURL, function(){
