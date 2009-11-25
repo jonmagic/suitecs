@@ -18,11 +18,18 @@ module InventoryLogHelper
     end
     string = "#{user_link} <span class='action'>#{item.action.downcase}</span> <span class='quantity'>#{item.quantity}x</span> #{item_link} "
     if item.action == "Added"
-      string << "to #{destination_link} from #{source_link}"
+      string << "to #{destination_link}"
+      if item.device_id
+        string << " and <span class='device'>Device #{item.device.service_tag}</span>"
+      end
+      string << " from #{source_link}"
     elsif item.action == "Moved"
       string << "to #{destination_link}"
     elsif item.action == "Removed"
       string << "from #{source_link}"
+      if item.device_id
+        string << " and <span class='device'>Device #{item.device.service_tag}</span>"
+      end
     end
     string << " at #{item.created_at.strftime('%I:%M%p on %x')}"
   end

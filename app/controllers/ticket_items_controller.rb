@@ -15,7 +15,8 @@ class TicketItemsController < ApplicationController
   
   def item_id
     @ticket_item = TicketItem.new(:item_id => Item.find(params[:id]).id, :ticket_id => params[:ticket_id])
-    @locations = Location.all('items.'+@ticket_item.item.id => {"$exists" => true})
+    @locations = []
+    Location.all('items.'+@ticket_item.item.id => {"$exists" => true}).each { |l| if l.items[@ticket_item.item.id][:quantity] > 0 then @locations << l end }
     render :partial => 'item_form'
   end
   
@@ -26,7 +27,8 @@ class TicketItemsController < ApplicationController
                           :action => "Removed", 
                           :quantity => @ticket_item.quantity, 
                           :item_id => @ticket_item.item_id,
-                          :source => {'type' => 'ticket', 'id' => @ticket_item.ticket_id})
+                          :source => {'type' => 'ticket', 'id' => @ticket_item.ticket_id},
+                          :device_id => @ticket_item.device_id)
       render :nothing => true, :status => 200
     else
       render :nothing => true, :status => 500

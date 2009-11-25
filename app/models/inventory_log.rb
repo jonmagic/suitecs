@@ -7,10 +7,12 @@ class InventoryLog
   key :item_id, ObjectId, :require => true
   key :source, Hash
   key :destination, Hash
+  key :device_id, Integer
   key :created_at, Time, :require => true
   
   belongs_to :user
   belongs_to :item
+  belongs_to :device
   
   # InventoryLog.create(:user_id => ticket_item.creator_id, 
   #                     :action => "Added", 

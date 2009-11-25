@@ -22,7 +22,7 @@
       </div>
     <% else %>
       <div id="ticket_item_<%= entry.id %>" data-ticket-item-id="<%= entry.id %>" class="ticket_item entry">
-        <p><b><%= entry.quantity %></b> x (<%= entry.item.barcode %>) <b><%= entry.item.name %></b> <% if !entry.serial_number.blank? %>(SN: <%= entry.serial_number %>)<% end %> added by <b><%= User.find(entry.creator_id).name %></b> <div class="delete_button hide"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_item_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this item?" %></div></p>
+        <p><b><%= entry.quantity %></b>x <b><%= entry.item.name %></b> [Barcode: <%= entry.item.barcode %>] <% if !entry.serial_number.blank? %>[SN: <%= entry.serial_number %>]<% end %><% if !entry.device_id.blank? %> [Device: <%= link_to entry.device.service_tag, url_for(entry.device) %>]<% end %> added by <b><%= User.find(entry.creator_id).name %></b> on <%= entry.created_at.strftime('%I:%M%p on %x')%><div class="delete_button hide"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_item_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this item?" %></div></p>
       </div>
     <% end %>
   <% end %>

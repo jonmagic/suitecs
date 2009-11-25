@@ -1,6 +1,9 @@
 <li>
   <span class="item_name"><%= @ticket_item.item.name %></span>
   <span class="item_fields">
+    <% if @ticket_item.ticket.devices.length > 0 %>
+      <%= select_tag 'ticket[ticket_item_data][][device_id]', options_for_select([['Select Device','']] + @ticket_item.ticket.devices.map {|d| [d.service_tag,d.id]}) %>
+    <% end %>
     <% if @locations.length > 0 %>
       <select name="ticket[ticket_item_data][][location]">
         <option value="">Store</option>

@@ -34,6 +34,11 @@ class InventoryLogController < ApplicationController
       conditions['source.type'] = 'location'
       conditions['source.id'] = params['from']
     end
+    if params['device_service_tag']
+      if device = Device.find_by_service_tag(params['device_service_tag'])
+        conditions[:device_id] = device.id
+      end
+    end
     # filter by start and end date
     # if !params['start_date'].blank? && !params['end_date'].blank?
     #   conditions[:created_at] = params['start_date'].to_time..params['end_date'].to_time

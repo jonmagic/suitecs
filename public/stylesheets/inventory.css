@@ -6,7 +6,7 @@ table tr td img {padding:2px 5px;}
 
 div#inventory_log ul {list-style:none;margin:0;padding:0;}
 div#inventory_log ul li {padding:.3em .5em;border-bottom:2px solid #ccc;font-size:1em;font-weight:bold;}
-div#inventory_log ul li a, div#inventory ul li span {padding:.2em .4em;}
+div#inventory_log ul li a, div#inventory_log ul li span {padding:.2em .4em;}
 div#inventory_log ul li a.user {background-color:#91b6ec;}
 div#inventory_log ul li a.user:hover {background-color:#397bd9;}
 div#inventory_log ul li span.action {background-color:#fe7874;}
@@ -17,6 +17,8 @@ div#inventory_log ul li a.source {background-color:#f7b6fa;}
 div#inventory_log ul li a.source:hover {background-color:#ca79ff;}
 div#inventory_log ul li a.destination {background-color:#f7fbb8;}
 div#inventory_log ul li a.destination:hover {background-color:#f3e567;}
+div#inventory_log ul li span.device {background-color:#ddd;}
+div#inventory_log ul li span.device:hover {background-color:#bbb;}
 
 #content_search input#to_id {width:5em;}
 #content_search input#from_id {width:5em;}
