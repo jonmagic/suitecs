@@ -9,11 +9,8 @@
     <tr> 
       <td>Owner:</td>
       <td>
-        <% if !@device.new_record? %>
-          <input id="client_id" name="client_id" type="text" value="<%= @device.client.fullname %>" /><%= f.hidden_field :client_id, :value => @device.client.id %>
-        <% else %>
-          <input id="client_id" name="client_id" type="text" value="" /><%= f.hidden_field :client_id %>
-        <% end %>
+        <% @client = @device.client.fullname unless @device.new_record? %>
+        <%= text_field_tag :client_id, @client %> <%= f.hidden_field :client_id %>
       </td>
     </tr>
     <tr> 
@@ -35,7 +32,7 @@
       autoSelectFirst:true,
     	maxVisibleItems:15,
     	autoFill: false,
-    	additional_fields:$("input#device_client_id")
+    	additionalFields:$("input#device_client_id")
     });
     // add save button to footer
     $("#footer div.col2").append("<a href='#' class='save'>Save</a>");
