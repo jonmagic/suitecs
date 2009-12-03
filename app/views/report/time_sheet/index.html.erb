@@ -11,7 +11,7 @@
 </div>
 
 <% if @technicians %>
-  <table class="itu">
+  <table class="itu" id="report">
     <thead>
       <tr>
         <% @header.each do |name| %>
@@ -38,5 +38,14 @@
     $("#start_date").datepicker();
     $("#end_date").datepicker();
     $('table.itu').tablesorter();
+    
+    // Create a totals row
+    $('#report tbody').append('<tr class="last"><td>Totals</td></tr>');
+    $('#report thead th').each(function(index){
+      if ($(this).text() != "Technician") {
+        $('#report tbody tr.last').append('<td>'+sumOfColumns('report', index + 1, true)+'</td>')
+      }
+    })
+    buildTables();
 	});
 </script>

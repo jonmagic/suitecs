@@ -62,6 +62,10 @@ class Report::AverageHoursComparisonController < ApplicationController
       @header << ts
     end
     
+    # build totals
+    @totals = {}
+    time_spans.each { |ts| @totals[ts] = 0.0 }
+    
     # add all my billable time in there
     entries.each do |entry|
       if scope == "Billable" && entry.billable 
@@ -92,6 +96,7 @@ class Report::AverageHoursComparisonController < ApplicationController
     @technicians = technicians.values
     @start_date = params[:start_date]
     @end_date = params[:end_date]
+    
   end
   
 end

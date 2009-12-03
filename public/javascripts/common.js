@@ -48,9 +48,14 @@ function buildTables(){
     $(this).append("<div>"+text+"</div>");
     $(this).addClass("remove-margins-padding");
   });
-  // wrap my content with hrefs
+  // wrap content that doesn't have a link
   $("table.itu td").each(function(){
-    $(this).addClass("remove-margins-padding");
+    if ($(this).find('a').length == 0) {
+      var text = $(this).text();
+      $(this).text("");
+      $(this).append("<div>"+text+"</div>");
+      $(this).addClass("remove-margins-padding");
+    };
   });
   // add my even odd classes to rows
   var rowClass = "even";
@@ -160,4 +165,14 @@ function flash( message )
     $("div#header div.flash p").effect('drop');
     setTimeout(function(){$("div#header div.flash").empty()}, 500)
   }, 2000);
+}
+
+function sumOfColumns(tableID, columnIndex, hasHeader) {
+  var tot = 0.0;
+  $("#" + tableID + " tr" + (hasHeader ? ":gt(0)" : ""))
+  .children("td:nth-child(" + columnIndex + ")")
+  .each(function() {
+    tot += parseFloat($(this).text());
+  });
+  return tot.toFixed(2);
 }
