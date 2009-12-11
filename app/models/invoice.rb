@@ -36,7 +36,7 @@ class Invoice
           line_item = {}
           line_item[:ItemRef] = {:ListID => te.item.qb_id}
           line_item[:Quantity] = te.quantity
-          line_item[:Desc] = "Serial# #{te.serial_number}, Device: #{te.device.service_tag}"
+          line_item[:Desc] = "#{te.item.description} [Serial# #{te.serial_number}] (Device: #{te.device.service_tag})"
           line_items << line_item
         end
       end
