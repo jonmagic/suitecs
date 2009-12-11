@@ -113,7 +113,7 @@
       $("#footer div.col2").append("<a href='#' class='unarchive_ticket'>Un-Archive</a>");
       $("#footer a.unarchive_ticket").bind("click", function(){
         $("div#archive form input#ticket_archived_on").val("");
-        $("div#invoice form input[type=submit]").click();
+        $("div#archive form input[type=submit]").click();
       });
     };
     // add to existing invoice dialog
