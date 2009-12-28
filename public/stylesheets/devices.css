@@ -2,6 +2,8 @@
 
 /* Sidebar */
 div.sidebar-list ul#devices li a.search {background:url("/images/icons/find.png") no-repeat;}
+div.sidebar-list ul#devices li a.in_trouble {background:url("/images/icons/arrow_down.png") no-repeat;}
+div.sidebar-list ul#checklists li a.checklist_search {background:url("/images/icons/application_form_magnify.png") no-repeat;}
 
 /* Search box */
 #applesearch .sbox input {width:300px;}

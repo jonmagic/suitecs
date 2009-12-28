@@ -1,0 +1,7 @@
+<% @checklists.each do |checklist| %>
+  <tr>
+    <td><%= checklist.name %></td>
+    <td><a href="<%= checklist.device_id ? device_path(checklist.device_id) : 'javascript:void(0)' %>"><%= checklist.device_id %></a></td>
+    <td><a href="<%= checklist.ticket_id ? ticket_path(checklist.ticket_id) : 'javascript:void(0)' %>"><%= checklist.ticket_id %></a></td>
+  </tr>
+<% end %>

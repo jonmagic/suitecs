@@ -13,17 +13,15 @@
 
   <div id="device_content">
     <ul>
-      <li class="ui-tabs-nav-item"><a href="#description" title="description">Description</a></li>
-      <li class="ui-tabs-nav-item"><a href="#tickets" title="tickets">Tickets</a></li>
-      <li class="ui-tabs-nav-item"><a href="#checklists" title="checklists">Checklists</a></li>
-      <li class="ui-tabs-nav-item" id="sentries_tab"><a href="#sentries" title="sentries">Sentries</a></li>
-      <li class="ui-tabs-nav-item"><a href="#files" title="files">Files</a></li>
+      <li><a href="#description" title="description">Description</a></li>
+      <li><a href="#tickets" title="tickets">Tickets</a></li>
+      <li><a href="#check_lists" title="checklists">Checklists</a></li>
+      <li id="sentries_tab"><a href="#sentries" title="sentries">Sentries</a></li>
+      <li><a href="#files" title="files">Files</a></li>
     </ul>
-  
     <div id="description">
-      <div class="ui-tabs-panel-padding"><%= textile_to_html(@device.description) %></div>
+      <%= textile_to_html(@device.description) %>
     </div>
-
     <div id="tickets">
       <ul class="toolbar">
         <li><a href="javascript:void(0)" class="new_ticket">New Ticket</a></li>
@@ -45,19 +43,17 @@
         <% end %>
       </table>
     </div>
-    <div id="checklists">
+    <div id="check_lists">
       <ul class="toolbar">
         <li><a href="javascript:void(0)" class="add_checklist">Add Checklist</a></li>
       </ul>
       <div id="add_checklist_form" class="hide toolbox">
         <h3>Add A Checklist</h3>
-        <div class="ui-tabs-panel-padding">
-          <% form_for Checklist.new do |f| -%>
-            <%= f.select :checklist_template_id, ChecklistTemplate.find(:all, :order => "name").collect {|c| [c.name, c.id]} %>
-            <%= f.hidden_field :device_id, :value => @device.id %>
-            <%= f.submit "Save" %>
-          <% end %>
-        </div>
+        <% form_for Checklist.new do |f| -%>
+          <%= f.select :checklist_template_id, ChecklistTemplate.find(:all, :order => "name").collect {|c| [c.name, c.id]} %>
+          <%= f.hidden_field :device_id, :value => @device.id %>
+          <%= f.submit "Save" %>
+        <% end %>
       </div>
       <h3>Device Checklists</h3>
       <table class="itu" id="checklists">
@@ -79,15 +75,12 @@
 
 <script>
   $(document).ready(function() {
-    // Load other content and create tabs
-    $("#device_content").tabs();
-    $("#center div.ui-tabs-panel table.itu").wrap("<div></div>").parent().addClass("ui-tabs-panel-padding");
     // add checklist to this device
     $("a.add_checklist").bind("click", function(){
       $("div#add_checklist_form").slideDown(500);
     });
     // show checklist on click
-    $("#checklists table a").bind("click", function(){
+    $("#check_lists table a").bind("click", function(){
       var checklistURL = "/checklists/"+$(this).attr("alt")+"/edit"
       $("#checklist").slideUp(500);
       $("#checklist").load(checklistURL, function(){

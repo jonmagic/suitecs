@@ -2,6 +2,16 @@ class ChecklistsController < ApplicationController
   before_filter :login_required
   layout nil
   
+  def index
+    if params[:q]
+      @checklists = Checklist.search(params[:q], :include => [:checklist_items])
+      render :partial => 'checklists'
+    else
+      @checklists = []
+      render :layout => 'devices'
+    end
+  end
+  
   def edit
     @checklist = Checklist.find(params[:id])
     respond_to do |format|

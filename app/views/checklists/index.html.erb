@@ -1,0 +1,25 @@
+<div id="content_search">
+  <div id="applesearch"><form onsubmit="return false"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span> <input id="srch_button" name="commit" type="submit" value="Search" onclick="" /></form></div>
+</div>
+<div id="checklists">
+  <table class="itu">
+    <thead>
+      <tr><th>Name</th><th>Device</th><th>Ticket</th></tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // make sidebar item appear selected
+    $("#sidebar li a.checklist_search").parent().addClass("selected");
+    $("#srch_button").click(function(){
+      var q = $("input#srch_fld").val();
+      $("#checklists table tbody").load('/checklists/?q='+q, function(){
+        buildTables();
+      });
+    });
+  });
+</script>
