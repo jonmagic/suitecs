@@ -10,11 +10,11 @@ Rails::Initializer.run do |config|
   config.active_record.observers = :user_observer
   config.gem 'googlebase', :lib => 'google/base', :version => '0.2.1'
   config.gem 'paperclip', :version => '2.1.2'
-  config.gem "jnunemaker-httparty", :lib => 'httparty'
+  config.gem "httparty"
   config.gem "RedCloth", :lib => "redcloth"
-  config.gem "dcparker-days_and_times", :lib => 'days_and_times', :version => '1.0.0'
+  config.gem "days_and_times", :version => '1.0.0'
   config.gem "quickbooks"
-  config.gem 'mongo_mapper', :version => '0.6.1'
+  config.gem 'mongo_mapper', :version => '0.6.10'
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
