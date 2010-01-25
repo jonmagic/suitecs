@@ -8,13 +8,13 @@ Rails::Initializer.run do |config|
   }
   config.action_controller.session_store = :active_record_store
   config.active_record.observers = :user_observer
-  config.gem 'googlebase', :lib => 'google/base', :version => '0.2.1'
-  config.gem 'paperclip', :version => '2.1.2'
+  config.gem 'googlebase', :lib => 'google/base'
+  config.gem 'paperclip'
   config.gem "httparty"
   config.gem "RedCloth", :lib => "redcloth"
-  config.gem "days_and_times", :version => '1.0.0'
+  config.gem "days_and_times"
   config.gem "quickbooks"
-  config.gem 'mongo_mapper', :version => '0.6.10'
+  config.gem 'mongo_mapper'
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
