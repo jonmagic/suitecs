@@ -21,7 +21,7 @@
     <tr><td class="first">Scheduled For:</td><td><%= f.text_field :active_on, :value => if @ticket.active_on != nil then @ticket.active_on.strftime("%m/%d/%Y") else Date.today.strftime("%m/%d/%Y") end %></td></tr>
   </table>
   <div class="line"></div>
-  <h3>Description:</h3>
+  <h3>You need to</h3>
   <%= f.hidden_field :creator_id, :value => current_user.id %>
   <p><%= f.text_area :description %></p>
   <%= f.submit "Save", :class => "hide" %>

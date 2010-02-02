@@ -18,11 +18,15 @@
   <table>
     <tr>
       <td class="new_ticket_entry_note">Notes</td>
-      <td class="new_ticket_entry_parts">Parts</td>
+      <% if !@ticket_entry.parts.blank? %>
+        <td class="new_ticket_entry_parts">Parts</td>
+      <% end %>      
     </tr>
     <tr>
       <td class="new_ticket_entry_note"><%= f.text_area :note %></td>
-      <td class="new_ticket_entry_parts"><%= f.text_area :parts %></td>
+      <% if !@ticket_entry.parts.blank? %>
+        <td class="new_ticket_entry_parts"><%= f.text_area :parts %></td>
+      <% end %>
     </tr>
   </table>
   <p><%= f.submit "Save" %></p>

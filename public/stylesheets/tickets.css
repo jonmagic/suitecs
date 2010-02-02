@@ -15,33 +15,30 @@ h3.description {margin-top:0;}
 #sidebar .archived {background:url("../images/icons/tag_yellow.png") no-repeat 0px 2px;}
 
 /* ticket */
-#ticket {margin:0 1em;padding:1.5em 0 0 0;}
-#ticket table.details {position:absolute;right:1.5em;top:3.8em;}
-#ticket div.description {width:50%;min-height:5em;}
-div#ticket_entries {margin:1em 0;}
-div.ticket_entry, div.ticket_item {position:relative;border-top:1px solid #ddd;padding:5px;font-size:.9em;}
-.ticket_entry:hover, .ticket_item:hover {background-color:#d4dde6;}
-.ticket_entry_details {font-size:10pt;line-height:8pt;}
-.ticket_entry_byline {font-size:10pt;margin-left:55px;line-height:8pt;color:#666;}
-.ticket_entry_mugshot {float:left;display:block;margin-right:5px;width:50px;height:50px;background-color:#eee;}
-div.ticket_entry_note {float:left;width:100%;}
-div.ticket_entry_note_old {float:left;width:65%;}
+#ticket {margin:0 1em;padding:0 0 0 0;}
+#ticket div.details {position:absolute;right:1.5em;top:3em;min-width:270px;}
+#ticket div.details > div {position:absolute;top:-28px;right:0px;margin:0;padding:0;color:#eee;font-size:9em;font-weight:bold;z-index:10;}
+#ticket div.details > table {z-index:20;}
+#ticket div.description {min-height:6em;font-size:1.3em;margin:15px 280px 0 5px;font-family:Helvetica;color:#666;font-weight:bold;}
+div#ticket_entries {margin:1em 0;border-top:1px solid #ccc;}
+div.ticket_entry {position:relative;border-bottom:1px solid #ccc;min-height:100px;}
+div.ticket_entry img {position:absolute;top:10px;left:0px;}
+div.ticket_entry > table.details {position:absolute;top:5px;right:0px;width:200px;font-size:0.8em;}
+div.ticket_entry > table.details td {margin:0;padding:1px 3px;}
+div.ticket_entry > table.details tr td:first-child {text-align:right;}
+div.ticket_entry > table.details tr td.bold {font-weight:bold;}
+div.ticket_entry > table.details td.date {font-style:italic;text-align:right;width:105px;font-weight:normal;}
+div.ticket_entry_note {float:left;margin:0 250px 0 60px;}
+div.delete_button {position:absolute;bottom:30px;right:20px;}
+div.edit_button {position:absolute;bottom:30px;right:40px;}
+
 div.ticket_entry_note_text_area {padding-right:10px;}
 div.ticket_entry_note_text_area textarea {height:75px;width:100%;}
-div.ticket_entry_parts {margin-left:70%;padding-top:5px;padding-bottom:5px;background-color:#fbfbfb;}
-div.ticket_entry_bottom {clear:both;}
-input.ticket_item_quantity {width:2em;}
-#ticket_content {margin-top:3.5em;}
+td.new_ticket_entry_note {width:70%;}
+td.new_ticket_entry_note textarea {width:100%;height:6em;}
 
 #item_search {width:400px;}
 
-td.new_ticket_entry_note {width:70%;}
-td.new_ticket_entry_note textarea {width:100%;height:6em;}
-td.new_ticket_entry_parts {width:30%;}
-td.new_ticket_entry_parts textarea {width:100%;height:6em;}
-div.ticket_entry {position:relative;}
-div.delete_button {position:absolute;top:10px;right:10px;}
-div.edit_button {position:absolute;top:10px;right:30px;}
 
 /* new ticket form */
 table.m tr td.first {width:8em;}

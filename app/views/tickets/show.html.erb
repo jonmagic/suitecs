@@ -1,13 +1,15 @@
-<div id="ticket" alt="<%= @ticket.id %>" completed="<%= @ticket.completed_on %>" archived="<%= @ticket.archived_on %>" ticket_id="<%= @ticket.id %>" current_user="<%= current_user.id %>">
-  <table class="m details">
-    <tr><td class="first">Ticket:</td><td><%= @ticket.id %></td></tr>
-    <tr><td class="first">Client:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
-    <tr><td class="first">Technician:</td><td><span id="technician"><%= @ticket.technician.name %></span></td></tr>
-    <tr><td class="first">Status:</td><td><%= @ticket.status %></td></tr>
-  </table>
+<div id="ticket" alt="<%= @ticket.id %>" completed="<%= @ticket.completed_on %>" archived="<%= @ticket.archived_on %>" data-ticket-id="<%= @ticket.id %>" current_user="<%= current_user.id %>">
+  <div class="details">
+    <table class="m">
+      <tr><td class="first">Ticket:</td><td><%= @ticket.id %></td></tr>
+      <tr><td class="first">Client:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
+      <tr><td class="first">Technician:</td><td><span id="technician"><%= @ticket.technician.name %></span></td></tr>
+      <tr><td class="first">Status:</td><td><%= @ticket.status %></td></tr>
+    </table>
+    <div><%= @ticket.id %></div>
+  </div>
   <div class="description">
-    <h3 style="margin-top:0">Description:</h3>
-    <%= textile_to_html(@ticket.description) %>
+    <%= textile_to_html("#{@ticket.client.fullname} needs you to #{@ticket.description}") %>
   </div>
   
   <div id="ticket_content">
@@ -57,6 +59,19 @@
 
 <script>
   $(document).ready(function() {
+    // ticket details rollover
+    $("div.details table").fadeTo(0, 0);
+    $("div.details").bind("mouseenter",function(){
+      setTimeout(function(){
+        $("div.details table").fadeTo(0, 1);
+        $("div.details > div").hide();
+      }, 100);
+    }).bind("mouseleave",function(){
+      setTimeout(function(){
+        $("div.details table").fadeTo(0, 0);
+        $("div.details > div").show();
+      }, 100);
+    });
     // Get list of technicians into an array
     var technicians = new Array();
     <% User.find(:all, :order => 'updated_at desc').each do |technician| %>
