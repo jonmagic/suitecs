@@ -10,7 +10,7 @@
       <tr><td class="hideable">Labor Type</td><td class="bold hideable"><%= entry.labor_type.name %></td></tr>
     <% end %>
     <% unless entry.drive_time.blank? %>
-      <tr><td class="hideable">Time</td><td class="bold hideable"><%= entry.drive_time %> minutes</td></tr>
+      <tr><td class="hideable">Drive Time</td><td class="bold hideable"><%= entry.drive_time %> minutes</td></tr>
     <% end %>
     <% if entry.billable? %>
       <tr><td class="hideable"></td><td class="bold hideable">Billable</td></tr>
