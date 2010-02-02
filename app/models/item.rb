@@ -29,19 +29,21 @@ class Item
   
   def self.sync_inventory_with_qb
     items = QB::ItemInventory.all
+    ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
     items.each do |item|
+      description = ic.iconv(item["SalesDesc"] + ' ')[0..-2] unless item["SalesDesc"].blank?
       if Item.create(
                     :qb_id         => item["ListID"],
-                    :name          => item["FullName"],
-                    :description   => item["PurchaseDesc"],
+                    :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
+                    :description   => description,
                     :cost          => item["PurchaseCost"],
                     :retail        => item["SalesPrice"],
                     :quantity      => item["QuantityOnHand"])
       else
         Item.find_by_qb_id(item["ListID"]).update_attributes(
                     :qb_id         => item["ListID"],
-                    :name          => item["FullName"],
-                    :description   => item["PurchaseDesc"],
+                    :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
+                    :description   => description,
                     :cost          => item["PurchaseCost"],
                     :retail        => item["SalesPrice"],
                     :quantity      => item["QuantityOnHand"])
