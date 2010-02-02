@@ -5,7 +5,7 @@ class TicketEntriesController < ApplicationController
   def index
     @ticket = Ticket.find(params[:ticket_id])
     array = TicketEntry.find_all_by_ticket_id(@ticket.id) + TicketItem.find_all_by_ticket_id(@ticket.id)
-    @ticket_entries = array.sort_by(&:updated_at).reverse
+    @ticket_entries = array.sort_by(&:created_at).reverse
   end
   
   def show
