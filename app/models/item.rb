@@ -40,13 +40,14 @@ class Item
                     :retail        => item["SalesPrice"],
                     :quantity      => item["QuantityOnHand"])
       else
-        Item.find_by_qb_id(item["ListID"].to_s).update_attributes(
-                    :qb_id         => item["ListID"],
+        if i = Item.find_by_qb_id(item["ListID"].to_s)
+           i.update_attributes(
                     :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
                     :description   => description,
                     :cost          => item["PurchaseCost"],
                     :retail        => item["SalesPrice"],
                     :quantity      => item["QuantityOnHand"])
+        end
       end
     end
   end
