@@ -14,10 +14,10 @@ Rails::Initializer.run do |config|
   config.gem "RedCloth", :lib => "redcloth"
   config.gem "days_and_times"
   config.gem "quickbooks"
-  config.gem 'mongo_mapper'
+  config.gem 'mongo_mapper', :version => "0.6.1"
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
-MongoMapper.connection = Mongo::Connection.new('127.0.0.1', 27017, :auto_reconnect => true, :logger => Rails.logger)
+MongoMapper.connection = Mongo::Connection.new('127.0.0.1', 27017)
 MongoMapper.database = "suite-#{Rails.env}"
 MongoMapper.ensure_indexes!
