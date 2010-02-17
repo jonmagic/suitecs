@@ -9,7 +9,7 @@
     <div><%= @ticket.id %></div>
   </div>
   <div class="description">
-    <%= textile_to_html("#{@ticket.client.fullname} needs you to #{@ticket.description}") %>
+    <%= textile_to_html("#{@ticket.client.fullname}: #{@ticket.description}") %>
   </div>
   
   <div id="ticket_content">
