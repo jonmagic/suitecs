@@ -1,4 +1,3 @@
-require 'array'
 class InventoryController < ApplicationController
   before_filter :login_required
   
