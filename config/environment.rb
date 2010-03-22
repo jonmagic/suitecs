@@ -11,13 +11,10 @@ Rails::Initializer.run do |config|
   config.gem 'googlebase', :lib => 'google/base'
   config.gem 'paperclip'
   config.gem "httparty"
-  config.gem "RedCloth", :lib => "redcloth"
+  # config.gem "RedCloth", :lib => "redcloth"
   config.gem "days_and_times"
   config.gem "quickbooks"
-  config.gem 'mongo_mapper', :version => "0.6.1"
+  config.gem 'mongo_mapper'
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
-MongoMapper.connection = Mongo::Connection.new('127.0.0.1', 27017)
-MongoMapper.database = "suite-#{Rails.env}"
-MongoMapper.ensure_indexes!
