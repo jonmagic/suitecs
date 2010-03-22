@@ -78,6 +78,7 @@
     $('#item_search').quickselect({
       ajax: '/inventory/',
     	maxVisibleItems:50,
+    	matchMethod: 'quicksilver',
       onItemSelect: function(li){
         var item = li.item;
         var values = item.values || (item.value ? [item.value] : (typeof(item)==='string' ? [item] : item));

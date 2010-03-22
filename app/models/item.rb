@@ -8,6 +8,7 @@ class Item
   key :retail, Float  
   key :barcode, String
   key :quantity, Integer
+  key :active, Boolean
   key :_keywords, Array
   key :requires_serialnumber, Boolean
   
@@ -30,26 +31,35 @@ class Item
   def self.sync_inventory_with_qb
     items = QB::ItemInventory.all
     ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
+    updated = 0
+    created = 0
     items.each do |item|
       description = ic.iconv(item["SalesDesc"] + ' ')[0..-2] unless item["SalesDesc"].blank?
-      if Item.create(
-                    :qb_id         => item["ListID"],
-                    :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
-                    :description   => description,
-                    :cost          => item["PurchaseCost"],
-                    :retail        => item["SalesPrice"],
-                    :quantity      => item["QuantityOnHand"])
+      # active = item["IsActive"] == true ? true : false
+      if i = Item.find_by_qb_id(item["ListID"].to_s)
+        if i.update_attributes(
+                  :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
+                  :description   => description,
+                  :cost          => item["PurchaseCost"],
+                  :retail        => item["SalesPrice"],
+                  :quantity      => item["QuantityOnHand"],
+                  :active        => true)
+          updated += 1
+        end
       else
-        if i = Item.find_by_qb_id(item["ListID"].to_s)
-           i.update_attributes(
-                    :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
-                    :description   => description,
-                    :cost          => item["PurchaseCost"],
-                    :retail        => item["SalesPrice"],
-                    :quantity      => item["QuantityOnHand"])
+        if Item.create(
+                      :qb_id         => item["ListID"],
+                      :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
+                      :description   => description,
+                      :cost          => item["PurchaseCost"],
+                      :retail        => item["SalesPrice"],
+                      :quantity      => item["QuantityOnHand"],
+                      :active        => true)
+          created += 1
         end
       end
     end
+    puts "Updated: #{updated} Created: #{created}"
   end
   
   def locations
