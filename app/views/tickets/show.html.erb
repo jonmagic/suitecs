@@ -3,7 +3,16 @@
     <table class="m">
       <tr><td class="first">Ticket:</td><td><%= @ticket.id %></td></tr>
       <tr><td class="first">Client:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
-      <tr><td class="first">Technician:</td><td><span id="technician"><%= @ticket.technician.name %></span></td></tr>
+      <tr>
+        <td class="first">Technician:</td>
+        <td>
+          <span>
+            <% form_for(@ticket) do |f| %>
+              <%= f.collection_select :user_id, User.find(:all), :id, :name %>
+            <% end %>
+          </span>
+        </td>
+      </tr>
       <tr><td class="first">Status:</td><td><%= @ticket.status %></td></tr>
     </table>
     <div><%= @ticket.id %></div>
@@ -80,21 +89,13 @@
       technicians[tech_id] = tech_name;
     <% end %>
     
-    // Setup in place editable fields up top
-    $('#technician').editable( <%= ticket_path(@ticket).to_json %>, {
-      name: 'ticket[user_id]',
-      data: technicians,
-      type: 'select',
-      submit: "Save",
-      display: 'display: inline',
-      method: 'PUT',
-      submitdata: {
-        authenticity_token: <%= form_authenticity_token.to_json %>,
-        wants: 'user_id'
-      },
-      callback: function(){
-        window.location.replace($.url.attr("source"))
-      }
+    // Easily change technician
+    $('#ticket_user_id').bind('change', function(){
+      $(this).parent().ajaxSubmit({
+        success: function(){
+          alert("Technician has been updated.")
+        }
+      });
     });
     
     // setup my footer buttons
