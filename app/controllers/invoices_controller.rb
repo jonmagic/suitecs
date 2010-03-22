@@ -6,14 +6,16 @@ class InvoicesController < ApplicationController
     ticket = Ticket.find(params[:ticket_id])
 
     invoice_saved = false
-    if !ticket.client.qb_id.blank?
-      !params[:invoice_number].blank? ? invoice = Invoice.create_for(ticket, params[:invoice_number]) : invoice = Invoice.create_for(ticket)
-      invoice_saved = !invoice.new_record?
+    unless ticket.client.qb_id.blank?
+      invoice = params[:invoice_number].blank? ? Invoice.create_for(ticket) : Invoice.create_for(ticket, params[:invoice_number])
+      invoice_saved = invoice.existing_record?
     end
 
     if invoice_saved
       Quickbooks.connection.close
       ticket.invoiced = true
+      ticket.user_id = User.find_by_name("Customer Service").id
+      ticket.active_on = 7.days.from_now.to_date
       ticket.save
       invoice[:IsToBePrinted].to_s == "false" ? NotificationMailer.deliver_attention(ticket, invoice) : "No need"
       TicketEntry.create(:entry_type => "Invoice", :note => "Invoice ##{invoice[:RefNumber].to_s}", :billable => false, :private => false, :detail => 1, :ticket => ticket, :creator_id => current_user.id)

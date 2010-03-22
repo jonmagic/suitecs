@@ -19,14 +19,7 @@
           <span class="status"><%= @ticket.status %></span>
           <span class="schedule_for hide">
             <% form_for(@ticket) do |f| %>
-              <%= f.select :active_on, [
-                ["", "Date.today"],
-                ["Today", "Date.today"],
-                ["Tomorrow", 1.days.from_now.to_date], 
-                ["2 Days From Now", 2.days.from_now.to_date],
-                ["Next Week", Date.today.next_week],
-                ["Next Month", Date.today.next_month.beginning_of_month]
-              ] %>
+              <%= f.text_field :active_on %>
             <% end %>
           </span>
         </td>
@@ -116,6 +109,12 @@
       });
     });
     // Easily changed the scheduled date
+    $('tr#ticket_status span.schedule_for form input').datepicker({
+      beforeShow: function(){
+        var datepicker = $('#ui-datepicker-div');
+        setTimeout(function(){datepicker.css({left: datepicker.offset().left - 25});}, 1)
+      }
+    });
     $('tr#ticket_status').bind('mouseover', function(){
       $(this).find('td.first').text('Schedule For:');
       $(this).find('span.status').hide();
@@ -125,7 +124,7 @@
       $(this).find('span.schedule_for').hide();
       $(this).find('span.status').show();
     });
-    $('tr#ticket_status span.schedule_for form select').bind('change', function(){
+    $('tr#ticket_status span.schedule_for form input').bind('change', function(){
       $(this).parent().ajaxSubmit({
         dataType: 'json',
         success: function(data, response){
