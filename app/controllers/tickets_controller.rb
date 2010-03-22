@@ -61,10 +61,10 @@ class TicketsController < ApplicationController
       if @ticket.update_attributes(params[:ticket])
         flash[:notice] = 'Ticket was successfully updated.'
         format.html { redirect_to(@ticket) }
-        format.js
+        format.js { render :json => @ticket.to_json(:methods => [:status, :technician_name]) }
       else
         format.html { render :action => "edit" }
-        format.js
+        format.js { render :json => @ticket.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -19,6 +19,7 @@ h3.description {margin-top:0;}
 #ticket div.details {position:absolute;right:1.5em;top:3em;min-width:270px;}
 #ticket div.details > div {position:absolute;top:-28px;right:0px;margin:0;padding:0;color:#eee;font-size:9em;font-weight:bold;z-index:10;}
 #ticket div.details > table {z-index:20;}
+#ticket div.details select {padding:0;margin:0;}
 #ticket div.description {min-height:6em;font-size:1.3em;margin:15px 280px 0 5px;font-family:Helvetica;color:#666;font-weight:bold;}
 div#ticket_entries {margin:1em 0;border-top:1px solid #ccc;}
 div.ticket_entry {position:relative;border-bottom:1px solid #ccc;min-height:100px;}

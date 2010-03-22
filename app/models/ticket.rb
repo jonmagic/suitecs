@@ -76,6 +76,10 @@ class Ticket < ActiveRecord::Base
     User.find(self.user_id)
   end
   
+  def technician_name
+    User.find(self.user_id).name
+  end
+  
   def owner
     Client.find(self.client_id)
   end

@@ -13,7 +13,24 @@
           </span>
         </td>
       </tr>
-      <tr><td class="first">Status:</td><td><%= @ticket.status %></td></tr>
+      <tr id="ticket_status">
+        <td class="first">Status:</td>
+        <td>
+          <span class="status"><%= @ticket.status %></span>
+          <span class="schedule_for hide">
+            <% form_for(@ticket) do |f| %>
+              <%= f.select :active_on, [
+                ["", "Date.today"],
+                ["Today", "Date.today"],
+                ["Tomorrow", 1.days.from_now.to_date], 
+                ["2 Days From Now", 2.days.from_now.to_date],
+                ["Next Week", Date.today.next_week],
+                ["Next Month", Date.today.next_month.beginning_of_month]
+              ] %>
+            <% end %>
+          </span>
+        </td>
+      </tr>
     </table>
     <div><%= @ticket.id %></div>
   </div>
@@ -92,11 +109,31 @@
     // Easily change technician
     $('#ticket_user_id').bind('change', function(){
       $(this).parent().ajaxSubmit({
-        success: function(){
-          alert("Technician has been updated.")
+        dataType: 'json',
+        success: function(data, response){
+          alert("Technician has been updated to "+data.ticket.technician_name+".")
         }
       });
     });
+    // Easily changed the scheduled date
+    $('tr#ticket_status').bind('mouseover', function(){
+      $(this).find('td.first').text('Schedule For:');
+      $(this).find('span.status').hide();
+      $(this).find('span.schedule_for').show();
+    }).bind('mouseout', function(){
+      $(this).find('td.first').text('Status:');
+      $(this).find('span.schedule_for').hide();
+      $(this).find('span.status').show();
+    });
+    $('tr#ticket_status span.schedule_for form select').bind('change', function(){
+      $(this).parent().ajaxSubmit({
+        dataType: 'json',
+        success: function(data, response){
+          alert("Ticket status has been updated to "+data.ticket.status+".");
+          $('tr#ticket_status span.status').text(data.ticket.status);
+        }
+      });
+    })
     
     // setup my footer buttons
     if(ticket_state() == "open"){
