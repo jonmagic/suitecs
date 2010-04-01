@@ -1,5 +1,5 @@
 [
   <% @items.each do |item| %>
-    { "label" : "<%= item.name %> <%= item.description %>", "value" : "<%= item.id %>" },
+    { "label" : "<%= item.name %> <%= item.description %>", "value" : "<%= item.id %>" }<%= @items.last == item ? "" : "," %>
   <% end %>
 ]
