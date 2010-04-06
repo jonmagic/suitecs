@@ -54,7 +54,10 @@ class Ticket < ActiveRecord::Base
       NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
     elsif self.id
       before = Ticket.find(self.id)
-      if self.user_id != before.user_id && !self.status.has("on")
+      if self.user_id != before.user_id && self.status.has("Completed")
+        NotificationMailer.deliver_ticket_updated("Ticket ##{self.id} is ready to be invoiced", 
+        "Ticket ##{self.id} has been completed and is ready to be invoiced. #{APP_CONFIG[:site_url]}/tickets/#{self.id}", User.find_by_email("sabretechllc@gmail.com"))
+      elsif self.user_id != before.user_id && !self.status.has("on") && !self.status.has("Completed")
         NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
       end
     end
