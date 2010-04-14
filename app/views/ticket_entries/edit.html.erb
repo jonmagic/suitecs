@@ -15,13 +15,15 @@
       <% if current_user.email == "jonmagic@gmail.com" %>
         <td>
           <div class="key">
-            <%= f.hidden_field :time, :title => "minutes", :class => "short_field" %>
+            <%= f.text_field :time, :title => "minutes", :class => "short_field" %>
           </div>
         </td>
+      <% end %>
+      <% if current_user.email == "jonmagic@gmail.com" %>
         <td class="first">Drive Time</td>
         <td>
           <div class="key">
-            <%= f.hidden_field :drive_time, :title => "minutes", :class => "short_field" %>
+            <%= f.text_field :drive_time, :title => "minutes", :class => "short_field" %>
           </div>
         </td>
       <% end %>
