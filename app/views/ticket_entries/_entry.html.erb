@@ -19,7 +19,9 @@
   <% if !entry.parts.blank? %>
     <div class="ticket_entry_parts"><b>Parts</b><br /><%= textile_to_html(entry.parts) %></div>
   <% end %>
-  <div class="delete_button"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_entry_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this Ticket Entry?" %></div>
-  <div class="edit_button"><a href="javascript:void(0)" onclick="return false;"><%= image_tag("/images/icons/comment_edit.png") %></a></div>
+  <% if entry.ticket.archived_on.blank? %>
+    <div class="delete_button"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_entry_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this Ticket Entry?" %></div>
+    <div class="edit_button"><a href="javascript:void(0)" onclick="return false;"><%= image_tag("/images/icons/comment_edit.png") %></a></div>
+  <% end %>
   <div style="clear:both"></div>
 </div>
