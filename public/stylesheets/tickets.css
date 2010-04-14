@@ -32,6 +32,11 @@ div.ticket_entry > table.details td.date {font-style:italic;text-align:right;wid
 div.ticket_entry_note {float:left;margin:0 250px 0 60px;}
 div.delete_button {position:absolute;bottom:30px;right:20px;}
 div.edit_button {position:absolute;bottom:30px;right:40px;}
+div.key {
+  width:16px;
+  height:16px;
+  background-image:url('/images/icons/key.png');
+}
 
 div.ticket_entry_note_text_area {padding-right:10px;}
 div.ticket_entry_note_text_area textarea {height:75px;width:100%;}

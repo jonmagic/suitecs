@@ -11,8 +11,20 @@
     </tr>
     <tr>
       <td class="first">Labor Type</td><td><%= f.select :labor_type_id, LaborType.find(:all, :order => "name", :conditions => {:visible => true}).collect {|c| [c.name, c.id]}, :include_blank => true %></td>
-      <td class="first">Time Spent</td><td><img src="/images/icons/key.png" /><%= f.hidden_field :time, :title => "minutes", :class => "short_field" %></td>
-      <td class="first">Drive Time</td><td><img src="/images/icons/key.png" /><%= f.hidden_field :drive_time, :title => "minutes", :class => "short_field" %></td>
+      <td class="first">Time Spent</td>
+      <% if current_user.email == "jonmagic@gmail.com" %>
+        <td>
+          <div class="key">
+            <%= f.hidden_field :time, :title => "minutes", :class => "short_field" %>
+          </div>
+        </td>
+        <td class="first">Drive Time</td>
+        <td>
+          <div class="key">
+            <%= f.hidden_field :drive_time, :title => "minutes", :class => "short_field" %>
+          </div>
+        </td>
+      <% end %>
     </tr>
   </table>
   <table>
@@ -40,14 +52,15 @@
     autoOpen: false,
     buttons: {
       "Set New Times": function(){
-        $(this).parent().parent().find('input#ticket_entry_time').val($('div#time_entry').find('input#entry_time').val())
-        $(this).parent().parent().find('input#ticket_entry_drive_time').val($('div#drive_time_entry').find('input#entry_drive_time').val())
+        ENTRY.find('input#ticket_entry_time').val($('div#time_entry').find('input#entry_time').val())
+        ENTRY.find('input#ticket_entry_drive_time').val($('div#drive_time_entry').find('input#entry_drive_time').val())
         $('div#time_entry').dialog('close');
         alert('Do not forget to save the ticket entry.')
       }
     }
   });
-  $('form table img').bind('click', function(){
+  $('form table div.key').bind('click', function(){
+    ENTRY = $(this);
     $('div#time_entry').dialog('open');
   });
 </script>
