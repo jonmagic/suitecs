@@ -6,25 +6,21 @@
   <table class="m">
     <tr>
       <td class="first">Entry Type</td><td><%= f.select :entry_type, ["Work Done", "Research", "Note", "HowTo"] %></td>
-      <td class="first">Billable</td><td><%= f.check_box :billable %></td>
+      <% if current_user.email == "sabretechllc@gmail.com" %>
+        <td class="first">Billable</td><td><%= f.check_box :billable %></td>
+      <% end %>
       <td class="first">Private</td><td><%= f.check_box :private %></td>
     </tr>
     <tr>
-      <td class="first">Labor Type</td><td><%= f.select :labor_type_id, LaborType.find(:all, :order => "name", :conditions => {:visible => true}).collect {|c| [c.name, c.id]}, :include_blank => true %></td>
-      <td class="first">Time Spent</td>
-      <% if current_user.email == "jonmagic@gmail.com" %>
+      <% if current_user.email == "sabretechllc@gmail.com" %>   
+        <td class="first">Labor Type</td><td><%= f.select :labor_type_id, LaborType.find(:all, :order => "name", :conditions => {:visible => true}).collect {|c| [c.name, c.id]}, :include_blank => true %></td>
+        <td class="first">Time Spent</td>
         <td>
-          <div class="key">
-            <%= f.text_field :time, :title => "minutes", :class => "short_field" %>
-          </div>
+          <%= f.text_field :time, :title => "minutes", :class => "short_field" %>
         </td>
-      <% end %>
-      <% if current_user.email == "jonmagic@gmail.com" %>
         <td class="first">Drive Time</td>
         <td>
-          <div class="key">
-            <%= f.text_field :drive_time, :title => "minutes", :class => "short_field" %>
-          </div>
+          <%= f.text_field :drive_time, :title => "minutes", :class => "short_field" %>
         </td>
       <% end %>
     </tr>
