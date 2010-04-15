@@ -8,7 +8,7 @@
       <label>Technician:</label>
       <select id="technician_id" name="technician_id">
         <% @technicians.each do |tech| %>
-          <option value="<%= tech.id %>"<%= tech.id == @selected.to_i ? ' selected="selected"' : '' %>><%= tech.name %></option>
+          <option value="<%= tech.id %>"<%= if @selected then tech.id == @selected.to_i ? ' selected="selected"' : '' else tech.id == 2 ? ' selected="selected"' : '' end %>><%= tech.name %></option>
         <% end %>
       </select>
       <%= submit_tag "Run report" %>

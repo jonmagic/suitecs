@@ -22,8 +22,11 @@ class Report::TicketDetailController < ApplicationController
     end_date = params[:end_date] + " 23:59:59"
   
     # getting/setting technician_id
-    if params[:technician_id] then @selected = params[:technician_id] end
-    if params[:technician_id] == 'all' then params[:technician_id] = 2 end
+    if params[:technician_id]
+      @selected = params[:technician_id]
+    else
+      @selected = 2
+    end
   
     # find all ticket entries in the date range
     entries = TicketEntry.find(:all) do
