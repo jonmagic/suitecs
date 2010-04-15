@@ -29,7 +29,7 @@ class Report::TicketDetailController < ApplicationController
     end
   
     # find all ticket entries in the date range
-    entries = TicketEntry.find(:all) do
+    all_entries = TicketEntry.find(:all) do
       all do
         created_at > start_date
         created_at < end_date
@@ -40,7 +40,10 @@ class Report::TicketDetailController < ApplicationController
     # what are all my labor types, set it global so the view can see it
     @labor_types = LaborType.find(:all)
     
-    # find the techs in these tickets
+    entries = []
+    all_entries.each do |entry|
+      entries << entry unless entry.time.blank? && entry.drive_time.blank?
+    end
     ticket_ids = entries.collect { |e| e.ticket_id }
     
     # create them when requested
