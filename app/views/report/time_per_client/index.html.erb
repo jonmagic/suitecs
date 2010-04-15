@@ -35,8 +35,12 @@
 <script>
   $(document).ready(function() {
     // create datepicker widget
-    $("#start_date").datepicker();
-    $("#end_date").datepicker();
+    $("#start_date").datepicker({
+      dateFormat: '20y-mm-dd'
+    });
+    $("#end_date").datepicker({
+      dateFormat: '20y-mm-dd'
+    });
     $('table.itu').tablesorter({ sortList: [[7,1]] });
 	});
 </script>

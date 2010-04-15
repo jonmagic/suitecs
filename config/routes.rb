@@ -92,6 +92,7 @@ ActionController::Routing::Routes.draw do |map|
     report.resources :time_sheet
     report.resources :average_hours_comparison
     report.resources :time_per_client
+    report.resources :ticket_detail
   end
   
   # Home Page
