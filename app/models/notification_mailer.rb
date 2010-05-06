@@ -1,6 +1,7 @@
 class NotificationMailer < ActionMailer::Base
   
-  def notification(subject, message, schedule)
+  def notification(subject, message, schedule_id)
+    schedule = Schedule.find(schedule_id)
     technician = Client.find(schedule.user.client_id)
     email = Email.find(:first, :conditions => {:client_id => technician.id})
     @recipients = "#{email.address}"
@@ -10,20 +11,19 @@ class NotificationMailer < ActionMailer::Base
     @body[:message] = message
   end
   
-  def ticket_updated(subject, message, user)
-    technician = Client.find(user.client_id)
-    email = Email.find(:first, :conditions => {:client_id => technician.id})
-    @recipients = "#{email.address}"
+  def ticket_updated(subject, message, email)
+    @recipients = "#{email}"
     @from = "tickets@suite.sabretechllc.com"
     @subject = "#{subject}"
     @sent_on = Time.now
     @body[:message] = message
   end
   
-  def attention(ticket, invoice)
+  def attention(ticket_id, invoice_ref_number)
+    ticket  = Ticket.find(ticket_id)
     @recipients = "sabretechllc@gmail.com"
     @from = APP_CONFIG[:admin_email]
-    @subject = "Invoice ##{invoice[:RefNumber]} needs attention."
+    @subject = "Invoice ##{invoice_ref_number} needs attention."
     @sent_on = Time.now
     message = ""
     message << "Ticket ##{ticket.id}\n"

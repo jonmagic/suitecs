@@ -12,9 +12,9 @@ class Ticket < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :description
   
-  before_create :notify_tech
+  before_create :queue_notify_tech
   after_create :add_created_note
-  before_update :add_status_change_note, :notify_tech
+  before_update :add_status_change_note, :queue_notify_tech
   
   attr_accessor :ticket_item_data
   before_save :save_ticket_item_data
@@ -46,19 +46,22 @@ class Ticket < ActiveRecord::Base
     end
   end
   
-  def notify_tech
-    subject = "Ticket# #{self.id} needs your attention"
-    message = "#{User.find(self.creator_id).name} created or updated this ticket for you: #{APP_CONFIG[:site_url]}/tickets/#{self.id}\n\n#{self.description}"
+  def queue_notify_tech
+    ticket = self
+    subject = "Ticket# #{ticket.id} needs your attention"
+    message = "#{User.find(ticket.creator_id).name} #{ ticket.new_record? ? 'created' : 'updated' } this ticket for you: #{APP_CONFIG[:site_url]}/tickets/#{ticket.id}\n\n#{ticket.description} for client #{ticket.client.fullname}."
     
-    if self.new_record? && self.creator_id != self.user_id
-      NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
-    elsif self.id
-      before = Ticket.find(self.id)
-      if self.status.has("Completed")
-        NotificationMailer.deliver_ticket_updated("Ticket ##{self.id} is ready to be invoiced", 
-        "Ticket ##{self.id} has been completed and is ready to be invoiced. #{APP_CONFIG[:site_url]}/tickets/#{self.id}", User.find_by_email("sabretechllc@gmail.com"))
-      elsif self.user_id != before.user_id && !self.status.has("on") && !self.status.has("Completed")
-        NotificationMailer.deliver_ticket_updated(subject, message, self.technician)
+    if ticket.new_record? && ticket.creator_id != ticket.user_id
+      Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
+    elsif ticket.id
+      before = Ticket.find(ticket.id)
+      if ticket.status.has("Completed")
+        subject = "Ticket ##{ticket.id} is ready to be invoiced"
+        message = "Ticket ##{ticket.id} has been completed and is ready to be invoiced. #{APP_CONFIG[:site_url]}/tickets/#{ticket.id}"
+        email = User.find_by_email("sabretechllc@gmail.com").email
+        Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
+      elsif ticket.user_id != before.user_id && !ticket.status.has("on") && !ticket.status.has("Completed")
+        Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
       end
     end
   end

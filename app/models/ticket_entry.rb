@@ -18,8 +18,8 @@ class TicketEntry < ActiveRecord::Base
   def notify_tech
     if self.creator_id != self.ticket.user_id && !self.ticket.status.has("on")
       subject = "Ticket# #{self.ticket.id} needs your attention"
-      message = "#{self.creator.name} updated or added a note to #{APP_CONFIG[:site_url]}/tickets/#{self.ticket.id}\n\n#{self.note}"
-      NotificationMailer.deliver_ticket_updated(subject, message, self.ticket.technician)
+      message = "#{self.creator.name} updated or added a note to #{APP_CONFIG[:site_url]}/tickets/#{self.ticket.id}\n\n#{self.note} for client #{self.ticket.client.fullname}\n\nDescription:\n#{self.ticket.description}"
+      Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.ticket.technician.email)
     end
   end
 

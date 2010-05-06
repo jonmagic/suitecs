@@ -15,6 +15,7 @@ Rails::Initializer.run do |config|
   config.gem "days_and_times"
   config.gem "quickbooks"
   config.gem 'mongo_mapper', :version => '0.6.1'
+  config.gem 'navvy', :version => '0.1.0'
   require 'lib/search.rb'
   require 'lib/statuslang.rb'
 end
