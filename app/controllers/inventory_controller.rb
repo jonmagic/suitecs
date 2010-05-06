@@ -7,7 +7,7 @@ class InventoryController < ApplicationController
       if queries.length > 1
         items = []
         queries.each do |q|
-          Item.all(:_keywords => /#{q}/i).each { |i| items << i }
+          Item.all(:_keywords => /#{q}/i, :active => true).each { |i| items << i }
         end
         hash = {}
         items.each do |item|
@@ -30,7 +30,7 @@ class InventoryController < ApplicationController
           @items << item if count == queries.length
         end
       else
-        @items = Item.all(:_keywords => /#{params[:q]}/i)
+        @items = Item.all(:_keywords => /#{params[:q]}/i, :active => true)
       end
       Rails.logger.info @items.length
       respond_to do |format|

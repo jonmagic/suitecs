@@ -29,13 +29,13 @@ class Item
   end
   
   def self.sync_inventory_with_qb
-    items = QB::ItemInventory.all
+    items = QB::ItemInventory.all("ActiveStatus" => "All")
     ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
     updated = 0
     created = 0
     items.each do |item|
       description = ic.iconv(item["SalesDesc"] + ' ')[0..-2] unless item["SalesDesc"].blank?
-      # active = item["IsActive"] == true ? true : false
+      active = item["IsActive"].to_s == "true" ? true : false
       if i = Item.find_by_qb_id(item["ListID"].to_s)
         if i.update_attributes(
                   :name          => ic.iconv(item["FullName"] + ' ')[0..-2],
@@ -43,7 +43,7 @@ class Item
                   :cost          => item["PurchaseCost"],
                   :retail        => item["SalesPrice"],
                   :quantity      => item["QuantityOnHand"],
-                  :active        => true)
+                  :active        => active)
           updated += 1
         end
       else
@@ -54,7 +54,7 @@ class Item
                       :cost          => item["PurchaseCost"],
                       :retail        => item["SalesPrice"],
                       :quantity      => item["QuantityOnHand"],
-                      :active        => true)
+                      :active        => active)
           created += 1
         end
       end
