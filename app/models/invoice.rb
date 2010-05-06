@@ -73,10 +73,10 @@ class Invoice
             save_ret = Quickbooks.execute(QB::InvoiceModRq.new(:InvoiceMod => invoice_mod))
             invoice = save_ret[:QBXMLMsgsRs][:InvoiceModRs][0][:InvoiceRet].to_model
           else
-            raise "Invoice is not valid for save."
+            Rails.logger.info "Invoice is not valid for save."
           end
         else
-          raise "Failed to find invoice."
+          Rails.logger.info "Failed to find invoice."
         end
       else
         invoice = QB::Invoice.new(
@@ -90,7 +90,7 @@ class Invoice
           invoice.instance_variable_set(:@new_record, false)
           return invoice
         else
-          raise "Failed to save invoice."
+          Rails.logger.info invoice.save
         end
       end
     # rescue
