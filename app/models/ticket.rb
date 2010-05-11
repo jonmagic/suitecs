@@ -58,8 +58,7 @@ class Ticket < ActiveRecord::Base
       if ticket.status.has("Completed")
         subject = "Ticket ##{ticket.id} is ready to be invoiced"
         message = "Ticket ##{ticket.id} has been completed and is ready to be invoiced. #{APP_CONFIG[:site_url]}/tickets/#{ticket.id}"
-        email = User.find_by_email("sabretechllc@gmail.com").email
-        Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
+        Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, "sabretechllc@gmail.com")
       elsif ticket.user_id != before.user_id && !ticket.status.has("on") && !ticket.status.has("Completed")
         Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
       end
