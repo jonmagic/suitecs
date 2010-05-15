@@ -31,8 +31,8 @@ class Report::TicketDetailController < ApplicationController
     # find all ticket entries in the date range
     all_entries = TicketEntry.find(:all) do
       all do
-        created_at > start_date
-        created_at < end_date
+        created_at > start_date.to_time + 5.hours
+        created_at < end_date.to_time + 5.hours
         creator_id == params[:technician_id]
       end
     end
