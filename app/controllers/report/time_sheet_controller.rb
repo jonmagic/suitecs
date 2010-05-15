@@ -24,8 +24,8 @@ class Report::TimeSheetController < ApplicationController
     # find all ticket entries in the date range
     entries = TicketEntry.find(:all) do
       all do
-        created_at > start_date
-        created_at < end_date
+        created_at > start_date.to_time.utc
+        created_at < end_date.to_time.utc
       end
     end
     
