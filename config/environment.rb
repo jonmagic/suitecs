@@ -11,7 +11,7 @@ Rails::Initializer.run do |config|
   config.gem 'googlebase', :lib => 'google/base'
   config.gem 'paperclip'
   config.gem "httparty"
-  # config.gem "RedCloth", :lib => "redcloth"
+  config.gem "RedCloth", :lib => "redcloth"
   config.gem "days_and_times"
   config.gem "quickbooks"
   config.gem 'mongo_mapper', :version => '0.6.1'
