@@ -33,7 +33,7 @@
     <div id="center">
       <div id="content_search">
         <div id="applesearch"><form action="/tickets/search"><span class="sbox_l"></span><span class="sbox"><input type="search" id="srch_fld" name="q" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></span><span class="sbox_r" id="srch_clear"></span> <input id="srch_button" name="commit" type="submit" value="Search" onclick="" /></form></div>
-        <% @users = User.find(:all).collect {|c| [c.name, c.id]} %>
+        <% @users = User.active.collect {|c| [c.name, c.id]} %>
         <div id="user_select"></div>
       </div>
       <%= yield %>

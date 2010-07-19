@@ -11,10 +11,10 @@
     <tr>
     <tr><td class="first">Technician:</td>
       <td>
-        <% if User.find(:all).length > 1 %>
-          <%= f.select :user_id, User.find(:all).collect {|c| [c.name, c.id]}, :include_blank => true %>
+        <% if User.active.length > 1 %>
+          <%= f.select :user_id, User.active.collect {|c| [c.name, c.id]}, :include_blank => true %>
         <% else %>
-          <%= f.select :user_id, User.find(:all).collect {|c| [c.name, c.id]} %>
+          <%= f.select :user_id, User.active.collect {|c| [c.name, c.id]} %>
         <% end %>
       </td>
     </tr>

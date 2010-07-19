@@ -30,7 +30,7 @@
     var row = ""
     var tech_id = ""
     var tech_name = ""
-    <% User.find(:all).each do |technician| %>
+    <% User.active.each do |technician| %>
       tech_id = "<%= technician.id %>"
       tech_name = "<%= technician.name %>"
       technicians[tech_id] = tech_name;

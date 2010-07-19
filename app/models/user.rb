@@ -33,7 +33,11 @@ class User < ActiveRecord::Base
   # uff.  this is really an authorization, not authentication routine.  
   # We really need a Dispatch Chain here or something.
   # This will also let us return a human error message.
-  #
+
+  def self.active
+    User.find(:all, :conditions => {:active => true})
+  end
+
   def self.authenticate(email, password)
     u = find_in_state :first, :active, :conditions => { :email => email } # need to get the salt
     u && u.authenticated?(password) ? u : nil

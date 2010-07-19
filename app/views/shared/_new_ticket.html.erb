@@ -1,6 +1,6 @@
 <% form_for Ticket.new(:client => @client, :user => current_user) do |f| -%>
   <table class="m">
-    <tr><td class="first">Technician:</td><td><%= f.select :user_id, User.find(:all).collect {|c| [c.name, c.id]} %></td></tr>
+    <tr><td class="first">Technician:</td><td><%= f.select :user_id, User.active.collect {|c| [c.name, c.id]} %></td></tr>
     <tr><td class="first">Scheduled For:</td><td><%= f.text_field :active_on, :value => Date.today.strftime("%m/%d/%Y") %></td></tr>
   </table>
   <div class="line"></div>

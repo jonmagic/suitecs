@@ -8,7 +8,7 @@
         <td>
           <span>
             <% form_for(@ticket) do |f| %>
-              <%= f.collection_select :user_id, User.find(:all), :id, :name %>
+              <%= f.collection_select :user_id, User.active, :id, :name %>
             <% end %>
           </span>
         </td>
@@ -93,7 +93,7 @@
     });
     // Get list of technicians into an array
     var technicians = new Array();
-    <% User.find(:all, :order => 'updated_at desc').each do |technician| %>
+    <% User.active.each do |technician| %>
       tech_id = "<%= technician.id %>"
       tech_name = "<%= technician.name %>"
       technicians[tech_id] = tech_name;

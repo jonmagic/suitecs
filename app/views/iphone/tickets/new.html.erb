@@ -10,7 +10,7 @@
   </ul>
   <h2>Technician</h2>
   <ul class="rounded">
-    <li><%= f.select :user_id, User.find(:all).collect {|c| [c.name, c.id]}, :selected => current_user.id %></li>
+    <li><%= f.select :user_id, User.active.collect {|c| [c.name, c.id]}, :selected => current_user.id %></li>
   </ul>
   <h2>Description</h2>
   <ul>

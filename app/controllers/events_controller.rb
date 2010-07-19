@@ -6,7 +6,7 @@ class EventsController < ApplicationController
     @event = Event.new
     @event.recordable_id = params[:sentry_id]
     @event.recordable_type = params[:type]
-    @event.data = params[:data]    
+    @event.data = params[:data]
     respond_to do |format|
       if @event.save
         format.json  { render :json => @event, :status => "Created" }
