@@ -13,8 +13,6 @@ class Client < ActiveRecord::Base
   has_many :phones, :dependent => :destroy
   has_many :emails, :dependent => :destroy
   has_many :addresses, :dependent => :destroy
-  
-  has_one :radcheck, :dependent => :destroy
 
   validates_associated :phones, :emails, :addresses
   

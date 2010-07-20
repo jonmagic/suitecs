@@ -6,13 +6,13 @@
   <table class="m">
     <tr>
       <td class="first">Entry Type</td><td><%= f.select :entry_type, ["Work Done", "Research", "Note", "HowTo"] %></td>
-      <% if current_user.email == "sabretechllc@gmail.com" %>
+      <% if current_user.email == APP_CONFIG[:admin_email] %>
         <td class="first">Billable</td><td><%= f.check_box :billable %></td>
       <% end %>
       <td class="first">Private</td><td><%= f.check_box :private %></td>
     </tr>
     <tr>
-      <% if current_user.email == "sabretechllc@gmail.com" %>   
+      <% if current_user.email == APP_CONFIG[:admin_email] %>   
         <td class="first">Labor Type</td><td><%= f.select :labor_type_id, LaborType.find(:all, :order => "name", :conditions => {:visible => true}).collect {|c| [c.name, c.id]}, :include_blank => true %></td>
         <td class="first">Time Spent</td>
         <td>
