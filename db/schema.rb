@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090515121848) do
+ActiveRecord::Schema.define(:version => 20100719150015) do
 
   create_table "addresses", :force => true do |t|
     t.string   "context",      :default => "Work", :null => false
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(:version => 20090515121848) do
     t.datetime "updated_at"
   end
 
-  add_index "preferences", ["attribute", "group_id", "group_type", "owner_id", "owner_type"], :name => "index_preferences_on_owner_and_attribute_and_preference", :unique => true
+  add_index "preferences", ["owner_id", "owner_type", "attribute", "group_id", "group_type"], :name => "index_preferences_on_owner_and_attribute_and_preference", :unique => true
 
   create_table "roles", :force => true do |t|
     t.string "name"
@@ -250,14 +250,14 @@ ActiveRecord::Schema.define(:version => 20090515121848) do
     t.string   "entry_type"
     t.text     "note"
     t.integer  "time"
-    t.boolean  "billable",      :default => true,  :null => false
-    t.boolean  "private",       :default => false, :null => false
+    t.boolean  "billable",                     :default => true,  :null => false
+    t.boolean  "private",                      :default => false, :null => false
     t.integer  "detail"
     t.integer  "creator_id"
     t.integer  "ticket_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "parts"
+    t.text     "parts",         :limit => 255
     t.integer  "drive_time"
     t.integer  "labor_type_id"
   end
@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(:version => 20090515121848) do
     t.integer  "avatar_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",                                   :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -1,70 +1,49 @@
-# Setup a couple device types
-daavlin_desktop_build = DeviceType.create(:description => "Daavlin desktop model", :identifier => "001")
-daavlin_mini_build = DeviceType.create(:description => "Daavlin mini internal model", :identifier => "002")
-sabretech_showroom_build = DeviceType.create(:description => "SabreTech standard PC model", :identifier => "050")
-
-# Setup some clients
-sabretech = Client.create(:name => "SabreTech Consulting LLC", :company => 1)
-malibutan = Client.create(:name => "Malibu Tan", :company => 1)
-malibutanning = Client.create(:name => "Malibu Tanning", :company => 1)
-jon = Client.create(:firstname => "Jonathan", :lastname => "Hoyt", :belongs_to => sabretech.id, :note => "Whatever I want it to be...")
-sam = Client.create(:firstname => "Sam", :lastname => "Sallows", :belongs_to => sabretech.id)
-brad = Client.create(:firstname => "Brad", :lastname => "Cochran", :belongs_to => sabretech.id)
-
-# Setup some client attributes
-jon_cell = Phone.create(:client => jon, :context => "Cell", :number => "5175551212")
-sam_cell = Phone.create(:client => sam, :context => "Cell", :number => "5175551212")
-brad_cell = Phone.create(:client => brad, :context => "Cell", :number => "5175551212")
-office_phone = Phone.create(:client => sabretech, :context => "Work", :number => "5175551212")
-jon_email = Email.create(:client => jon, :context => "Personal", :address => "*******@gmail.com")
-sam_email = Email.create(:client => sam, :context => "Personal", :address => "*******@gmail.com")
-jon_address = Address.create(:client => jon, :context => "Home", :full_address => "316 west blvd south, elkhart IN 46514")
-sabretech_address = Address.create(:client => sabretech, :context => "Work", :full_address => "32 S Howell St. Hillsdale MI 49242")
-
-# date = "#{Date.today.strftime('%m%d%Y')}"
-# Setup some devices
-# jons_computer = Device.create(:client => sabretech, :service_tag => "001-#{date}-1", :name => "Desktop", :device_type => daavlin_desktop_build )
-# sams_laptop = Device.create(:client => sabretech, :service_tag => "002-#{date}-2", :name => "Mini", :device_type => daavlin_mini_build)
-# malibu_workstation = Device.create(:client => malibutan, :name => "hillsdale-master", :device_type => sabretech_showroom_build)
-
-# Setup some users and roles
+# Setup Users & Their respective clients
+cambriatool = Client.create(:name => "Cambria Tool", :company => true)
 technician_role = Role.create(:name => 'technician')
-jonmagic = User.find(1)
-jonmagic.client_id = 4
-jonmagic.name = jon.fullname
-jonmagic.save
-jonmagic.roles << technician_role
-# samtheslacker = User.create do |u|
-#   u.email = "samsallows@gmail.com"
-#   u.password = u.password_confirmation = "1214bj06"
-#   u.client_id = 5
-# end
-# samtheslacker.register!
-# samtheslacker.activate!
-# samtheslacker.roles << technician_role
-# samtheslacker.update_attributes(:name => sam.fullname)
+[
+  {:firstname => "Troy", :lastname => "Balser", :email => "troy@cambriatool.com", :password => "cambria"}
+].each do |employee|
+  client = Client.create(:firstname => employee[:firstname], :lastname => employee[:lastname], :belongs_to => cambriatool.id)
+  user = User.create do |u|
+    u.email = employee[:email]
+    u.password = u.password_confirmation = employee[:password]
+    u.client_id = client.id
+  end
+  user.register!
+  user.activate!
+  user.roles << technician_role
+  user.update_attributes(:name => client.fullname)
+end
 
-# Setup some tickets
-ticket1 = Ticket.create(:description => "The first ticket in the system", :client => malibutan, :user_id => 1, :active_on => Date.yesterday)
-ticket2 = Ticket.create(:description => "Ticket number 2", :client => sabretech, :user_id => 1, :active_on => Date.yesterday)
-ticket3 = Ticket.create(:description => "Only dingbats love the rain", :client => jon, :user_id => 1, :active_on => Date.tomorrow)
-ticket4 = Ticket.create(:description => "Cooties are for girls", :client => sam, :user_id => 1, :completed_on => Time.now)
-ticket5 = Ticket.create(:description => "Make me a sandwich please", :client => malibutan, :user_id => 1, :archived_on => Time.now - 24.hours)
+require 'fastercsv'
 
-note1 = TicketEntry.create(:ticket => ticket1, :creator_id => jonmagic.id, :entry_type => "Work Done", :time => 60, :billable => true, :note => "this is a note")
+FasterCSV.foreach("#{RAILS_ROOT}/db/CUSTOMER.CSV") do |row|
+  if row[1].present?
+    billing_street  = row[5].present?  ? row[5]  : ""
+    billing_city    = row[7].present?  ? row[7]  : ""
+    billing_state   = row[8].present?  ? row[8]  : ""
+    billing_zip     = row[9].present?  ? row[9]  : ""
+    phone           = row[21].present? ? row[21] : ""
+    email           = row[24].present? ? row[24] : ""
+    shipping_street = row[13].present? ? row[13] : ""
+    shipping_city   = row[15].present? ? row[15] : ""
+    shipping_state  = row[16].present? ? row[16] : ""
+    shipping_zip    = row[17].present? ? row[17] : ""    
+    note            = row[4].present?  ? "Contact Person: #{row[4]}" : ""
+    c = Client.create(:name => row[1], :company => true, :note => note)
+    if billing_street.present? && billing_city.present? && billing_state.present? && billing_zip.present?
+      Address.create(:client => c, :context => "Billing", :thoroughfare => billing_street, :city => billing_city, :state => billing_state, :zip => billing_zip)
+    end
+    if shipping_street.present? && shipping_city.present? && shipping_state.present? && shipping_zip.present?
+      Address.create(:client => c, :context => "Shipping", :thoroughfare => shipping_street, :city => shipping_city, :state => shipping_state, :zip => shipping_zip)
+    end
+    Phone.create(:client => c, :context => "Work", :number => phone) if phone.present?
+    Email.create(:client => c, :context => "Work", :address => email) if email.present?
+  end
+end
 
-# Create some links between tickets and devices
-# ticket1.devices << jons_computer
-# ticket1.devices << sams_laptop
-# ticket2.devices << jons_computer
-# ticket3.devices << malibu_workstation
-
-# create some checklists
-daavlin_desktop_checklist = ChecklistTemplate.create(:name => "Daavlin Desktop Build")
-daavlin_mini_checklist =    ChecklistTemplate.create(:name => "Daavlin Mini Build")
-hospital_checklist =        ChecklistTemplate.create(:name => "Hillsdale Hospital Desktop Build")
-
-# add some items to those checklists
-item1 = ChecklistTemplateQuestion.create(:checklist_template => daavlin_desktop_checklist, :answer_type => "string", :question => "SabreTech Serial Number")
-item2 = ChecklistTemplateQuestion.create(:checklist_template => daavlin_desktop_checklist, :answer_type => "string", :question => "Windows Number")
-item3 = ChecklistTemplateQuestion.create(:checklist_template => daavlin_desktop_checklist, :answer_type => "boolean", :question => "Build System")
+# # Setup some clients
+# jon = Client.create(:firstname => "Jonathan", :lastname => "Hoyt", :belongs_to => sabretech.id, :note => "Whatever I want it to be...")
+# # Setup some client attributes
+# jon_cell = Phone.create(:client => jon, :context => "Cell", :number => "5175551212")
