@@ -3,6 +3,7 @@ function resize(){
   var width = $(window).width();
   $("#sidebar").css({height: height - 65});
   $("#center").css({width: width - 240});
+  $("#calendar").css({width: width - 30, height: height - 65});
 };
 
 
