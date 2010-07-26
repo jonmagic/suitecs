@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
     end_date   = Time.at(params[:end].to_i).to_date
     @tickets = Ticket.find(:all, :conditions => {:active_on => start_date..end_date})
     events = []
-    @tickets.each { |ticket| events << {:id => ticket.id, :title => "#{ticket.id}: #{ticket.description[0..60]}", :start => "#{ticket.active_on.to_time.iso8601}", :allDay => true} }
+    @tickets.each { |ticket| events << {:id => ticket.id, :title => "#{ticket.id}: #{ticket.description[0..30]}", :start => "#{ticket.active_on.to_time.iso8601}", :allDay => true} }
     render :text => events.to_json
   end
   
