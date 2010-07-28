@@ -2,7 +2,7 @@
   <div class="details">
     <table class="m">
       <tr><td class="first">Ticket:</td><td><%= @ticket.id %></td></tr>
-      <tr><td class="first">Client:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
+      <tr><td class="first">Department:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
       <tr>
         <td class="first">Technician:</td>
         <td>

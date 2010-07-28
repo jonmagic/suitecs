@@ -20,9 +20,11 @@
     </div>
     
     <div id="sidebar">
-      <div id="applesearch"><input type="search" id="srch_fld" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="" /></div>
-      <h2>Clients</h2>
+      <h2>Departments</h2>
       <ul class="itu" id="clients">
+        <% Client.find(:all, :conditions => {:company => true}).each do |department| %>
+          <li><%= link_to department.name, client_url(department), :class => 'company' %></li>
+        <% end %>
       </ul>
     </div>
     
