@@ -8,14 +8,6 @@ class LaborTypesController < ApplicationController
   
   def new
     @labor_type = LaborType.new
-    begin
-      @qb_labor_types = QB::ItemService.all()
-    rescue
-      flash[:notice] = "Could not connect to Quickbooks."
-      @qb_labor_types = []
-    ensure
-      Quickbooks.connection.close
-    end
   end
   
   def create
@@ -31,14 +23,6 @@ class LaborTypesController < ApplicationController
   
   def edit
     @labor_type = LaborType.find(params[:id])
-    begin
-      @qb_labor_types = QB::ItemService.all()
-    rescue
-      flash[:notice] = "Could not connect to Quickbooks."
-      @qb_labor_types = []
-    ensure
-      Quickbooks.connection.close
-    end
   end
   
   def update
