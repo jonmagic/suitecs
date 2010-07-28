@@ -4,10 +4,6 @@
       <h2 class="company_name">Company Name: <%= f.text_field :name, :title => "Company Name" %></h2>
       <h3 class="company_select">Belongs To: <input id="belongs_to" name="belongs_to" type="text" value="" /><%= f.hidden_field :belongs_to, :title => "Belongs To" %></h3>
       <h3 class="is_a_company">Company? <%= f.check_box :company %></h3>
-      <% if @client.qb_id.blank? %>
-        <h3>Save to Quickbooks? <input id="save_to_quickbooks" name="save_to_quickbooks" type="checkbox" value="1" /></h3>
-        <input name="save_to_quickbooks" type="hidden" value="0" />
-      <% end %>
     </div>
     <div id="picture"><p>Avatar: <%= f.file_field :mugshot %></p></div>
     <div id="details" class="edit">
