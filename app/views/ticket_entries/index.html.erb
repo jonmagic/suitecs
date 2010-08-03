@@ -9,7 +9,7 @@
       <%= render :partial => 'entry', :locals => { :entry => entry } %>
     <% else %>
       <div id="ticket_item_<%= entry.id %>" data-ticket-item-id="<%= entry.id %>" class="ticket_item entry">
-        <p><span><%= entry.quantity %></span>x <span><%= entry.item.name %></span> [Barcode: <%= entry.item.barcode %>] <% if !entry.serial_number.blank? %>[SN: <%= entry.serial_number %>]<% end %><% if !entry.device_id.blank? %> [Device: <%= link_to entry.device.service_tag, url_for(entry.device) %>]<% end %> added by <span><%= User.find(entry.creator_id).name %></span> on <%= entry.created_at.strftime('%I:%M%p on %x')%><div class="delete_button hide"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_item_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this item?" %></div></p>
+        <p><span><%= entry.quantity %></span>x <span><%= entry.item.name %></span> [Barcode: <%= entry.item.barcode %>] <% if !entry.serial_number.blank? %>[SN: <%= entry.serial_number %>]<% end %><% if !entry.device_id.blank? %> [Equipment: <%= link_to entry.device.service_tag, url_for(entry.device) %>]<% end %> added by <span><%= User.find(entry.creator_id).name %></span> on <%= entry.created_at.strftime('%I:%M%p on %x')%><div class="delete_button hide"><%= link_to_remote image_tag("/images/icons/delete.png"), :url => ticket_item_url(entry), :method => :delete, :confirm => "Are you sure you want to delete this item?" %></div></p>
       </div>
     <% end %>
   <% end %>

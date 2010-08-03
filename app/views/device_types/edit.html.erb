@@ -1,5 +1,5 @@
 <div id="device_type">
-  <h2>Edit Device Type</h2>
+  <h2>Edit Equipment Type</h2>
   <% form_for @device_type do |f| -%>
     <table id="device_details" class="m">
       <tr>
@@ -18,7 +18,7 @@
     // make sidebar item appear selected
     $("#sidebar li a.device_type_configuration").parent().addClass("selected");
     // add new device type button to footer
-    $("#footer div.col2").append("<a href='#' class='save'>Save Device Type</a>");
+    $("#footer div.col2").append("<a href='#' class='save'>Save Equipment Type</a>");
     $("#footer div.col2 a.save").bind("click", function(){
       $("#device_type input[type=submit]").click();
     });

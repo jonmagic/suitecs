@@ -42,12 +42,12 @@
       <li><a href="/iphone/clients/<%= @client.id %>/tickets">Tickets</a></li>
     <% end %>
     <% if @client.devices.length != 0 %>
-      <li><a href="/iphone/clients/<%= @client.id %>/devices">Devices</a></li>
+      <li><a href="/iphone/clients/<%= @client.id %>/devices">Equipment</a></li>
     <% end %>
   </ul>
   <ul class="individual">
     <li><a href="/iphone/clients/<%= @client.id %>/tickets/new">New Ticket</a></li>
-    <li><a href="/iphone/clients/<%= @client.id %>/devices/new">New Device</a></li>
+    <li><a href="/iphone/clients/<%= @client.id %>/devices/new">New Equipment</a></li>
   </ul>
 </div>
 

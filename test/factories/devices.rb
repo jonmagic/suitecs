@@ -7,5 +7,5 @@ end
 
 Factory.define :device_type do |dt|
   dt.identifier "555"
-  dt.sequence(:description) { |n| "Device Type #{n}"}
+  dt.sequence(:description) { |n| "Equipment Type #{n}"}
 end

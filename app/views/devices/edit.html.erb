@@ -3,4 +3,4 @@
   <%= render :partial => 'form' %>
 </div>
 
-<span class="delete_object"><%= image_tag '/images/icons/delete.png' %> <%= link_to "Delete this device, #{@device.identifier}, and all associated checklists.", url_for(@device), :confirm => "Are you absolutely sure you want to delete this Device?", :method => :delete %></span>
+<span class="delete_object"><%= image_tag '/images/icons/delete.png' %> <%= link_to "Delete this Equipment, #{@device.identifier}, and all associated checklists.", url_for(@device), :confirm => "Are you absolutely sure you want to delete this Equipment?", :method => :delete %></span>

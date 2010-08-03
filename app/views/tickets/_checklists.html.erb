@@ -22,7 +22,7 @@
       </tr>
     <% end %>
   </table>
-  <h3>Device Checklists</h3>
+  <h3>Equipment Checklists</h3>
   <table class="itu">
     <tr><th>Service Tag</th><th>Completed</th><th>Actions</th></tr>
     <% @ticket.devices.collect{|device| device.checklists}.flatten.each do |checklist| %>

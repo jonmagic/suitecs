@@ -1,4 +1,4 @@
-<h3>New Device</h3>
+<h3>New Equipment</h3>
 <% form_for Device.new(), :url => "" do |f| -%>
   <% @client.blank? ? @client_id = @ticket.client.id : @client_id = @client.id %>
   <%= f.hidden_field :client_id, :value => @client_id %>
@@ -7,10 +7,10 @@
       <td class="first">Service Tag:</td><td><%= f.text_field :service_tag %> Auto-Generated</td>
     </tr>
     <tr>
-      <td class="first">Device Name:</td><td><%= f.text_field :name %></td>
+      <td class="first">Equipment Name:</td><td><%= f.text_field :name %></td>
     </tr>
     <tr>
-      <td class="first">Device Type:</td><td><%= f.select :device_type_id, DeviceType.find(:all, :order => "description").collect {|c| [c.description, c.id]} %></td>
+      <td class="first">Equipment Type:</td><td><%= f.select :device_type_id, DeviceType.find(:all, :order => "description").collect {|c| [c.description, c.id]} %></td>
     </tr>
     <tr class="hide">
       <td class="first">Description:</td><td><%= f.text_area :description, :rows => 6 %></td>

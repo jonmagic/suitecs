@@ -14,10 +14,10 @@ class DeviceTypesController < ApplicationController
     @device_type = DeviceType.new(params[:device_type])
     
     if @device_type.save
-      flash[:notice] = 'Device type was successfully created.'
+      flash[:notice] = 'Equipment type was successfully created.'
       redirect_to '/device_types'
     else
-      flash[:notice] = 'Device type could not be created.'
+      flash[:notice] = 'Equipment type could not be created.'
       redirect_to '/device_types'
     end
   end
@@ -30,10 +30,10 @@ class DeviceTypesController < ApplicationController
     @device_type = DeviceType.find(params[:id])
     
     if @device_type.update_attributes(params[:device_type])
-      flash[:notice] = 'Device type was successfully updated.'
+      flash[:notice] = 'Equipment type was successfully updated.'
       redirect_to '/device_types'
     else
-      flash[:notice] = 'Device type was screwy.'
+      flash[:notice] = 'Equipment type was screwy.'
       redirect_to '/device_types'
     end
   end

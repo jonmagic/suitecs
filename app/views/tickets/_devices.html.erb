@@ -7,18 +7,18 @@
     <%= render :partial => 'shared/new_device', :locals => {:client => @ticket.client, :ticket => @ticket} %>
   </div>
   <div id="add_existing_device" class="hide">
-    <h3>Devices available for attaching</h3>
+    <h3>Equipment available for attaching</h3>
     <table class="itu">
       <thead>
-        <tr><th>Service Tag</th><th>Device Name</th><th>Action</th></tr>
+        <tr><th>Service Tag</th><th>Equipment Name</th><th>Action</th></tr>
       </thead>
       <tbody>
       </tbody>
     </table>        
   </div>
-  <h3>Devices attached to this ticket</h3>
+  <h3>Equipment attached to this ticket</h3>
   <table class="itu">
-    <tr><th>Service Tag</th><th>Device Name</th><th>Action</th></tr>
+    <tr><th>Service Tag</th><th>Equipment Name</th><th>Action</th></tr>
     <% @ticket.devices.each do |device| %>
       <tr>
         <td><a href="/devices/<%= device.id %>"><%= device.service_tag %></a></td>

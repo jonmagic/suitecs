@@ -1,6 +1,6 @@
 <% form_for @device, :url => iphone_devices_path, :html => {:class => "form"} do |f| %>
   <div class="toolbar">
-    <h1>New Device</h1>
+    <h1>New Equipment</h1>
     <a class="back" href="#">Back</a>
     <a class="button" href="#home">Home</a>
   </div>
@@ -12,11 +12,11 @@
   <ul>
     <li><%= f.text_field :service_tag, :placeholder => "Auto-generated" %></li>
   </ul>
-  <h2>Device Name</h2>
+  <h2>Equipment Name</h2>
   <ul>
     <li><%= f.text_field :name %></li>
   </ul>
-  <h2>Device Type</h2>
+  <h2>Equipment Type</h2>
   <ul>
     <li><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></li>
   </ul>

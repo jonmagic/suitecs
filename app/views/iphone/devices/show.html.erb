@@ -1,6 +1,6 @@
 <div id="device_<%= @device.id %>" selected="true">
   <div class="toolbar">
-    <h1>Device</h1>
+    <h1>Equipment</h1>
     <a class="back" href="#">Back</a>
     <a class="button flip" href="#edit_device_<%= @device.id %>">Edit</a>
   </div>
@@ -26,7 +26,7 @@
 
 <% form_for @device, :url => iphone_device_path(@device), :html => {:class => "form"} do |f| %>
   <div class="toolbar">
-    <h1>Edit Device</h1>
+    <h1>Edit Equipment</h1>
     <a class="back" href="#">Back</a>
     <a class="button" href="#device_<%= @device.id %>">Cancel</a>
   </div>
@@ -38,11 +38,11 @@
   <ul>
     <li><%= f.text_field :service_tag, :placeholder => "Auto-generated" %></li>
   </ul>
-  <h2>Device Name</h2>
+  <h2>Equipment Name</h2>
   <ul>
     <li><%= f.text_field :name %></li>
   </ul>
-  <h2>Device Type</h2>
+  <h2>Equipment Type</h2>
   <ul>
     <li><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></li>
   </ul>

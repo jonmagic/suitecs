@@ -14,7 +14,7 @@
       </td>
     </tr>
     <tr> 
-      <td>Device Type:</td><td><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></td>
+      <td>Equipment Type:</td><td><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></td>
     </tr>
     <tr> 
       <td>Description:</td><td><%= f.text_area :description, :rows => 6 %></td>

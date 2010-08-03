@@ -16,7 +16,6 @@
       <li><a href="#description" title="description">Description</a></li>
       <li><a href="#tickets" title="tickets">Tickets</a></li>
       <li><a href="#check_lists" title="checklists">Checklists</a></li>
-      <li id="sentries_tab"><a href="#sentries" title="sentries">Sentries</a></li>
       <li><a href="#files" title="files">Files</a></li>
     </ul>
     <div id="description">
@@ -30,7 +29,7 @@
         <% @client = @device.client %>
         <%= render :partial => 'shared/new_ticket', :locals => {:client => @client} %>
       </div>
-      <h3>Tickets Associated With This Device</h3>
+      <h3>Tickets Associated With This Equipment</h3>
       <table class="itu">
         <tr><th>Description</th><th>Owner</th><th>Technician</th><th>Status</th></tr>
         <% @device.tickets.each do |ticket| %>
@@ -55,7 +54,7 @@
           <%= f.submit "Save" %>
         <% end %>
       </div>
-      <h3>Device Checklists</h3>
+      <h3>Equipment Checklists</h3>
       <table class="itu" id="checklists">
         <tr><th>Name</th><th>Service Tag</th><th>Completed</th></tr>
         <% @device.checklists.each do |checklist| %>
@@ -68,7 +67,6 @@
       </table>
       <div id="checklist" class="hide"></div>
     </div>
-    <%= render :partial => 'sentries', :locals => {:device => @device} %>  
     <%= render :partial => 'things', :locals => {:device => @device} %>
   </div>
 </div>
