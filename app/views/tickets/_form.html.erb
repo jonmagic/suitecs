@@ -1,6 +1,6 @@
 <% form_for @ticket do |f| -%>
   <table class="m">
-    <tr><td class="first">Client:</td>
+    <tr><td class="first">Department:</td>
       <td>
         <% if !@ticket.new_record? %>
           <input id="client_id" name="client_id" type="text" value="<%= @ticket.client.fullname %>" /><%= f.hidden_field :client_id, :value => @ticket.client.id %>

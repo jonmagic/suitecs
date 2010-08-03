@@ -4,7 +4,7 @@
       <td class="first">Service Tag:</td><td><%= @device.service_tag %></td>
     </tr>
     <tr>
-      <td class="first">Device Name:</td><td><%= @device.name %></td>
+      <td class="first">Equipment Name:</td><td><%= @device.name %></td>
     </tr>
     <tr>
       <td class="first">Owner:</td><td><%= link_to @device.client.fullname, "/clients/"+@device.client.id.to_s %></td>
