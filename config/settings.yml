@@ -1,7 +1,7 @@
 development: &non_production_settings
-  site_url: http://suite.bounceme.net
-  site_name: Suite
-  admin_email: admin@suite.net
+  site_url: http://suitecs.alphi.local
+  site_name: SuiteCS
+  admin_email: jonmagic@gmail.com
   # we use https://www.grc.com/passwords.htm to generate some unique strings
   event_api_url: http://suite.bounceme.net
   event_api_username: ln4A9DvHOs2qZXTLOg8hPx5jV5cClb9Emra129Fi0Q2cqcMvIysiL0XCSKcu5S6
@@ -12,11 +12,4 @@ test:
   <<: *non_production_settings
   
 production:
-  site_url: http://suite.sabretechllc.com
-  site_name: SabreTech Suite
-  admin_email: sabretechllc@gmail.com
-  # we use https://www.grc.com/passwords.htm to generate some unique strings
-  event_api_url: http://suite.sabretechllc.com:8088
-  event_api_username: ln4A9DvHOs2qZXTLOg8hPx5jV5cClb9Emra129Fi0Q2cqcMvIysiL0XCSKcu5S6
-  event_api_password: MPQ1CBykdvLmcjRs9el0DKbKMEkdGJPT2OD4Dn1jtXNZMSoHy8f8ViMt6auJhu3
-  nsis_path: "/usr/bin"
+  <<: *non_production_settings
