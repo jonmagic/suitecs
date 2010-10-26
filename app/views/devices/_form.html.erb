@@ -3,20 +3,20 @@
     <tr>
       <td>Service Tag:</td><td class="blur"><%= f.text_field :service_tag %> (Auto-Generated)</td>
     </tr>
-    <tr> 
+    <tr>
       <td>Equipment Name:</td><td><%= f.text_field :name %></td>
     </tr>
-    <tr> 
-      <td>Owner:</td>
+    <tr>
+      <td>Location:</td>
       <td>
         <% @client = @device.client.fullname unless @device.new_record? %>
         <%= text_field_tag :client_id, @client %> <%= f.hidden_field :client_id %>
       </td>
     </tr>
-    <tr> 
+    <tr>
       <td>Equipment Type:</td><td><%= f.select :device_type_id, DeviceType.find(:all, :order => "description ASC").collect {|c| [c.description, c.id]} %></td>
     </tr>
-    <tr> 
+    <tr>
       <td>Description:</td><td><%= f.text_area :description, :rows => 6 %></td>
     </tr>
   </table>
@@ -28,15 +28,15 @@
     // change client dropdown to quickselect box
     $("input#client_id").quickselect({
       ajax:'/clients/all',
-    	match:'quicksilver',
+      match:'quicksilver',
       autoSelectFirst:true,
-    	maxVisibleItems:15,
-    	autoFill: false,
-    	additionalFields:$("input#device_client_id")
+      maxVisibleItems:15,
+      autoFill: false,
+      additionalFields:$("input#device_client_id")
     });
     // add save button to footer
     $("#footer div.col2").append("<a href='#' class='save'>Save</a>");
-  	// bind some clicks
+    // bind some clicks
     $("#footer a.save").bind("click", function(){
       $("#device input[type=submit]").click();
     });
@@ -46,5 +46,5 @@
     <% else %>
       $("input#device_name").focus();
     <% end %>
-	});
+  });
 </script>

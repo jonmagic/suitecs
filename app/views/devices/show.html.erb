@@ -7,7 +7,7 @@
       <td class="first">Equipment Name:</td><td><%= @device.name %></td>
     </tr>
     <tr>
-      <td class="first">Owner:</td><td><%= link_to @device.client.fullname, "/clients/"+@device.client.id.to_s %></td>
+      <td class="first">Location:</td><td><%= link_to @device.client.fullname, "/clients/"+@device.client.id.to_s %></td>
     </tr>
   </table>
 
@@ -31,7 +31,7 @@
       </div>
       <h3>Tickets Associated With This Equipment</h3>
       <table class="itu">
-        <tr><th>Description</th><th>Owner</th><th>Technician</th><th>Status</th></tr>
+        <tr><th>Description</th><th>Location</th><th>Technician</th><th>Status</th></tr>
         <% @device.tickets.each do |ticket| %>
           <tr>
             <td><%= link_to ticket.description[0...60], "/tickets/#{ticket.id}" %></td>
@@ -92,7 +92,7 @@
       $("#new_ticket").slideDown(500);
     })
     // Change submit url
-  	$("#new_ticket form").attr("action", "/devices/"+<%= @device.id %>+"/tickets/");
+    $("#new_ticket form").attr("action", "/devices/"+<%= @device.id %>+"/tickets/");
     // change sentries tab color based on device health
     <% if !@device.healthy? %>
       $("table#device_details").css({'background-color':'#fbfbfb'});
