@@ -1,14 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-	  <title>Suite</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Suite</title>
     <%= javascript_include_tag "jquery-1.3.2.min.js", "jquery-ui" %>
     <%= javascript_include_tag "jquery.metadata", "quicksilver", "jquery.quickselect", "strftime", "jquery.tablesorter" %>
     <%= javascript_include_tag "common", "devices" %>
-		<%= stylesheet_link_tag "blueprint/screen", "smoothness/jquery-ui-1.7.2.custom", "common", "reports", "jquery.quickselect", :media => "screen" %>
+    <%= stylesheet_link_tag "blueprint/screen", "smoothness/jquery-ui-1.7.2.custom", "common", "reports", "jquery.quickselect", :media => "screen" %>
     <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
   </head>
   <body>
@@ -17,21 +17,21 @@
       <%= render :partial => 'shared/link_bar' %>
       <div class="flash"><%= flash_messages %></div>
     </div>
-    
-    
+
+
     <div id="sidebar" class="sidebar-list">
       <h2>Reports</h2>
       <ul id="configuration" class="itu">
         <li><a href="/report/time_sheet" class="time_sheet_report">Time Sheet</a></li>
         <li><a href="/report/average_hours_comparison" class="average_hours_comparison_report">Average Hours Comparison</a></li>
-        <li><a href="/report/time_per_client" class="time_per_client_report">Time Per Department</a></li>
+        <li><a href="/report/time_per_client" class="time_per_client_report">Time Per Location</a></li>
         <li><a href="/report/ticket_detail" class="ticket_detail_report">Ticket Detail</a></li>
       </ul>
     </div>
     <div id="center" class="container">
       <%= yield %>
     </div>
-    
+
     <div id="footer">
       <div class="col1">
       </div>

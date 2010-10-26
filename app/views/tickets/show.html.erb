@@ -2,7 +2,7 @@
   <div class="details">
     <table class="m">
       <tr><td class="first">Ticket:</td><td><%= @ticket.id %></td></tr>
-      <tr><td class="first">Department:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
+      <tr><td class="first">Location:</td><td><%= link_to @ticket.client.fullname, "/clients/"+@ticket.client.id.to_s %></td><tr>
       <tr>
         <td class="first">Technician:</td>
         <td>
@@ -30,7 +30,7 @@
   <div class="description">
     <%= textile_to_html("#{@ticket.client.fullname}: #{@ticket.description}") %>
   </div>
-  
+
   <div id="ticket_content">
     <ul>
       <li><a href="#entries" title="entries">Entries</a></li>
@@ -43,7 +43,7 @@
     <%= render :partial => 'checklists', :locals => {:ticket => @ticket} %>
     <%= render :partial => 'things', :locals => {:ticket => @ticket} %>
   </div>
-  
+
   <div id="complete" class="hide">
     <% form_for @ticket do |f| -%>
       <%= f.text_field :completed_on, :value => Date.today.strftime("%m/%d/%Y") %>
@@ -84,7 +84,7 @@
       tech_name = "<%= technician.name %>"
       technicians[tech_id] = tech_name;
     <% end %>
-    
+
     // Easily change technician
     $('#ticket_user_id').bind('change', function(){
       $(this).parent().ajaxSubmit({
@@ -119,7 +119,7 @@
         }
       });
     })
-    
+
     // setup my footer buttons
     if(ticket_state() == "open"){
       $("#footer div.col2").append("<a href='/tickets/"+<%= @ticket.id %>+"/edit' class='edit_ticket'>Edit</a>");
@@ -171,7 +171,7 @@
     $("a.add_existing_device").bind("click", function(){
       $.getJSON("/clients/<%= @ticket.client.id %>/devices", function(data){
         $.each(data, function(i, object){
-          var row = "<tr><td><a href='#'>"+object.device.service_tag+"</a></td><td><a href='#'>"+object.device.name+"</a></td><td><a href='/tickets/<%= @ticket.id %>/devices/"+object.device.id+"/add_to_ticket'>Add</a></td></tr>"        
+          var row = "<tr><td><a href='#'>"+object.device.service_tag+"</a></td><td><a href='#'>"+object.device.name+"</a></td><td><a href='/tickets/<%= @ticket.id %>/devices/"+object.device.id+"/add_to_ticket'>Add</a></td></tr>"
           $("#add_existing_device table tbody").append(row);
           $("#add_existing_device").slideDown(1000);
           // buildTables();
@@ -179,6 +179,6 @@
       });
     });
     // Change submit url
-  	$("form#new_device").attr("action", "/tickets/"+<%= @ticket.id %>+"/devices/");
+    $("form#new_device").attr("action", "/tickets/"+<%= @ticket.id %>+"/devices/");
   });
 </script>

@@ -1,6 +1,6 @@
 <% form_for @ticket do |f| -%>
   <table class="m">
-    <tr><td class="first">Department:</td>
+    <tr><td class="first">Location:</td>
       <td>
         <% if !@ticket.new_record? %>
           <input id="client_id" name="client_id" type="text" value="<%= @ticket.client.fullname %>" /><%= f.hidden_field :client_id, :value => @ticket.client.id %>
@@ -37,11 +37,11 @@
     // add quickselects for client and technician
     $("input#client_id").quickselect({
       ajax:'/clients/all',
-    	matchMethod:'quicksilver',
+      matchMethod:'quicksilver',
       autoSelectFirst:true,
-    	maxVisibleItems:15,
-    	autoFill: false,
-    	additionalFields:$("input#ticket_client_id")
+      maxVisibleItems:15,
+      autoFill: false,
+      additionalFields:$("input#ticket_client_id")
     });
     $("#ticket_user_id").quickselect({
       matchMethod:'quicksilver',
@@ -57,5 +57,5 @@
     <% else %>
       $("input#client_id").focus();
     <% end %>
-	});
+  });
 </script>

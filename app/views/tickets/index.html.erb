@@ -1,7 +1,7 @@
 <div id="tickets">
   <table total="<%= @tickets.length %>" class="itu">
     <thead>
-      <tr><th class="first">Id</th><th>Description</th><th>Department</th><th>Technician</th><th>Status</th></tr>
+      <tr><th class="first">Id</th><th>Description</th><th>Location</th><th>Technician</th><th>Status</th></tr>
     </thead>
     <tbody>
       <% @tickets.each do |ticket|  %>
@@ -24,7 +24,7 @@
     }else{
       $('div#user_select').append("<select></select>");
     };
-    
+
     // setup my select box for the technician we're viewing
     var technicians = new Array();
     var row = ""
@@ -39,7 +39,7 @@
     <% end %>
     row = '<option value="all">All</option>'
     $('div#user_select select').append(row);
-    
+
     // Get the scope, set the select box to the correct value
     var scope = $.url.param("scope");
     if(scope*1){
@@ -49,7 +49,7 @@
     }else{
       $("div#user_select select").val(<%= current_user.id %>);
     };
-    
+
     // Update page based on selection
     var url = $.url.attr("source");
     url = url.replace(/\/tickets(.*)$/, "/")
