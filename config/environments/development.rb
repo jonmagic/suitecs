@@ -20,8 +20,6 @@ config.action_mailer.raise_delivery_errors = true
 REST_AUTH_SITE_KEY = 'f5945d1c74d3502f8a3de8562e5bf21fe3fec887'
 REST_AUTH_DIGEST_STRETCHES = 10
 
-Quickbooks.use_adapter :http, "10.0.154.107", "SuiteCS", "stcbjs154"
-
 require "smtp_tls"
 
 ActionMailer::Base.smtp_settings = {
