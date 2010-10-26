@@ -8,4 +8,4 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
-require 'navvy/tasks'
+# require 'navvy/tasks'
