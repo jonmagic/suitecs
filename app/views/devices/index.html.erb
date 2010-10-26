@@ -40,6 +40,7 @@
           var row = "<tr><td><a href='/devices/"+object.device.id+"'>"+object.device.service_tag+"</a></td><td><a href='/devices/"+object.device.id+"'>"+object.device.name+"</a></td><td><a href='/devices/"+object.device.id+"'>"+object.device.client_name+"</a></td><td><a href='/devices/"+object.device.id+"'>"+object.device.created_at+"</a></td><td><a href='/devices/"+object.device.id+"'>"+object.device.updated_at+"</a></td></tr>"
           $("div#tickets table tbody").append(row);
         });
+        $('table.itu').tablesorter();
         buildTables();
       });
     });
