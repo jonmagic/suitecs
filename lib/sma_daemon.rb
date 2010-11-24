@@ -3,7 +3,7 @@
 #     Record last_surveyed_at
 #     Notify if haven't notified too recently
 #       Record last_notified_at
-# 
+#
 # Later: Partition groups of surveys into separate threads to get it done faster.
 require 'fileutils'
 
@@ -18,11 +18,11 @@ def store_pid(pid)
 end
 def delete_pidfile
   FileUtils.rm("log/watcher.pid")
-end  
+end
 
 def watch!
   # This will naturally migrate different surveys to need run slightly apart from one another.
-  while(sleep(10))
+  while(sleep(60))
     Sentry.find(:all).each do |sentry|
       begin
         if (sentry.last_surveyed_at.nil? || Time.now > sentry.last_surveyed_at.to_time + sentry.survey_interval*60)
@@ -67,7 +67,7 @@ end
 
 watch!
 
-# 
+#
 # def start_daemon!
 #   if File.exists?("log/watcher.pid")
 #     pid = IO.read("log/watcher.pid").chomp.to_i
@@ -106,7 +106,7 @@ watch!
 #     end
 #   end
 # end
-# 
+#
 # def stop_daemon!
 #   begin
 #     pid = IO.read("log/watcher.pid").chomp.to_i
@@ -119,7 +119,7 @@ watch!
 #     exit
 #   end
 # end
-# 
+#
 # case ARGV[0]
 # when 'start'
 #   start_daemon!
