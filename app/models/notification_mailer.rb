@@ -1,5 +1,5 @@
 class NotificationMailer < ActionMailer::Base
-  
+
   def notification(subject, message, schedule_id)
     schedule = Schedule.find(schedule_id)
     technician = Client.find(schedule.user.client_id)
@@ -10,7 +10,7 @@ class NotificationMailer < ActionMailer::Base
     @sent_on = Time.now
     @body[:message] = message
   end
-  
+
   def ticket_updated(subject, message, email)
     @recipients = "#{email}"
     @from = "tickets@suite.sabretechllc.com"
@@ -18,10 +18,10 @@ class NotificationMailer < ActionMailer::Base
     @sent_on = Time.now
     @body[:message] = message
   end
-  
+
   def attention(ticket_id, invoice_ref_number)
     ticket  = Ticket.find(ticket_id)
-    @recipients = "sabretechllc@gmail.com"
+    @recipients = "sabretechfront@gmail.com"
     @from = APP_CONFIG[:admin_email]
     @subject = "Invoice ##{invoice_ref_number} needs attention."
     @sent_on = Time.now
