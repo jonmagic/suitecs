@@ -6,65 +6,65 @@ class Ticket < ActiveRecord::Base
   has_and_belongs_to_many :devices
   has_many :checklists
   has_many :things, :as => :attached, :dependent => :destroy
-  
+
   validates_presence_of :client_id
   validates_presence_of :creator_id
   validates_presence_of :user_id
   validates_presence_of :description
-  
+
   before_create :queue_notify_tech
   after_create :add_created_note
   before_update :add_status_change_note, :queue_notify_tech
-  
+
   attr_accessor :ticket_item_data
   before_save :save_ticket_item_data
-  
+
   def save_ticket_item_data
     return if ticket_item_data.blank?
     ticket_item_data.each do |item|
       ticket_item = TicketItem.new(item.merge(:ticket_id => id))
       if ticket_item.update_or_save
-        InventoryLog.create(:user_id => ticket_item.creator_id, 
-                            :action => "Added", 
-                            :quantity => 1, 
-                            :item_id => ticket_item.item_id, 
+        InventoryLog.create(:user_id => ticket_item.creator_id,
+                            :action => "Added",
+                            :quantity => 1,
+                            :item_id => ticket_item.item_id,
                             :source => {'type' => 'location', 'id' => ticket_item.location},
                             :destination => {'type' => 'ticket', 'id' => ticket_item.ticket_id},
                             :device_id => ticket_item.device_id)
       end
     end
   end
-    
+
   def add_created_note
     TicketEntry.create(:entry_type => "State change", :note => "Ticket created.", :billable => false, :private => true, :detail => 6, :ticket => self, :creator_id => self.creator_id)
   end
-  
+
   def add_status_change_note
     before = Ticket.find(self.id)
     if self.status != before.status
       TicketEntry.create(:entry_type => "State change", :note => "Status changed to #{self.status}", :billable => false, :private => true, :detail => 6, :ticket => self, :creator_id => self.creator_id)
     end
   end
-  
+
   def queue_notify_tech
     ticket = self
     subject = "Ticket# #{ticket.id} needs your attention"
     message = "#{User.find(ticket.creator_id).name} #{ ticket.new_record? ? 'created' : 'updated' } this ticket for you: #{APP_CONFIG[:site_url]}/tickets/#{ticket.id}\n\n#{ticket.description} for client #{ticket.client.fullname}."
-    
+
     if ticket.new_record? && ticket.creator_id != ticket.user_id
-      Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
+      # Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
     elsif ticket.id
       before = Ticket.find(ticket.id)
       if ticket.status.has("Completed")
         subject = "Ticket ##{ticket.id} is ready to be invoiced"
         message = "Ticket ##{ticket.id} has been completed and is ready to be invoiced. #{APP_CONFIG[:site_url]}/tickets/#{ticket.id}"
-        Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, "sabretechllc@gmail.com")
+        # Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, "sabretechllc@gmail.com")
       elsif ticket.user_id != before.user_id && !ticket.status.has("on") && !ticket.status.has("Completed")
-        Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
+        # Navvy::Job.enqueue(NotificationMailer, :deliver_ticket_updated, subject, message, self.technician.email)
       end
     end
   end
-  
+
   def status
     if self.archived_on != nil
       return "Archived on "+self.archived_on.strftime("%m/%d/%Y")
@@ -76,19 +76,19 @@ class Ticket < ActiveRecord::Base
       return "Open"
     end
   end
-  
+
   def technician
     User.find(self.user_id)
   end
-  
+
   def technician_name
     User.find(self.user_id).name
   end
-  
+
   def owner
     Client.find(self.client_id)
   end
-  
+
   def self.limit(status, user, scope)
     if scope == nil
       scope = user.id
@@ -109,7 +109,7 @@ class Ticket < ActiveRecord::Base
     if scope != "all" then conditions[:user_id] = User.find(scope) end
     self.find(:all, :conditions => conditions)
   end
-  
+
   def limit(scope)
     new_array = ()
     self.each do |ticket|
@@ -119,7 +119,7 @@ class Ticket < ActiveRecord::Base
     end
     return self
   end
-  
+
   def billable_time
     billable_time = 0
     self.ticket_entries.each do |entry|
@@ -130,7 +130,7 @@ class Ticket < ActiveRecord::Base
     end
     return billable_time
   end
-  
+
   def non_billable_time
     non_billable_time = 0
     self.ticket_entries.each do |entry|
@@ -141,7 +141,7 @@ class Ticket < ActiveRecord::Base
     end
     return non_billable_time
   end
-  
+
   def self.totals(user)
     future = Date.today + 100.years
     past = Date.today - 100.years
@@ -156,7 +156,7 @@ class Ticket < ActiveRecord::Base
     totals[:all] = (self.find(:all, :conditions => all)).length
     return totals
   end
-  
+
   def checklists_complete?
     checklists = []
     checklists.concat(self.checklists)
@@ -167,7 +167,7 @@ class Ticket < ActiveRecord::Base
     end
     complete == 0
   end
-  
+
 end
 
 class String
